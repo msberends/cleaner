@@ -125,7 +125,7 @@ clean.default <- function(x, ...) {
   fns <- c("Date", "percentage", "numeric", "logical", "character")
   n_valid <- integer(length(fns))
   for (i in 1:length(fns)) {
-    fn <- get(paste0("clean_", fns[i]), envir = asNamespace("clean"))
+    fn <- get(paste0("clean_", fns[i]), envir = asNamespace("cleaner"))
     n_valid[i] <- sum(!is.na(suppressWarnings(suppressMessages(fn(x_withoutNA)))))
   }
   class_winner <- fns[n_valid == max(n_valid)][1L]
@@ -146,7 +146,7 @@ clean.default <- function(x, ...) {
     message("Note: Assuming class '", class_winner, "' ", appendLF = end_with_LF)
   }
   
-  fn_winner <- get(paste0("clean_", class_winner), envir = asNamespace("clean"))
+  fn_winner <- get(paste0("clean_", class_winner), envir = asNamespace("cleaner"))
   fn_winner(x)
 }
 

@@ -263,43 +263,7 @@
 <span class='fu'>clean_percentage</span>(<span class='st'>"PCT: 0.143"</span>)</div><div class='output co'>#&gt; [1] 0.143%</div><div class='input'><span class='fu'>clean_percentage</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Total of -12.3%"</span>, <span class='st'>"Total of +4.5%"</span>))</div><div class='output co'>#&gt; [1] -12.3%   4.5%</div><div class='input'>
 <span class='fu'>clean_character</span>(<span class='st'>"qwerty123456"</span>)</div><div class='output co'>#&gt; [1] "qwerty"</div><div class='input'><span class='fu'>clean_character</span>(<span class='st'>"Positive (0.143)"</span>)</div><div class='output co'>#&gt; [1] "Positive"</div><div class='input'>
 <span class='fu'>clean_currency</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Received 25"</span>, <span class='st'>"Received 31.40"</span>))</div><div class='output co'>#&gt; [1] `USD 25.00` `USD 31.40`</div><div class='input'><span class='fu'>clean_currency</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Jack sent £ 25"</span>, <span class='st'>"Bill sent £ 31.40"</span>))</div><div class='output co'>#&gt; [1] `GBP 25.00` `GBP 31.40`</div><div class='input'>
-<span class='fu'>clean</span>(<span class='st'>"12 06 2012"</span>)</div><div class='output co'>#&gt; <span class='message'>Registered S3 methods overwritten by 'clean':</span>
-#&gt; <span class='message'>  method                  from   </span>
-#&gt; <span class='message'>  [.currency              cleaner</span>
-#&gt; <span class='message'>  [.percentage            cleaner</span>
-#&gt; <span class='message'>  [&lt;-.currency            cleaner</span>
-#&gt; <span class='message'>  [&lt;-.percentage          cleaner</span>
-#&gt; <span class='message'>  [[.currency             cleaner</span>
-#&gt; <span class='message'>  [[.percentage           cleaner</span>
-#&gt; <span class='message'>  [[&lt;-.currency           cleaner</span>
-#&gt; <span class='message'>  [[&lt;-.percentage         cleaner</span>
-#&gt; <span class='message'>  as.data.frame.freq      cleaner</span>
-#&gt; <span class='message'>  as.double.percentage    cleaner</span>
-#&gt; <span class='message'>  boxplot.freq            cleaner</span>
-#&gt; <span class='message'>  c.currency              cleaner</span>
-#&gt; <span class='message'>  c.percentage            cleaner</span>
-#&gt; <span class='message'>  format.currency         cleaner</span>
-#&gt; <span class='message'>  format.percentage       cleaner</span>
-#&gt; <span class='message'>  hist.freq               cleaner</span>
-#&gt; <span class='message'>  max.currency            cleaner</span>
-#&gt; <span class='message'>  max.percentage          cleaner</span>
-#&gt; <span class='message'>  mean.currency           cleaner</span>
-#&gt; <span class='message'>  mean.percentage         cleaner</span>
-#&gt; <span class='message'>  median.currency         cleaner</span>
-#&gt; <span class='message'>  min.currency            cleaner</span>
-#&gt; <span class='message'>  min.percentage          cleaner</span>
-#&gt; <span class='message'>  pillar_shaft.currency   cleaner</span>
-#&gt; <span class='message'>  pillar_shaft.percentage cleaner</span>
-#&gt; <span class='message'>  plot.freq               cleaner</span>
-#&gt; <span class='message'>  print.currency          cleaner</span>
-#&gt; <span class='message'>  print.freq              cleaner</span>
-#&gt; <span class='message'>  print.percentage        cleaner</span>
-#&gt; <span class='message'>  sum.currency            cleaner</span>
-#&gt; <span class='message'>  sum.percentage          cleaner</span>
-#&gt; <span class='message'>  summary.currency        cleaner</span>
-#&gt; <span class='message'>  summary.percentage      cleaner</span>
-#&gt; <span class='message'>  type_sum.currency       cleaner</span>
-#&gt; <span class='message'>  type_sum.percentage     cleaner</span></div><div class='output co'>#&gt; <span class='message'>Note: Assuming class 'Date' </span></div><div class='output co'>#&gt; <span class='message'>(assuming format 'dd mm yyyy')</span></div><div class='output co'>#&gt; [1] "2012-06-12"</div><div class='input'>
+<span class='fu'>clean</span>(<span class='st'>"12 06 2012"</span>)</div><div class='output co'>#&gt; <span class='message'>Note: Assuming class 'Date' </span></div><div class='output co'>#&gt; <span class='message'>(assuming format 'dd mm yyyy')</span></div><div class='output co'>#&gt; [1] "2012-06-12"</div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>A</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2 Apr 2016"</span>, <span class='st'>"5 Feb 2019"</span>),
                  <span class='kw'>B</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"yes"</span>, <span class='st'>"no"</span>),
                  <span class='kw'>C</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Total of -12.3%"</span>, <span class='st'>"Total of +4.5%"</span>),
