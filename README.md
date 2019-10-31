@@ -1,14 +1,16 @@
-% clean
+% cleaner
 
-# `clean`: Fast and Easy Data Cleaning
+# `cleaner`: Fast and Easy Data Cleaning
 
-**Website of this package: https://msberends.github.io/clean**
+**(Previously called `clean`, but renamed to `cleaner` upon CRAN request)**
 
-[![CRAN_Badge](https://www.r-pkg.org/badges/version/clean)](https://CRAN.R-project.org/package=clean)
+**Website of this package: https://msberends.github.io/cleaner**
+
+[![CRAN_Badge](https://www.r-pkg.org/badges/version/cleaner)](https://CRAN.R-project.org/package=cleaner)
 
 The R package for **cleaning and checking data columns** in a fast and easy way. Relying on very few dependencies, it provides **smart guessing**, but with user options to override anything if needed.
 
-It also provides two new data types that are not available in base R: [`currency`](./reference/currency.html) and [`percentage`](./reference/percentage.html).
+It also provides two new data types that are not available in base R: `currency` and `percentage`.
 
 ----
 
@@ -29,13 +31,13 @@ As a data scientist, I'm often served with data that is not clean, not tidy and 
 If the CRAN button at the top of this page is green, install the package with:
 
 ```r
-install.packages("clean")
+install.packages("cleaner")
 ```
 
 Otherwise, or if you are looking for the latest stable development version, install the package with:
 ```r
 install.packages("devtools") # if you haven't already
-devtools::install_github("msberends/clean")
+devtools::install_github("msberends/cleaner")
 ```
 
 ## How it works
@@ -112,16 +114,16 @@ Use `clean()` to clean data. It guesses what kind of data class would best fit y
   clean_Date("13jul18", "ddmmmyy")
   #> [1] "2018-07-13"
   
-  clean_Date("12 06 2012")
-  #> Cleaning dates using format 'dd mm yyyy' ('%d %m %Y')
+  clean_Date("12-06-2012")
+  #> (assuming format 'dd-mm-yyyy')
   #> [1] "2012-06-12"
   
-  clean_Date("14 august 2010")
-  #> Cleaning dates using format 'dd mmmm yyyy' ('%d %B %Y')
+  clean_Date("14 August 2010")
+  #> (assuming format 'dd mmmm yyyy')
   #> [1] "2010-08-14"
   
   clean_Date(38071)
-  #> Cleaning dates using Excel format
+  #> (assuming Excel format)
   #> [1] "2004-03-25"
   ```
   
@@ -188,6 +190,9 @@ Use `clean()` to clean data. It guesses what kind of data class would best fit y
   ```r
   as.percentage(c(0.25, 2.5, 0.025))
   #> [1]  25.0% 250.0%   2.5%
+  
+  sum(as.percentage(c(0.25, 2.5, 0.025)))
+  #> [1] 277.5%
   
   clean_percentage("PCT: 0.143")
   #> [1] 14.3%
@@ -256,7 +261,7 @@ freq(clean_factor(unclean$gender,
 #> Frequency table 
 #> 
 #> Class:   factor (numeric)
-#> Length:  500 (of which NA: 0 = 0.00%)
+#> Length:  500 (of which NA: 0 = 0%)
 #> Levels:  2: Male, Female
 #> Unique:  2
 #> 

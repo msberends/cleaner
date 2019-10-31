@@ -45,10 +45,11 @@ as.percentage(2.5e-14)
 as.percentage(pi)
 format(as.percentage(pi))
 format(as.percentage(pi), digits = 6)
-percentage(0.4455) # rounds to 44.6\%
+
+round(0.4455 * 100, 1) # mind the rounding
+percentage(0.4455) # does not round to 44.5\%
 
 \dontrun{
-
 library(ggplot2)
 ggplot(data.frame(a = LETTERS[1:6],
                   b = runif(6)),

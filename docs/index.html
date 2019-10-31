@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fast and Easy Data Cleaning • clean</title>
+<title>Fast and Easy Data Cleaning • cleaner</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
@@ -35,8 +35,8 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">clean</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0.9000</span>
+        <a class="navbar-link" href="index.html">cleaner</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
       </span>
     </div>
 
@@ -57,7 +57,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/msberends/clean">
+  <a href="https://github.com/msberends/cleaner">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -75,14 +75,15 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-<p>% clean</p>
-<div id="clean-fast-and-easy-data-cleaning" class="section level1">
+<p>% cleaner</p>
+<div id="cleaner-fast-and-easy-data-cleaning" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#clean-fast-and-easy-data-cleaning" class="anchor"></a><code>clean</code>: Fast and Easy Data Cleaning</h1></div>
-<p><strong>Website of this package: <a href="https://msberends.github.io/clean" class="uri">https://msberends.github.io/clean</a></strong></p>
-<p><a href="https://CRAN.R-project.org/package=clean"><img src="https://www.r-pkg.org/badges/version/clean" alt="CRAN_Badge"></a></p>
+<a href="#cleaner-fast-and-easy-data-cleaning" class="anchor"></a><code>cleaner</code>: Fast and Easy Data Cleaning</h1></div>
+<p><strong>(Previously called <code>clean</code>, but renamed to <code>cleaner</code> upon CRAN request)</strong></p>
+<p><strong>Website of this package: <a href="https://msberends.github.io/cleaner" class="uri">https://msberends.github.io/cleaner</a></strong></p>
+<p><a href="https://CRAN.R-project.org/package=cleaner"><img src="https://www.r-pkg.org/badges/version/cleaner" alt="CRAN_Badge"></a></p>
 <p>The R package for <strong>cleaning and checking data columns</strong> in a fast and easy way. Relying on very few dependencies, it provides <strong>smart guessing</strong>, but with user options to override anything if needed.</p>
-<p>It also provides two new data types that are not available in base R: <a href="./reference/currency.html"><code>currency</code></a> and <a href="./reference/percentage.html"><code>percentage</code></a>.</p>
+<p>It also provides two new data types that are not available in base R: <code>currency</code> and <code>percentage</code>.</p>
 <hr>
 <p>Contents:</p>
 <ul>
@@ -103,10 +104,10 @@
 <a href="#why-this-package" class="anchor"></a>Why this package</h2>
 <p>As a data scientist, I’m often served with data that is not clean, not tidy and consquently not ready for analysis at all. For tidying data, there’s of course the <code>tidyverse</code> (<a href="https://www.tidyverse.org" class="uri">https://www.tidyverse.org</a>), which lets you manipulate data in any way you can think of. But for <em>cleaning</em>, I think our community was still lacking a neat solution that makes data cleaning fast and easy with functions that kind of ‘think on their own’ to do that.</p>
 <p>If the CRAN button at the top of this page is green, install the package with:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"clean"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"cleaner"</span>)</a></code></pre></div>
 <p>Otherwise, or if you are looking for the latest stable development version, install the package with:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>) <span class="co"># if you haven't already</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"msberends/clean"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"msberends/cleaner"</span>)</a></code></pre></div>
 </div>
 <div id="how-it-works" class="section level2">
 <h2 class="hasAnchor">
@@ -170,16 +171,16 @@
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="reference/clean.html">clean_Date</a></span>(<span class="st">"13jul18"</span>, <span class="st">"ddmmmyy"</span>)</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt; [1] "2018-07-13"</span></a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="kw"><a href="reference/clean.html">clean_Date</a></span>(<span class="st">"12 06 2012"</span>)</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; Cleaning dates using format 'dd mm yyyy' ('%d %m %Y')</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="kw"><a href="reference/clean.html">clean_Date</a></span>(<span class="st">"12-06-2012"</span>)</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; (assuming format 'dd-mm-yyyy')</span></a>
 <a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt; [1] "2012-06-12"</span></a>
 <a class="sourceLine" id="cb7-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="kw"><a href="reference/clean.html">clean_Date</a></span>(<span class="st">"14 august 2010"</span>)</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt; Cleaning dates using format 'dd mmmm yyyy' ('%d %B %Y')</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="kw"><a href="reference/clean.html">clean_Date</a></span>(<span class="st">"14 August 2010"</span>)</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt; (assuming format 'dd mmmm yyyy')</span></a>
 <a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt; [1] "2010-08-14"</span></a>
 <a class="sourceLine" id="cb7-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb7-12" data-line-number="12"><span class="kw"><a href="reference/clean.html">clean_Date</a></span>(<span class="dv">38071</span>)</a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt; Cleaning dates using Excel format</span></a>
+<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt; (assuming Excel format)</span></a>
 <a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt; [1] "2004-03-25"</span></a></code></pre></div>
 <p>The function to transform <code>d-mmm-yyyy</code> to <code>%e-%b-%Y</code> is available as <code><a href="reference/format_datetime.html">format_datetime()</a></code> to users. This makes it possible to use it in other date functions too:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"12-13-14"</span>, <span class="dt">format =</span> <span class="kw"><a href="reference/format_datetime.html">format_datetime</a></span>(<span class="st">"mm-yy-dd"</span>))</a>
@@ -287,7 +288,7 @@
 <a class="sourceLine" id="cb17-3" data-line-number="3"><span class="co">#&gt; Frequency table </span></a>
 <a class="sourceLine" id="cb17-4" data-line-number="4"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb17-5" data-line-number="5"><span class="co">#&gt; Class:   factor (numeric)</span></a>
-<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="co">#&gt; Length:  500 (of which NA: 0 = 0.00%)</span></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="co">#&gt; Length:  500 (of which NA: 0 = 0%)</span></a>
 <a class="sourceLine" id="cb17-7" data-line-number="7"><span class="co">#&gt; Levels:  2: Male, Female</span></a>
 <a class="sourceLine" id="cb17-8" data-line-number="8"><span class="co">#&gt; Unique:  2</span></a>
 <a class="sourceLine" id="cb17-9" data-line-number="9"><span class="co">#&gt; </span></a>
@@ -364,11 +365,9 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=clean">https://​cloud.r-project.org/​package=clean</a>
+<li>Browse source code at <br><a href="https://github.com/msberends/cleaner">https://​github.com/​msberends/​cleaner</a>
 </li>
-<li>Browse source code at <br><a href="https://github.com/msberends/clean">https://​github.com/​msberends/​clean</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/msberends/clean/issues">https://​github.com/​msberends/​clean/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/msberends/cleaner/issues">https://​github.com/​msberends/​cleaner/​issues</a>
 </li>
 </ul>
 </div>

@@ -3,7 +3,7 @@
 # Fast and Easy Data Cleaning                                          #
 #                                                                      #
 # SOURCE                                                               #
-# https://github.com/msberends/clean                                   #
+# https://github.com/msberends/cleaner                                 #
 #                                                                      #
 # LICENCE                                                              #
 # (c) 2019 Berends MS (m.s.berends@umcg.nl)                            #
@@ -18,6 +18,6 @@
 # ==================================================================== #
 
 library(testthat)
-library(clean)
+library(cleaner)
 
-test_check("clean")
+test_check("cleaner")

@@ -3,7 +3,7 @@
 # Fast and Easy Data Cleaning                                          #
 #                                                                      #
 # SOURCE                                                               #
-# https://github.com/msberends/clean                                   #
+# https://github.com/msberends/cleaner                                 #
 #                                                                      #
 # LICENCE                                                              #
 # (c) 2019 Berends MS (m.s.berends@umcg.nl)                            #
@@ -41,10 +41,11 @@
 #' as.percentage(pi)
 #' format(as.percentage(pi))
 #' format(as.percentage(pi), digits = 6)
-#' percentage(0.4455) # rounds to 44.6%
+#' 
+#' round(0.4455 * 100, 1) # mind the rounding
+#' percentage(0.4455) # does not round to 44.5%
 #' 
 #' \dontrun{
-#' 
 #' library(ggplot2)
 #' ggplot(data.frame(a = LETTERS[1:6],
 #'                   b = runif(6)),
@@ -197,6 +198,6 @@ percentage <- function(x, digits = NULL, ...) {
     digits <- getdecimalplaces(x, minimum = 0, maximum = 1)
   }
   # round right: percentage(0.4455) should return "44.6%", not "44.5%"
-  x <- as.numeric(round2(x * 100, digits = digits)) / 100
+  x <- as.numeric(round2(x, digits = digits + 2))
   format(as.percentage(x), digits = digits, ...)
 }
