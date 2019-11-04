@@ -48,14 +48,4 @@ format(as.percentage(pi), digits = 6)
 
 round(0.4455 * 100, 1) # mind the rounding
 percentage(0.4455) # does not round to 44.5\%
-
-\dontrun{
-library(ggplot2)
-ggplot(data.frame(a = LETTERS[1:6],
-                  b = runif(6)),
-       aes(a, b)) +
-  geom_col() + 
-  geom_label(aes(label = percentage(b))) +
-  scale_y_continuous(labels = percentage) 
-}
 }

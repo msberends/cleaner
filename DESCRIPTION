@@ -1,7 +1,7 @@
 Package: cleaner
 Title: Fast and Easy Data Cleaning
 Version: 1.2.0
-Date: 2019-10-31
+Date: 2019-11-04
 Authors@R: 
   person(
     given = c("Matthijs", "S."),
@@ -9,8 +9,8 @@ Authors@R:
     email = "m.s.berends@umcg.nl",
     role = c("aut", "cre"),
     comment = c(ORCID = "0000-0001-7620-1800"))
-Description: Data cleaning functions for classes 'logical',
-  'factor', 'numeric', 'character', 'currency' and 'Date' to make
+Description: Data cleaning functions for classes logical,
+  factor, numeric, character, currency and Date to make
   data cleaning fast and easy. Relying on very few dependencies, it 
   provides smart guessing, but with user options to override 
   anything if needed.

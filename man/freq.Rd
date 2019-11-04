@@ -100,7 +100,21 @@ Create a frequency table of a \code{vector} or a \code{data.frame}. It supports 
 \code{top_freq} can be used to get the top/bottom \emph{n} items of a frequency table, with counts as names. It respects ties.
 }
 \details{
-Frequency tables (or frequency distributions) are summaries of the distribution of values in a sample. With the `freq` function, you can create univariate frequency tables. Multiple variables will be pasted into one variable, so it forces a univariate distribution. This package also has a vignette available to explain the use of this function further, run \code{browseVignettes("clean")} to read it.
+Frequency tables (or frequency distributions) are summaries of the distribution of values in a sample. With the `freq` function, you can create univariate frequency tables. Multiple variables will be pasted into one variable, so it forces a univariate distribution. 
+
+Input can be done in many different ways. Base R methods are:
+\preformatted{
+freq(df$variable)
+freq(df[, "variable"])
+}
+
+Tidyverse methods are:
+\preformatted{
+df$variable \%>\% freq()
+df[, "variable"] \%>\% freq()
+df \%>\% freq("variable")
+df \%>\% freq(variable)
+}
 
 For numeric values of any class, these additional values will all be calculated with \code{na.rm = TRUE} and shown into the header:
 \itemize{
@@ -130,7 +144,7 @@ The function \code{top_freq} will include more than \code{n} rows if there are t
 Interested in extending the \code{freq()} function with your own class? Add a method like below to your package, and optionally define some header info by passing a \code{\link{list}} to the \code{.add_header} parameter, like below example for class \code{difftime}. This example assumes that you use the \code{roxygen2} package for package development.
 \preformatted{
 #' @exportMethod freq.difftime
-#' @importFrom clean freq.default
+#' @importFrom cleaner freq.default
 #' @export
 #' @noRd
 freq.difftime <- function(x, ...) {
@@ -138,29 +152,22 @@ freq.difftime <- function(x, ...) {
                .add_header = list(units = attributes(x)$units))
 }
 }
-Be sure to call \code{freq.default} in your function and not just \code{freq}. Also, add \code{clean} to the \code{Imports:} field of your \code{DESCRIPTION} file, to make sure that it will be installed with your package, e.g.:
+Be sure to call \code{freq.default} in your function and not just \code{freq}. Also, add \code{cleaner} to the \code{Imports:} field of your \code{DESCRIPTION} file, to make sure that it will be installed with your package, e.g.:
 \preformatted{
-Imports: clean
+Imports: cleaner
 }
 }
 
 \examples{
-\dontrun{
+freq(unclean$gender, markdown = FALSE)
 
-# this all gives the same results:
-freq(df$variable)
-freq(df[, "variable"])
-df$variable \%>\% freq()
-df[, "variable"] \%>\% freq()
-df \%>\% freq("variable")
-df \%>\% freq(variable) # <- tidyverse way
-}
-
-clean_gender <- clean_factor(unclean$gender, 
-                             levels = c("^m" = "Male", 
-                                        "^f" = "Female"))
-freq(unclean$gender)
-freq(clean_gender)
+freq(x = clean_factor(unclean$gender, 
+                      levels = c("^m" = "Male", 
+                                 "^f" = "Female")),
+     markdown = TRUE,
+     title = "Frequencies of a cleaned version for a markdown report!",
+     header = FALSE,
+     quote = TRUE)
 }
 \keyword{freq}
 \keyword{frequency}

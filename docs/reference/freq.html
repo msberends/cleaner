@@ -254,7 +254,19 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
     <p>A <code>data.frame</code> (with an additional class <code>"freq"</code>) with five columns: <code>item</code>, <code>count</code>, <code>percent</code>, <code>cum_count</code> and <code>cum_percent</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Frequency tables (or frequency distributions) are summaries of the distribution of values in a sample. With the `freq` function, you can create univariate frequency tables. Multiple variables will be pasted into one variable, so it forces a univariate distribution. This package also has a vignette available to explain the use of this function further, run <code><a href='https://rdrr.io/r/utils/browseVignettes.html'>browseVignettes("clean")</a></code> to read it.</p>
+    <p>Frequency tables (or frequency distributions) are summaries of the distribution of values in a sample. With the `freq` function, you can create univariate frequency tables. Multiple variables will be pasted into one variable, so it forces a univariate distribution.</p>
+<p>Input can be done in many different ways. Base R methods are:</p><pre>
+freq(df$variable)
+freq(df[, "variable"])
+</pre>
+
+<p>Tidyverse methods are:</p><pre>
+df$variable %&gt;% freq()
+df[, "variable"] %&gt;% freq()
+df %&gt;% freq("variable")
+df %&gt;% freq(variable)
+</pre>
+
 <p>For numeric values of any class, these additional values will all be calculated with <code>na.rm = TRUE</code> and shown into the header:</p><ul>
 <li><p>Mean, using <code><a href='https://rdrr.io/r/base/mean.html'>mean</a></code></p></li>
 <li><p>Standard Deviation, using <code><a href='https://rdrr.io/r/stats/sd.html'>sd</a></code></p></li>
@@ -278,69 +290,55 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
 
 <p>Interested in extending the <code>freq()</code> function with your own class? Add a method like below to your package, and optionally define some header info by passing a <code><a href='https://rdrr.io/r/base/list.html'>list</a></code> to the <code>.add_header</code> parameter, like below example for class <code>difftime</code>. This example assumes that you use the <code>roxygen2</code> package for package development.</p><pre>
 #' @exportMethod freq.difftime
-#' @importFrom clean freq.default
+#' @importFrom cleaner freq.default
 #' @export
 #' @noRd
 freq.difftime &lt;- function(x, ...) {
   freq.default(x = x, ...,
                .add_header = list(units = attributes(x)$units))
 }
-</pre><p>Be sure to call <code>freq.default</code> in your function and not just <code>freq</code>. Also, add <code>clean</code> to the <code>Imports:</code> field of your <code>DESCRIPTION</code> file, to make sure that it will be installed with your package, e.g.:</p><pre>
-Imports: clean
+</pre><p>Be sure to call <code>freq.default</code> in your function and not just <code>freq</code>. Also, add <code>cleaner</code> to the <code>Imports:</code> field of your <code>DESCRIPTION</code> file, to make sure that it will be installed with your package, e.g.:</p><pre>
+Imports: cleaner
 </pre>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-
-<span class='co'># this all gives the same results:</span>
-<span class='fu'>freq</span>(<span class='no'>df</span>$<span class='no'>variable</span>)
-<span class='fu'>freq</span>(<span class='no'>df</span>[, <span class='st'>"variable"</span>])
-<span class='no'>df</span>$<span class='no'>variable</span> <span class='kw'>%&gt;%</span> <span class='fu'>freq</span>()
-<span class='no'>df</span>[, <span class='st'>"variable"</span>] <span class='kw'>%&gt;%</span> <span class='fu'>freq</span>()
-<span class='no'>df</span> <span class='kw'>%&gt;%</span> <span class='fu'>freq</span>(<span class='st'>"variable"</span>)
-<span class='no'>df</span> <span class='kw'>%&gt;%</span> <span class='fu'>freq</span>(<span class='no'>variable</span>) <span class='co'># &lt;- tidyverse way</span>
-}
-
-<span class='no'>clean_gender</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clean.html'>clean_factor</a></span>(<span class='no'>unclean</span>$<span class='no'>gender</span>,
-                             <span class='kw'>levels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"^m"</span> <span class='kw'>=</span> <span class='st'>"Male"</span>,
-                                        <span class='st'>"^f"</span> <span class='kw'>=</span> <span class='st'>"Female"</span>))
-<span class='fu'>freq</span>(<span class='no'>unclean</span>$<span class='no'>gender</span>)</div><div class='output co'>#&gt; 
+    <pre class="examples"><div class='input'><span class='fu'>freq</span>(<span class='no'>unclean</span>$<span class='no'>gender</span>, <span class='kw'>markdown</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Frequency table</span><span> 
 #&gt; 
-#&gt; **Frequency table**   
+#&gt; Class:     character
+#&gt; Length:    500 (of which NA: </span><span style='color: #00BB00;'>0 = 0%</span><span>)
+#&gt; Unique:    5
 #&gt; 
-#&gt; Class:     character  
-#&gt; Length:    500 (of which NA: 0 = 0%)  
-#&gt; Unique:    5  
-#&gt;   
-#&gt; Shortest:  1  
+#&gt; Shortest:  1
 #&gt; Longest:   6
 #&gt; 
+#&gt;      Item      Count   Percent   Cum. Count   Cum. Percent
+#&gt; ---  -------  ------  --------  -----------  -------------
+#&gt; 1    male        240     48.0%          240          48.0%
+#&gt; 2    female      220     44.0%          460          92.0%
+#&gt; 3    man          22      4.4%          482          96.4%
+#&gt; 4    m            15      3.0%          497          99.4%
+#&gt; 5    F             3      0.6%          500         100.0%
+#&gt; </div><div class='input'>
+<span class='fu'>freq</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='clean.html'>clean_factor</a></span>(<span class='no'>unclean</span>$<span class='no'>gender</span>,
+                      <span class='kw'>levels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"^m"</span> <span class='kw'>=</span> <span class='st'>"Male"</span>,
+                                 <span class='st'>"^f"</span> <span class='kw'>=</span> <span class='st'>"Female"</span>)),
+     <span class='kw'>markdown</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+     <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Frequencies of a cleaned version for a markdown report!"</span>,
+     <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+     <span class='kw'>quote</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
 #&gt; 
-#&gt; |   |Item   | Count| Percent| Cum. Count| Cum. Percent|
-#&gt; |:--|:------|-----:|-------:|----------:|------------:|
-#&gt; |1  |male   |   240|   48.0%|        240|        48.0%|
-#&gt; |2  |female |   220|   44.0%|        460|        92.0%|
-#&gt; |3  |man    |    22|    4.4%|        482|        96.4%|
-#&gt; |4  |m      |    15|    3.0%|        497|        99.4%|
-#&gt; |5  |F      |     3|    0.6%|        500|       100.0%|
-#&gt; 
-#&gt; </div><div class='input'><span class='fu'>freq</span>(<span class='no'>clean_gender</span>)</div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; **Frequency table**   
-#&gt; 
-#&gt; Class:   factor (numeric)  
-#&gt; Length:  500 (of which NA: 0 = 0%)  
-#&gt; Levels:  2: Male, Female  
-#&gt; Unique:  2
+#&gt; **Frequencies of a cleaned version for a markdown report!**   
 #&gt; 
 #&gt; 
-#&gt; |   |Item   | Count| Percent| Cum. Count| Cum. Percent|
-#&gt; |:--|:------|-----:|-------:|----------:|------------:|
-#&gt; |1  |Male   |   277|   55.4%|        277|        55.4%|
-#&gt; |2  |Female |   223|   44.6%|        500|       100.0%|
 #&gt; 
-#&gt; </div></pre>
+#&gt; 
+#&gt; |   |Item     | Count| Percent| Cum. Count| Cum. Percent|
+#&gt; |:--|:--------|-----:|-------:|----------:|------------:|
+#&gt; |1  |"Male"   |   277|   55.4%|        277|        55.4%|
+#&gt; |2  |"Female" |   223|   44.6%|        500|       100.0%|
+#&gt; 
+#&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
