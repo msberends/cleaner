@@ -6,7 +6,7 @@
 # https://github.com/msberends/cleaner                                 #
 #                                                                      #
 # LICENCE                                                              #
-# (c) 2019 Berends MS (m.s.berends@umcg.nl)                            #
+# (c) 2020 Berends MS (m.s.berends@umcg.nl)                            #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -44,7 +44,7 @@
 #' \itemize{
 #'   \item{\code{clean_logical()}:\cr}{Use parameters \code{true} and \code{false} to match values using case-insensitive regular expressions (\link[base]{regex}). Unmatched values are considered \code{NA}. At default, values are matched with \code{\link{regex_true}} and \code{\link{regex_false}}. This allows support for values "Yes" and "No" in the following languages: Arabic, Bengali, Chinese (Mandarin), Dutch, English, French, German, Hindi, Indonesian, Japanese, Malay, Portuguese, Russian, Spanish, Telugu, Turkish and Urdu. Use parameter \code{na} to override values as \code{NA} that would else be matched with \code{true} or \code{false}. See Examples.}
 #'   \item{\code{clean_factor()}:\cr}{Use parameter \code{levels} to set new factor levels. They can be case-insensitive regular expressions to match existing values of \code{x}. For matching, new values for \code{levels} are internally temporary sorted descending on text length. See Examples.}
-#'   \item{\code{clean_numeric()} and \code{clean_character()}:\cr}{Use parameter \code{remove} to match values that must be removed from the input, using regular expressions (\link[base]{regex}). In case of \code{clean_numeric()}, comma's will be read as dots and only the last dot will be kept. Function \code{clean_character()} will keep middle spaces at default. See Examples.}
+#'   \item{\code{clean_numeric()}, \code{clean_double()}, \code{clean_integer()} and \code{clean_character()}:\cr}{Use parameter \code{remove} to match values that must be removed from the input, using regular expressions (\link[base]{regex}). In case of \code{clean_numeric()}, comma's will be read as dots and only the last dot will be kept. Function \code{clean_character()} will keep middle spaces at default. See Examples.}
 #'   \item{\code{clean_percentage()}:\cr}{This new class works like \code{clean_numeric()}, but transforms it with \code{\link{as.percentage}}, which will retain the original values, but will print them as percentages. See Examples.} 
 #'   \item{\code{clean_currency()}:\cr}{This new class works like \code{clean_numeric()}, but transforms it with \code{\link{as.currency}}. The currency symbol is guessed based on the most traded currencies by value (see Source): the United States dollar, Euro, Japanese yen, Pound sterling, Swiss franc, Renminbi, Swedish krona, Mexican peso, South Korean won, Turkish lira, Russian ruble, Indian rupee and the South African rand. See Examples.}
 #'   \item{\code{clean_Date()}:\cr}{Use parameter \code{format} to define a date format, or leave it empty to have the format guessed. Use \code{"Excel"} to read values as Microsoft Excel dates. The \code{format} parameter will be evaluated with \code{\link{format_datetime}}, which means that a format like \code{"d-mmm-yy"} with be translated internally to \code{"\%e-\%b-\%y"} for convenience. See Examples.}
@@ -57,7 +57,8 @@
 #' \itemize{
 #'   \item{\code{clean_logical()}: class \code{logical}}
 #'   \item{\code{clean_factor()}: class \code{factor}}
-#'   \item{\code{clean_numeric()}: class \code{numeric}}
+#'   \item{\code{clean_numeric()} & \code{clean_double()}: class \code{numeric}}
+#'   \item{\code{clean_integer()}: class \code{integer}}
 #'   \item{\code{clean_character()}: class \code{character}}
 #'   \item{\code{clean_percentage()}: class \code{percentage}}
 #'   \item{\code{clean_currency()}: class \code{currency}}
@@ -88,8 +89,8 @@
 #' clean_Date(c("1 Oct 13", "October 1st 2012")) # could not be fitted in 1 format
 #' clean_Date(c("1 Oct 13", "October 1st 2012"), guess_each = TRUE)
 #' 
-#' clean_POSIXct("Created log on 2019/02/11 11:23 by user Joe")
-#' clean_POSIXct("Created log on 2019.02.11 11:23 by user Joe", tz = "UTC")
+#' clean_POSIXct("Created log on 2020/02/11 11:23 by user Joe")
+#' clean_POSIXct("Created log on 2020.02.11 11:23 by user Joe", tz = "UTC")
 #' 
 #' clean_numeric("qwerty123456")
 #' clean_numeric("Positive (0.143)")
@@ -107,7 +108,7 @@
 #'  
 #' clean("12 06 2012")
 #' 
-#' df <- data.frame(A = c("2 Apr 2016", "5 Feb 2019"), 
+#' df <- data.frame(A = c("2 Apr 2016", "5 Feb 2020"), 
 #'                  B = c("yes", "no"),
 #'                  C = c("Total of -12.3%", "Total of +4.5%"),
 #'                  D = c("Marker: 0.4513 mmol/l", "Marker: 0.2732 mmol/l"))
@@ -243,6 +244,16 @@ clean_numeric <- function(x, remove = "[^0-9.,-]", fixed = FALSE) {
   # set minus where needed
   x_numeric[x_below0] <- -x_numeric[x_below0]
   x_numeric
+}
+
+#' @rdname clean
+#' @export
+clean_double <- clean_numeric
+
+#' @rdname clean
+#' @export
+clean_integer <- function(x, remove = "[^0-9.,-]", fixed = FALSE) {
+  as.integer(clean_numeric(x = x, remove = remove, fixed = fixed))
 }
 
 #' @rdname clean

@@ -8,18 +8,24 @@
 \alias{format.currency}
 \title{Transform to currency}
 \usage{
-as.currency(x, currency_symbol = Sys.localeconv()["int_curr_symbol"],
-  ...)
+as.currency(x, currency_symbol = Sys.localeconv()["int_curr_symbol"], ...)
 
 is.currency(x)
 
-\method{print}{currency}(x, decimal.mark = getOption("OutDec"),
-  big.mark = ifelse(decimal.mark == ",", ".", ","), ...)
+\method{print}{currency}(
+  x,
+  decimal.mark = getOption("OutDec"),
+  big.mark = ifelse(decimal.mark == ",", ".", ","),
+  ...
+)
 
-\method{format}{currency}(x,
+\method{format}{currency}(
+  x,
   currency_symbol = attributes(x)$currency_symbol,
-  decimal.mark = getOption("OutDec"), big.mark = ifelse(decimal.mark ==
-  ",", ".", ","), ...)
+  decimal.mark = getOption("OutDec"),
+  big.mark = ifelse(decimal.mark == ",", ".", ","),
+  ...
+)
 }
 \arguments{
 \item{x}{input}

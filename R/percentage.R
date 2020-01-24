@@ -6,7 +6,7 @@
 # https://github.com/msberends/cleaner                                 #
 #                                                                      #
 # LICENCE                                                              #
-# (c) 2019 Berends MS (m.s.berends@umcg.nl)                            #
+# (c) 2020 Berends MS (m.s.berends@umcg.nl)                            #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -125,7 +125,8 @@ format.percentage <- function(x, digits = NULL, ...) {
     digits <- getdecimalplaces(x)
   }
   x_formatted <- format(as.double(x) * 100, scientific = FALSE, digits = digits, nsmall = digits, ...)
-  x_formatted[!is.na(x)] <- paste0(x_formatted[!is.na(x)], "%")
+  x_formatted <- paste0(x_formatted, "%")
+  x_formatted[!grepl(pattern = "^[0-9.,]+$", x = x)] <- NA_character_
   x_formatted
 }
 
@@ -155,6 +156,13 @@ max.percentage <- function(x, ...) {
 #' @export
 mean.percentage <- function(x, ...) {
   as.percentage(mean(as.double(x), ...))
+}
+
+#' @noRd
+#' @exportMethod median.percentage
+#' @export
+median.percentage <- function(x, ...) {
+  as.percentage(median(as.double(x), ...))
 }
 
 #' @noRd

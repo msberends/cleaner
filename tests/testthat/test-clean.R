@@ -6,7 +6,7 @@
 # https://github.com/msberends/cleaner                                 #
 #                                                                      #
 # LICENCE                                                              #
-# (c) 2019 Berends MS (m.s.berends@umcg.nl)                            #
+# (c) 2020 Berends MS (m.s.berends@umcg.nl)                            #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -43,5 +43,12 @@ test_that("cleaning works", {
                c("no", "no", "yes", "no", "no"))
   expect_equal(clean_numeric(values),
                c(5538, 929, 2390, 841, 2610))
+  expect_equal(clean_double(values),
+               c(5538, 929, 2390, 841, 2610))
+  
+  expect_equal(clean_numeric(values) * 0.25,
+               c(1384.50, 232.25, 597.50, 210.25, 652.50))
+  expect_equal(clean_integer(clean_numeric(values) * 0.25),
+               c(1384,    232,    597,    210,    652))
 })
 

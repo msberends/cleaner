@@ -6,7 +6,7 @@
 # https://github.com/msberends/cleaner                                 #
 #                                                                      #
 # LICENCE                                                              #
-# (c) 2019 Berends MS (m.s.berends@umcg.nl)                            #
+# (c) 2020 Berends MS (m.s.berends@umcg.nl)                            #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -625,7 +625,7 @@ print.freq <- function(x,
   opt <- attr(x, "opt")
   if (is.null(opt)) {
     # selection of frequency table, return original class
-    class(x) <- class(x)[!class(x) %in% c("freq", "frequency_tbl")]
+    class(x) <- class(x)[!class(x) == "freq"]
     print(x)
     return(invisible())
   }
@@ -633,7 +633,6 @@ print.freq <- function(x,
   if (!is.null(opt$format)) {
     is.Date <- function(x) inherits(x, c("Date", "POSIXct"))
     x$item <- format(x$item, format = ifelse(is.Date(x$item), format_datetime(opt$format), opt$format))
-    quote <- FALSE
   }
 
   opt$header_txt <- header(x)
@@ -705,12 +704,13 @@ print.freq <- function(x,
     }
     return(invisible())
   }
+  
+  if (is.null(opt$digits)) {
+    opt$digits <- 2
+  }
 
   if (isTRUE(opt$header == TRUE)) {
     if (!is.null(opt$header_txt)) {
-      if (is.null(opt$digits)) {
-        opt$digits <- 2
-      }
       cat(format_header(x, digits = opt$digits, markdown = (opt$tbl_format == "markdown"),
                         decimal.mark = decimal.mark, big.mark = big.mark))
     }

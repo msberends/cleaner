@@ -17,11 +17,23 @@
 \usage{
 freq(x, ...)
 
-\method{freq}{default}(x, sort.count = TRUE,
-  nmax = getOption("max.print.freq"), na.rm = TRUE, row.names = TRUE,
-  markdown = !interactive(), digits = 2, quote = NULL,
-  header = TRUE, title = NULL, na = "<NA>", sep = " ",
-  decimal.mark = getOption("OutDec"), big.mark = "", ...)
+\method{freq}{default}(
+  x,
+  sort.count = TRUE,
+  nmax = getOption("max.print.freq"),
+  na.rm = TRUE,
+  row.names = TRUE,
+  markdown = !interactive(),
+  digits = 2,
+  quote = NULL,
+  header = TRUE,
+  title = NULL,
+  na = "<NA>",
+  sep = " ",
+  decimal.mark = getOption("OutDec"),
+  big.mark = "",
+  ...
+)
 
 \method{freq}{factor}(x, ..., droplevels = FALSE)
 
@@ -41,10 +53,15 @@ top_freq(f, n)
 
 header(f, property = NULL)
 
-\method{print}{freq}(x, nmax = getOption("max.print.freq", default = 10),
-  markdown = !interactive(), header = TRUE,
-  decimal.mark = getOption("OutDec"), big.mark = ifelse(decimal.mark !=
-  ",", ",", "."), ...)
+\method{print}{freq}(
+  x,
+  nmax = getOption("max.print.freq", default = 10),
+  markdown = !interactive(),
+  header = TRUE,
+  decimal.mark = getOption("OutDec"),
+  big.mark = ifelse(decimal.mark != ",", ",", "."),
+  ...
+)
 }
 \arguments{
 \item{x}{vector of any class or a \code{\link{data.frame}} or \code{\link{table}}}
@@ -75,11 +92,11 @@ header(f, property = NULL)
 
 \item{decimal.mark}{%
     used for prettying (longish) numerical and complex sequences.
-    Passed to \code{\link{prettyNum}}: that help page explains the details.}
+    Passed to \code{\link[base]{prettyNum}}: that help page explains the details.}
 
 \item{big.mark}{%
     used for prettying (longish) numerical and complex sequences.
-    Passed to \code{\link{prettyNum}}: that help page explains the details.}
+    Passed to \code{\link[base]{prettyNum}}: that help page explains the details.}
 
 \item{droplevels}{a logical value indicating whether in factors empty levels should be dropped}
 

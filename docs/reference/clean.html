@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
       </span>
     </div>
 
@@ -124,19 +124,39 @@
 <span class='co'># S3 method for data.frame</span>
 <span class='fu'>clean</span>(<span class='no'>x</span>)
 
-<span class='fu'>clean_logical</span>(<span class='no'>x</span>, <span class='kw'>true</span> <span class='kw'>=</span> <span class='fu'><a href='regex_true_false.html'>regex_true</a></span>(), <span class='kw'>false</span> <span class='kw'>=</span> <span class='fu'><a href='regex_true_false.html'>regex_false</a></span>(),
-  <span class='kw'>na</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>clean_logical</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>true</span> <span class='kw'>=</span> <span class='fu'><a href='regex_true_false.html'>regex_true</a></span>(),
+  <span class='kw'>false</span> <span class='kw'>=</span> <span class='fu'><a href='regex_true_false.html'>regex_false</a></span>(),
+  <span class='kw'>na</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
 
-<span class='fu'>clean_factor</span>(<span class='no'>x</span>, <span class='kw'>levels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='no'>x</span>), <span class='kw'>ordered</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>droplevels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>clean_factor</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>levels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='no'>x</span>),
+  <span class='kw'>ordered</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>droplevels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
 
 <span class='fu'>clean_numeric</span>(<span class='no'>x</span>, <span class='kw'>remove</span> <span class='kw'>=</span> <span class='st'>"[^0-9.,-]"</span>, <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>clean_character</span>(<span class='no'>x</span>, <span class='kw'>remove</span> <span class='kw'>=</span> <span class='st'>"[^a-z \t\r\n]"</span>, <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>trim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>clean_double</span>(<span class='no'>x</span>, <span class='kw'>remove</span> <span class='kw'>=</span> <span class='st'>"[^0-9.,-]"</span>, <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>clean_currency</span>(<span class='no'>x</span>, <span class='kw'>currency_symbol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>remove</span> <span class='kw'>=</span> <span class='st'>"[^0-9.,-]"</span>,
-  <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>clean_integer</span>(<span class='no'>x</span>, <span class='kw'>remove</span> <span class='kw'>=</span> <span class='st'>"[^0-9.,-]"</span>, <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>clean_character</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>remove</span> <span class='kw'>=</span> <span class='st'>"[^a-z \t\r\n]"</span>,
+  <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>trim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
+
+<span class='fu'>clean_currency</span>(<span class='no'>x</span>, <span class='kw'>currency_symbol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>remove</span> <span class='kw'>=</span> <span class='st'>"[^0-9.,-]"</span>, <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='fu'>clean_percentage</span>(<span class='no'>x</span>, <span class='kw'>remove</span> <span class='kw'>=</span> <span class='st'>"[^0-9.,-]"</span>, <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
@@ -225,7 +245,8 @@
     <p>The <code>clean</code> functions <strong>always</strong> return the class from the function name:</p><ul>
 <li><p><code>clean_logical()</code>: class <code>logical</code></p></li>
 <li><p><code>clean_factor()</code>: class <code>factor</code></p></li>
-<li><p><code>clean_numeric()</code>: class <code>numeric</code></p></li>
+<li><p><code>clean_numeric()</code> &amp; <code>clean_double()</code>: class <code>numeric</code></p></li>
+<li><p><code>clean_integer()</code>: class <code>integer</code></p></li>
 <li><p><code>clean_character()</code>: class <code>character</code></p></li>
 <li><p><code>clean_percentage()</code>: class <code>percentage</code></p></li>
 <li><p><code>clean_currency()</code>: class <code>currency</code></p></li>
@@ -240,7 +261,7 @@
 <ul>
 <li><p><code>clean_logical()</code>:<br />Use parameters <code>true</code> and <code>false</code> to match values using case-insensitive regular expressions (<a href='https://rdrr.io/r/base/regex.html'>regex</a>). Unmatched values are considered <code>NA</code>. At default, values are matched with <code><a href='regex_true_false.html'>regex_true</a></code> and <code><a href='regex_true_false.html'>regex_false</a></code>. This allows support for values "Yes" and "No" in the following languages: Arabic, Bengali, Chinese (Mandarin), Dutch, English, French, German, Hindi, Indonesian, Japanese, Malay, Portuguese, Russian, Spanish, Telugu, Turkish and Urdu. Use parameter <code>na</code> to override values as <code>NA</code> that would else be matched with <code>true</code> or <code>false</code>. See Examples.</p></li>
 <li><p><code>clean_factor()</code>:<br />Use parameter <code>levels</code> to set new factor levels. They can be case-insensitive regular expressions to match existing values of <code>x</code>. For matching, new values for <code>levels</code> are internally temporary sorted descending on text length. See Examples.</p></li>
-<li><p><code>clean_numeric()</code> and <code>clean_character()</code>:<br />Use parameter <code>remove</code> to match values that must be removed from the input, using regular expressions (<a href='https://rdrr.io/r/base/regex.html'>regex</a>). In case of <code>clean_numeric()</code>, comma's will be read as dots and only the last dot will be kept. Function <code>clean_character()</code> will keep middle spaces at default. See Examples.</p></li>
+<li><p><code>clean_numeric()</code>, <code>clean_double()</code>, <code>clean_integer()</code> and <code>clean_character()</code>:<br />Use parameter <code>remove</code> to match values that must be removed from the input, using regular expressions (<a href='https://rdrr.io/r/base/regex.html'>regex</a>). In case of <code>clean_numeric()</code>, comma's will be read as dots and only the last dot will be kept. Function <code>clean_character()</code> will keep middle spaces at default. See Examples.</p></li>
 <li><p><code>clean_percentage()</code>:<br />This new class works like <code>clean_numeric()</code>, but transforms it with <code><a href='percentage.html'>as.percentage</a></code>, which will retain the original values, but will print them as percentages. See Examples.</p></li>
 <li><p><code>clean_currency()</code>:<br />This new class works like <code>clean_numeric()</code>, but transforms it with <code><a href='currency.html'>as.currency</a></code>. The currency symbol is guessed based on the most traded currencies by value (see Source): the United States dollar, Euro, Japanese yen, Pound sterling, Swiss franc, Renminbi, Swedish krona, Mexican peso, South Korean won, Turkish lira, Russian ruble, Indian rupee and the South African rand. See Examples.</p></li>
 <li><p><code>clean_Date()</code>:<br />Use parameter <code>format</code> to define a date format, or leave it empty to have the format guessed. Use <code>"Excel"</code> to read values as Microsoft Excel dates. The <code>format</code> parameter will be evaluated with <code><a href='format_datetime.html'>format_datetime</a></code>, which means that a format like <code>"d-mmm-yy"</code> with be translated internally to <code>"%e-%b-%y"</code> for convenience. See Examples.</p></li>
@@ -258,21 +279,21 @@
 #&gt; Levels: Male Female</div><div class='input'><span class='fu'>clean_factor</span>(<span class='no'>gender_age</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"0-50"</span>, <span class='st'>"50+"</span>), <span class='kw'>ordered</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] 0-50 50+  0-50 50+ 
 #&gt; Levels: 0-50 &lt; 50+</div><div class='input'>
 <span class='fu'>clean_Date</span>(<span class='st'>"13jul18"</span>, <span class='st'>"ddmmmyy"</span>)</div><div class='output co'>#&gt; [1] "2018-07-13"</div><div class='input'><span class='fu'>clean_Date</span>(<span class='st'>"12 August 2010"</span>)</div><div class='output co'>#&gt; <span class='message'>(assuming format 'dd mmmm yyyy')</span></div><div class='output co'>#&gt; [1] "2010-08-12"</div><div class='input'><span class='fu'>clean_Date</span>(<span class='st'>"12 06 2012"</span>)</div><div class='output co'>#&gt; <span class='message'>(assuming format 'dd mm yyyy')</span></div><div class='output co'>#&gt; [1] "2012-06-12"</div><div class='input'><span class='fu'>clean_Date</span>(<span class='st'>"October 1st 2012"</span>)</div><div class='output co'>#&gt; <span class='message'>(assuming format 'mmmm d yyyy')</span></div><div class='output co'>#&gt; [1] "2012-10-01"</div><div class='input'><span class='fu'>clean_Date</span>(<span class='st'>"43658"</span>)</div><div class='output co'>#&gt; <span class='message'>(assuming Excel format)</span></div><div class='output co'>#&gt; [1] "2019-07-12"</div><div class='input'><span class='fu'>clean_Date</span>(<span class='st'>"14526"</span>, <span class='st'>"Excel"</span>)</div><div class='output co'>#&gt; [1] "1939-10-08"</div><div class='input'><span class='fu'>clean_Date</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"1 Oct 13"</span>, <span class='st'>"October 1st 2012"</span>)) <span class='co'># could not be fitted in 1 format</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Date/time format could not be determined automatically, returning NAs</span></div><div class='output co'>#&gt; [1] NA NA</div><div class='input'><span class='fu'>clean_Date</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"1 Oct 13"</span>, <span class='st'>"October 1st 2012"</span>), <span class='kw'>guess_each</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "2013-10-01" "2012-10-01"</div><div class='input'>
-<span class='fu'>clean_POSIXct</span>(<span class='st'>"Created log on 2019/02/11 11:23 by user Joe"</span>)</div><div class='output co'>#&gt; [1] "2019-02-11 11:23:00 CET"</div><div class='input'><span class='fu'>clean_POSIXct</span>(<span class='st'>"Created log on 2019.02.11 11:23 by user Joe"</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-02-11 11:23:00 UTC"</div><div class='input'>
+<span class='fu'>clean_POSIXct</span>(<span class='st'>"Created log on 2020/02/11 11:23 by user Joe"</span>)</div><div class='output co'>#&gt; [1] "2020-02-11 11:23:00 CET"</div><div class='input'><span class='fu'>clean_POSIXct</span>(<span class='st'>"Created log on 2020.02.11 11:23 by user Joe"</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2020-02-11 11:23:00 UTC"</div><div class='input'>
 <span class='fu'>clean_numeric</span>(<span class='st'>"qwerty123456"</span>)</div><div class='output co'>#&gt; [1] 123456</div><div class='input'><span class='fu'>clean_numeric</span>(<span class='st'>"Positive (0.143)"</span>)</div><div class='output co'>#&gt; [1] 0.143</div><div class='input'><span class='fu'>clean_numeric</span>(<span class='st'>"0,143"</span>)</div><div class='output co'>#&gt; [1] 0.143</div><div class='input'><span class='fu'>clean_numeric</span>(<span class='st'>"minus 12 degrees"</span>)</div><div class='output co'>#&gt; [1] -12</div><div class='input'>
-<span class='fu'>clean_percentage</span>(<span class='st'>"PCT: 0.143"</span>)</div><div class='output co'>#&gt; [1] 0.143%</div><div class='input'><span class='fu'>clean_percentage</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Total of -12.3%"</span>, <span class='st'>"Total of +4.5%"</span>))</div><div class='output co'>#&gt; [1] -12.3%   4.5%</div><div class='input'>
+<span class='fu'>clean_percentage</span>(<span class='st'>"PCT: 0.143"</span>)</div><div class='output co'>#&gt; [1] 0.143%</div><div class='input'><span class='fu'>clean_percentage</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Total of -12.3%"</span>, <span class='st'>"Total of +4.5%"</span>))</div><div class='output co'>#&gt; [1] &lt;NA&gt;     4.5%</div><div class='input'>
 <span class='fu'>clean_character</span>(<span class='st'>"qwerty123456"</span>)</div><div class='output co'>#&gt; [1] "qwerty"</div><div class='input'><span class='fu'>clean_character</span>(<span class='st'>"Positive (0.143)"</span>)</div><div class='output co'>#&gt; [1] "Positive"</div><div class='input'>
 <span class='fu'>clean_currency</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Received 25"</span>, <span class='st'>"Received 31.40"</span>))</div><div class='output co'>#&gt; [1] `USD 25.00` `USD 31.40`</div><div class='input'><span class='fu'>clean_currency</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Jack sent £ 25"</span>, <span class='st'>"Bill sent £ 31.40"</span>))</div><div class='output co'>#&gt; [1] `GBP 25.00` `GBP 31.40`</div><div class='input'>
 <span class='fu'>clean</span>(<span class='st'>"12 06 2012"</span>)</div><div class='output co'>#&gt; <span class='message'>Note: Assuming class 'Date' </span></div><div class='output co'>#&gt; <span class='message'>(assuming format 'dd mm yyyy')</span></div><div class='output co'>#&gt; [1] "2012-06-12"</div><div class='input'>
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>A</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2 Apr 2016"</span>, <span class='st'>"5 Feb 2019"</span>),
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>A</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2 Apr 2016"</span>, <span class='st'>"5 Feb 2020"</span>),
                  <span class='kw'>B</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"yes"</span>, <span class='st'>"no"</span>),
                  <span class='kw'>C</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Total of -12.3%"</span>, <span class='st'>"Total of +4.5%"</span>),
                  <span class='kw'>D</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Marker: 0.4513 mmol/l"</span>, <span class='st'>"Marker: 0.2732 mmol/l"</span>))
 <span class='no'>df</span></div><div class='output co'>#&gt;            A   B               C                     D
 #&gt; 1 2 Apr 2016 yes Total of -12.3% Marker: 0.4513 mmol/l
-#&gt; 2 5 Feb 2019  no  Total of +4.5% Marker: 0.2732 mmol/l</div><div class='input'><span class='fu'>clean</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; <span class='message'>Note: Assuming class 'Date' for variable 'A' </span></div><div class='output co'>#&gt; <span class='message'>(assuming format 'd mmm yyyy')</span></div><div class='output co'>#&gt; <span class='message'>Note: Assuming class 'logical' for variable 'B' </span></div><div class='output co'>#&gt; <span class='message'>Note: Assuming class 'percentage' for variable 'C' </span></div><div class='output co'>#&gt; <span class='message'>Note: Assuming class 'numeric' for variable 'D' </span></div><div class='output co'>#&gt;            A     B      C      D
-#&gt; 1 2016-04-02  TRUE -12.3% 0.4513
-#&gt; 2 2019-02-05 FALSE   4.5% 0.2732</div></pre>
+#&gt; 2 5 Feb 2020  no  Total of +4.5% Marker: 0.2732 mmol/l</div><div class='input'><span class='fu'>clean</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; <span class='message'>Note: Assuming class 'Date' for variable 'A' </span></div><div class='output co'>#&gt; <span class='message'>(assuming format 'd mmm yyyy')</span></div><div class='output co'>#&gt; <span class='message'>Note: Assuming class 'logical' for variable 'B' </span></div><div class='output co'>#&gt; <span class='message'>Note: Assuming class 'percentage' for variable 'C' </span></div><div class='output co'>#&gt; <span class='message'>Note: Assuming class 'numeric' for variable 'D' </span></div><div class='output co'>#&gt;            A     B      C      D
+#&gt; 1 2016-04-02  TRUE   &lt;NA&gt; 0.4513
+#&gt; 2 2020-02-05 FALSE   4.5% 0.2732</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -13,14 +13,17 @@ format_datetime(format)
 A \code{character} string (a POSIX standardised format)
 }
 \description{
-Use this function to transform generic date/time info writing (dd-mm-yyyy) to POSIX standardised format (\%d-\%m-\%Y), see Examples.
+Use this function to transform generic date/time info writing (dd-mm-yyyy) into POSIX standardised format (\%d-\%m-\%Y), see Examples.
 }
 \examples{
-format_datetime("yyyy/mm/dd")
+format_datetime("yyyy-mm-dd")
 
 # Very hard to remember all these characters:
 format(Sys.time(), "\%a \%b \%d \%Y \%X")
 
 # Easy to remember and write the same as above:
 format(Sys.time(), format_datetime("ddd mmm dd yyyy HH:MM:ss"))
+
+# seconds since the Epoch, 1970-01-01 00:00:00
+format(Sys.time(), format_datetime("epoch"))
 }

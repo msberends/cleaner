@@ -1,3 +1,10 @@
+# cleaner 1.3.0
+
+* Added functions `clean_double()` and `clean_integer()`
+* Added a method for `median()` in percentages
+* Fixed a bug where `NA` in percentages would not be formatted correctly
+* Fixed a bug in frequency tables where sometimes the number of digits used for percentages would be astronomical
+
 # cleaner 1.2.0
 
 * **DUE TO CRAN POLICY: RENAMED TO PACKAGE TO `cleaner`**
