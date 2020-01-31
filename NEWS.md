@@ -1,7 +1,7 @@
 # cleaner 1.3.1
 
 * Fixed a bug when using a `percentage` class into the `percentage()` function, i.e. `percentage(as.percentage(1))` would fail
-* Support for extremely small percentages, like `as.percentage(2.5e-14)`
+* Fixed extremely small percentages, like `as.percentage(2.5e-14)`
 
 # cleaner 1.3.0
 
