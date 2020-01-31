@@ -1,3 +1,7 @@
+# cleaner 1.3.1
+
+* Fixed a bug when using a `percentage` class into the `percentage()` function, i.e. `percentage(as.percentage(1))` would fail
+
 # cleaner 1.3.0
 
 * Added functions `clean_double()` and `clean_integer()`

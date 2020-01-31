@@ -192,6 +192,7 @@ pillar_shaft.percentage <- function (x, ...) {
 #' @rdname percentage
 #' @export
 percentage <- function(x, digits = NULL, ...) {
+  x <- as.double(x)
   if (is.null(digits)) {
     digits <- getdecimalplaces(x, minimum = 0, maximum = 1)
   }

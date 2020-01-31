@@ -53,6 +53,7 @@ gsub_warn_on_error <- function(pattern, replacement, x, ignore.case = FALSE, per
 # works exactly like round(), but rounds `round(44.55, 1)` as 44.6 instead of 44.5
 # and adds decimal zeroes until `digits` is reached when force_zero = TRUE
 round2 <- function(x, digits = 0, force_zero = TRUE) {
+  x <- as.double(x)
   # https://stackoverflow.com/a/12688836/4575331
   val <- (trunc((abs(x) * 10 ^ digits) + 0.5) / 10 ^ digits) * sign(x)
   if (digits > 0 & force_zero == TRUE) {
