@@ -1,3 +1,9 @@
+# cleaner 1.3.2
+
+* Frequency tables (`freq()`):
+  * Added availability to header
+  * Fixed a bug for using `na.rm`
+
 # cleaner 1.3.1
 
 * Fixed a bug when using a `percentage` class into the `percentage()` function, i.e. `percentage(as.percentage(1))` would fail

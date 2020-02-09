@@ -135,7 +135,7 @@ freq.default <- function(x,
                          decimal.mark = getOption("OutDec"),
                          big.mark = "",
                          ...) {
-  
+
   format <- list(...)$format
   
   # set header
@@ -148,7 +148,7 @@ freq.default <- function(x,
     x <- x[!x %in% NAs]
     class(x) <- x_class
   }
-  
+ 
   markdown_line <- ""
   if (markdown == TRUE) {
     markdown_line <- "  " # ending with two spaces results in newline
@@ -161,6 +161,7 @@ freq.default <- function(x,
     # since dplyr >= 0.8.0 does not do this anymore in group_by
     x <- droplevels(x)
   }
+  header_list$available <- header_list$length - length(NAs)
   header_list$na_length <- length(NAs)
   header_list$unique <- length(unique(x))
   # add class-specific properties set by freq.class() functions
@@ -190,7 +191,8 @@ freq.default <- function(x,
   column_align <- c(x_align, "r", "r", "r", "r")
   
   # create the data.frame
-  df <- base::as.data.frame(base::table(x), stringsAsFactors = FALSE)
+  df <- base::as.data.frame(base::table(x, useNA = ifelse(na.rm, "no", "ifany")), stringsAsFactors = FALSE)
+  
   if (NCOL(df) == 2) {
     colnames(df) <- c("item", "count")
   }
@@ -520,7 +522,9 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
   if (has_length == TRUE) {
     na_txt <- paste0(format(header$na_length, decimal.mark = decimal.mark, big.mark = big.mark), " = ",
                      sub("NaN", "0", percentage(header$na_length / header$length, 
-                                                digits = getdecimalplaces(header$na_length / header$length, minimum = 0, maximum = digits),
+                                                digits = getdecimalplaces(header$na_length / header$length,
+                                                                          minimum = 0, 
+                                                                          maximum = digits),
                                                 decimal.mark = decimal.mark), 
                          fixed = TRUE))
     if (!grepl("^0 =", na_txt)) {
@@ -528,12 +532,18 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
     } else {
       na_txt <- green(na_txt)
     }
-    na_txt <- paste0("(of which NA: ", na_txt, ")")
+    na_txt <- paste0(", NA: ", na_txt)
   } else {
     na_txt <- ""
   }
-  header$length <- paste(format(header$length, decimal.mark = decimal.mark, big.mark = big.mark),
-                         na_txt)
+  header$available <- paste0(format(header$available, decimal.mark = decimal.mark, big.mark = big.mark),
+                             " (", percentage(header$available / header$length, 
+                                              digits = getdecimalplaces(header$available / header$length,
+                                                                        minimum = 0, 
+                                                                        maximum = digits),
+                                              decimal.mark = decimal.mark),
+                             na_txt, ")")
+  header$length <- format(header$length, decimal.mark = decimal.mark, big.mark = big.mark)
   header <- header[names(header) != "na_length"]
 
   # format all numeric values
