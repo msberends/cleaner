@@ -25,7 +25,7 @@
 #' @param digits how many digits should be printed. It defaults to printing all decimals available in the data after transforming to a percentage, with a minimum of 0 and a maximum of 3.
 #' @details Printing percentages will always have a percentage symbol and is never written in scientific format (like 2.5e+04\%).
 #' 
-#' The function \code{percentage} is a wrapper around \code{format(as.percentage(...))} with automatic determination of the number of digits, varying between 0 and 1. It also rounds according to basic math rules: \code{percentage(0.4455)} returns \code{"44.6\%"} and not \code{"44.5\%"}. This function always returns a character, and can also be used in plotting, see Examples.
+#' The function \code{percentage} is a wrapper around \code{format(as.percentage(...))} with automatic determination of the number of digits, varying between 0 and 1. It also, unlike \R, rounds according to basic math rules: \code{percentage(0.4455)} returns \code{"44.6\%"} and not \code{"44.5\%"}. This function always returns a character, and can also be used in plotting, see Examples.
 #' @rdname percentage
 #' @name percentage
 #' @export
@@ -124,7 +124,12 @@ format.percentage <- function(x, digits = NULL, ...) {
   if (is.null(digits)) {
     digits <- getdecimalplaces(x)
   }
-  x_formatted <- format(as.double(x) * 100, scientific = FALSE, digits = digits, nsmall = digits, ...)
+  # round right: percentage(0.4455) and format(as.percentage(0.4455), 1) should return "44.6%", not "44.5%"
+  x_formatted <- format(round2(as.double(x), digits = digits + 2) * 100,
+                        scientific = FALSE,
+                        digits = digits,
+                        nsmall = digits,
+                        ...)
   x_formatted <- paste0(x_formatted, "%")
   x_formatted[!grepl(pattern = "^[0-9.,e-]+$", x = x)] <- NA_character_
   x_formatted
@@ -194,9 +199,8 @@ pillar_shaft.percentage <- function (x, ...) {
 percentage <- function(x, digits = NULL, ...) {
   x <- as.double(x)
   if (is.null(digits)) {
+    # max one digit if undefined
     digits <- getdecimalplaces(x, minimum = 0, maximum = 1)
   }
-  # round right: percentage(0.4455) should return "44.6%", not "44.5%"
-  x <- as.numeric(round2(x, digits = digits + 2))
   format(as.percentage(x), digits = digits, ...)
 }

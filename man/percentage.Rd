@@ -31,7 +31,7 @@ Transform input to a percentage. The actual values are numeric, but will be prin
 \details{
 Printing percentages will always have a percentage symbol and is never written in scientific format (like 2.5e+04\%).
 
-The function \code{percentage} is a wrapper around \code{format(as.percentage(...))} with automatic determination of the number of digits, varying between 0 and 1. It also rounds according to basic math rules: \code{percentage(0.4455)} returns \code{"44.6\%"} and not \code{"44.5\%"}. This function always returns a character, and can also be used in plotting, see Examples.
+The function \code{percentage} is a wrapper around \code{format(as.percentage(...))} with automatic determination of the number of digits, varying between 0 and 1. It also, unlike \R, rounds according to basic math rules: \code{percentage(0.4455)} returns \code{"44.6\%"} and not \code{"44.5\%"}. This function always returns a character, and can also be used in plotting, see Examples.
 }
 \examples{
 proportion <- as.percentage(c(0.25, 2.5, 0.0025))

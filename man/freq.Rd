@@ -112,7 +112,7 @@ header(f, property = NULL)
 A \code{data.frame} (with an additional class \code{"freq"}) with five columns: \code{item}, \code{count}, \code{percent}, \code{cum_count} and \code{cum_percent}.
 }
 \description{
-Create a frequency table of a \code{vector} or a \code{data.frame}. It supports tidyverse's quasiquotation and markdown for reports. Easiest practice is: \code{data \%>\% freq(var)} using the \href{https://magrittr.tidyverse.org/#usage}{tidyverse}.
+Create a frequency table of a \code{vector} or a \code{data.frame}. It supports tidyverse's quasiquotation and RMarkdown for reports. Easiest practice is: \code{data \%>\% freq(var)} using the \href{https://magrittr.tidyverse.org/#usage}{tidyverse}.
 
 \code{top_freq} can be used to get the top/bottom \emph{n} items of a frequency table, with counts as names. It respects ties.
 }

@@ -1,4 +1,4 @@
-# cleaner 1.3.2
+# cleaner 1.3.1.9000
 
 * Frequency tables (`freq()`):
   * Added availability to header

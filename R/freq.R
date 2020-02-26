@@ -19,7 +19,7 @@
 
 #' Frequency table
 #'
-#' @description Create a frequency table of a \code{vector} or a \code{data.frame}. It supports tidyverse's quasiquotation and markdown for reports. Easiest practice is: \code{data \%>\% freq(var)} using the \href{https://magrittr.tidyverse.org/#usage}{tidyverse}.
+#' @description Create a frequency table of a \code{vector} or a \code{data.frame}. It supports tidyverse's quasiquotation and RMarkdown for reports. Easiest practice is: \code{data \%>\% freq(var)} using the \href{https://magrittr.tidyverse.org/#usage}{tidyverse}.
 #' 
 #' \code{top_freq} can be used to get the top/bottom \emph{n} items of a frequency table, with counts as names. It respects ties.
 #' @param x vector of any class or a \code{\link{data.frame}} or \code{\link{table}}
@@ -474,7 +474,7 @@ freq.hms <- function(x, ..., format = "HH:MM:SS") {
 #' @export
 #' @rdname freq
 is.freq <- function(f) {
-  any(class(f) == "freq")
+  inherits(f, "freq")
 }
 
 #' @importFrom crayon silver green red
@@ -537,11 +537,11 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
     na_txt <- ""
   }
   header$available <- paste0(format(header$available, decimal.mark = decimal.mark, big.mark = big.mark),
-                             " (", percentage(header$available / header$length, 
-                                              digits = getdecimalplaces(header$available / header$length,
-                                                                        minimum = 0, 
-                                                                        maximum = digits),
-                                              decimal.mark = decimal.mark),
+                             " (", trimws(percentage(header$available / header$length, 
+                                                     digits = getdecimalplaces(header$available / header$length,
+                                                                               minimum = 0, 
+                                                                               maximum = digits),
+                                                     decimal.mark = decimal.mark)),
                              na_txt, ")")
   header$length <- format(header$length, decimal.mark = decimal.mark, big.mark = big.mark)
   header <- header[names(header) != "na_length"]

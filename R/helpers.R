@@ -60,7 +60,7 @@ round2 <- function(x, digits = 0, force_zero = TRUE) {
     val[val != as.integer(val) & !is.na(val)] <- paste0(val[val != as.integer(val) & !is.na(val)],
                                                         strrep("0", max(0, digits - nchar(gsub(".*[.](.*)$", "\\1", val[val != as.integer(val) & !is.na(val)])))))
   }
-  val
+  as.double(val)
 }
 
 getdecimalplaces <- function(x, minimum = 0, maximum = 3) {
