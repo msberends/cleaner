@@ -135,7 +135,7 @@ freq.default <- function(x,
                          decimal.mark = getOption("OutDec"),
                          big.mark = "",
                          ...) {
-
+  
   format <- list(...)$format
   
   # set header
@@ -148,7 +148,7 @@ freq.default <- function(x,
     x <- x[!x %in% NAs]
     class(x) <- x_class
   }
- 
+  
   markdown_line <- ""
   if (markdown == TRUE) {
     markdown_line <- "  " # ending with two spaces results in newline
@@ -445,10 +445,10 @@ freq.Date <- function(x, ..., format = "yyyy-mm-dd") {
                                     " (+", as.integer(max(x, na.rm = TRUE) - min(x, na.rm = TRUE)),
                                     " days)")))
 }
-#' @exportMethod freq.POSIXct
+#' @exportMethod freq.POSIXt
 #' @export
 #' @noRd
-freq.POSIXct <- function(x, ...) {
+freq.POSIXt <- function(x, ...) {
   freq.Date(x, ...)
 }
 
@@ -487,10 +487,10 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
     green <- function(x) x
     red <- function(x) x
   }
-
+  
   header <- header(x)
   has_length <- header$length > 0
-
+  
   # FORMATTING
   # class and mode
   if (!header$mode %in% header$class) {
@@ -545,7 +545,7 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
                              na_txt, ")")
   header$length <- format(header$length, decimal.mark = decimal.mark, big.mark = big.mark)
   header <- header[names(header) != "na_length"]
-
+  
   # format all numeric values
   header <- lapply(header, function(x) {
     if (is.numeric(x)) {
@@ -558,7 +558,7 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
       x
     }
   })
-
+  
   # header names
   header_names <- paste0(names(header), ":  ")
   # capitalise first character
@@ -631,7 +631,7 @@ print.freq <- function(x,
                        decimal.mark = getOption("OutDec"),
                        big.mark = ifelse(decimal.mark != ",", ",", "."),
                        ...) {
-
+  
   opt <- attr(x, "opt")
   if (is.null(opt)) {
     # selection of frequency table, return original class
@@ -641,10 +641,9 @@ print.freq <- function(x,
   }
   
   if (!is.null(opt$format)) {
-    is.Date <- function(x) inherits(x, c("Date", "POSIXct"))
     x$item <- format(x$item, format = ifelse(is.Date(x$item), format_datetime(opt$format), opt$format))
   }
-
+  
   opt$header_txt <- header(x)
   if (is.null(opt$nmax)) {
     opt$nmax <- 0
@@ -652,7 +651,7 @@ print.freq <- function(x,
   if (is.null(opt$tbl_format)) {
     opt$tbl_format <- "pandoc"
   }
-
+  
   dots <- list(...)
   if ("markdown" %in% names(dots)) {
     if (dots$markdown == TRUE) {
@@ -679,7 +678,7 @@ print.freq <- function(x,
   } else if (isTRUE(opt$nmax >= NROW(x))) {
     opt$nmax.set <- FALSE
   }
-
+  
   if (!missing(decimal.mark) | is.null(opt$decimal.mark)) {
     opt$decimal.mark <- decimal.mark
   }
@@ -689,7 +688,7 @@ print.freq <- function(x,
   if (!missing(header)) {
     opt$header <- header
   }
-
+  
   if (!is.null(opt$title)) {
     title <- opt$title
   } else {
@@ -700,9 +699,9 @@ print.freq <- function(x,
   } else if (isTRUE(opt$tbl_format == "markdown")) {
     title <- paste0("\n\n**", title, "**  ") # two space for newline
   }
-
+  
   cat(title, "\n\n")
-
+  
   if (NROW(x) == 0 | isTRUE(all(is.na(x$item)))) {
     cat("No observations")
     if (isTRUE(all(is.na(x$item) | identical(x$item, "<NA>") | identical(x$item, "(NA)")))) {
@@ -718,14 +717,14 @@ print.freq <- function(x,
   if (is.null(opt$digits)) {
     opt$digits <- 2
   }
-
+  
   if (isTRUE(opt$header == TRUE)) {
     if (!is.null(opt$header_txt)) {
       cat(format_header(x, digits = opt$digits, markdown = (opt$tbl_format == "markdown"),
                         decimal.mark = decimal.mark, big.mark = big.mark))
     }
   }
-
+  
   # save old NA setting for kable
   opt.old <- options()$knitr.kable.NA
   if (is.null(opt$na)) {
@@ -737,21 +736,21 @@ print.freq <- function(x,
     opt$na <- gsub(">", ")", opt$na, fixed = TRUE)
   }
   options(knitr.kable.NA = opt$na)
-
+  
   x.rows <- nrow(x)
   x.unprinted <- base::sum(x[(opt$nmax + 1):nrow(x), "count"], na.rm = TRUE)
   x.printed <- base::sum(x$count) - x.unprinted
-
+  
   if (nrow(x) > opt$nmax & isTRUE(opt$tbl_format != "markdown")) {
-
+    
     if (opt$nmax.set == TRUE) {
       nmax <- opt$nmax
     } else {
       nmax <- getOption("max.print.freq", default = 10)
     }
-
+    
     x <- x[1:nmax,]
-
+    
     if (opt$nmax.set == TRUE) {
       footer <- paste("[ reached `nmax = ", opt$nmax, "`", sep = "")
     } else {
@@ -784,7 +783,7 @@ print.freq <- function(x,
   } else {
     footer <- NULL
   }
-
+  
   if ("item" %in% colnames(x)) {
     if (any(class(x$item) %in% c("double", "integer", "numeric", "raw", "single"))) {
       x$item <- format(x$item, decimal.mark = opt$decimal.mark, big.mark = opt$big.mark)
@@ -792,7 +791,7 @@ print.freq <- function(x,
   } else {
     opt$column_names <- opt$column_names[!opt$column_names == "Item"]
   }
-
+  
   all_unique <- FALSE
   if ("count" %in% colnames(x)) {
     if (all(x$count == 1)) {
@@ -817,18 +816,18 @@ print.freq <- function(x,
   } else {
     opt$column_names <- opt$column_names[!opt$column_names == "Cum. Percent"]
   }
-
+  
   if (opt$tbl_format == "markdown") {
     cat("\n")
   }
-
+  
   if (is.null(opt$row_names)) {
     opt$row_names <- TRUE
   }
   if (is.null(opt$column_names)) {
     opt$column_names <- colnames(x)
   }
-
+  
   print(
     knitr::kable(x,
                  format = opt$tbl_format,
@@ -837,25 +836,25 @@ print.freq <- function(x,
                  align = opt$column_align,
                  padding = 1)
   )
-
+  
   if (!is.null(footer)) {
     cat(footer)
   }
-
+  
   if (opt$tbl_format == "markdown") {
     cat("\n\n")
   } else {
     cat("\n")
   }
-
+  
   if (all_unique == TRUE) {
     message("NOTE: All observations are unique.")
   }
-
+  
   # reset old kable setting
   options(knitr.kable.NA = opt.old)
   return(invisible())
-
+  
 }
 
 #' @noRd
@@ -863,6 +862,7 @@ print.freq <- function(x,
 #' @export
 as.data.frame.freq <- function(x, ...) {
   attr(x, "opt") <- NULL
+  attr(x, "header") <- NULL
   as.data.frame.data.frame(x, ...)
 }
 
@@ -872,11 +872,13 @@ as.data.frame.freq <- function(x, ...) {
 #' @importFrom graphics hist
 hist.freq <- function(x, breaks = "Sturges", main = NULL, xlab = NULL, ...) {
   opt <- attr(x, "opt")
-  if (!any(c("numeric", "double", "integer", "Date", "POSIXct") %in% class(x$item))) {
+  if (!is.numeric(x$item) & !is.Date(x$item)) {
     stop("`x` must be numeric or Date.", call. = FALSE)
   } else if (missing(breaks)) {
-    message('Assuming "years" as specification of \'breaks\' in histogram')
-    breaks <- "years"
+    if (is.Date(x$item)) {
+      message('Assuming "years" as specification of \'breaks\' in histogram')
+      breaks <- "years"
+    }
   }
   if (!is.null(opt$title)) {
     title <- paste(" of", opt$title)
@@ -889,7 +891,7 @@ hist.freq <- function(x, breaks = "Sturges", main = NULL, xlab = NULL, ...) {
   if (is.null(xlab)) {
     xlab <- opt$title
   }
-  hist(x$item, main = main, xlab = xlab, breaks = breaks, ...)
+  hist(as.vector(x), main = main, xlab = xlab, breaks = breaks, ...)
 }
 
 #' @noRd
@@ -898,7 +900,7 @@ hist.freq <- function(x, breaks = "Sturges", main = NULL, xlab = NULL, ...) {
 #' @importFrom graphics boxplot
 boxplot.freq <- function(x, main = NULL, xlab = NULL, ...) {
   opt <- attr(x, "opt")
-  if (!class(x$item) %in% c("numeric", "double", "integer", "Date")) {
+  if (!is.numeric(x$item) & !is.Date(x$item)) {
     stop("`x` must be numeric or Date.", call. = FALSE)
   }
   if (!is.null(opt$title)) {
@@ -906,11 +908,9 @@ boxplot.freq <- function(x, main = NULL, xlab = NULL, ...) {
   } else {
     title <- "Frequency table"
   }
-  if (class(x$item) == "Date") {
-    x <- as.Date(as.vector(x), origin = "1970-01-01")
-  } else {
-    x <- as.vector(x)
-  }
+  
+  x <- as.vector(x) # there's a method for that, that keeps dates if needed
+
   if (is.null(main)) {
     main <- paste("Boxplot of", title)
   }
@@ -937,23 +937,23 @@ plot.freq <- function(x, y, ...) {
 
 #' @noRd
 #' @exportMethod as.vector.freq
-as.vector.freq <- function(x, mode = "any") {
-  as.vector(rep(x$item, x$count), mode = mode)
+#' @export
+as.vector.freq <- function(x, ...) {
+  v <- as.vector(rep(x$item, x$count), ...)
+  if (is.Date(x$item)) {
+    as.Date(as.POSIXct(v, origin = "1970-01-01 0:00:00"))
+  } else {
+    v
+  }
 }
 
 #' @noRd
 #' @exportMethod format.freq
-format.freq <- function(x, digits = 1, ...) {
-  opt <- attr(x, "opt")
-  if (opt$nmax.set == TRUE) {
-    nmax <- opt$nmax
-  } else {
-    nmax <- getOption("max.print.freq", default = 10)
-  }
-
-  x <- x[1:nmax,]
+#' @export
+format.freq <- function(x, digits = 2, ...) {
+  x <- as.data.frame(x) # there's a method for that: as.data.frame.freq
   x$percent <- percentage(x$percent, digits = digits)
   x$cum_percent <- percentage(x$cum_percent, digits = digits)
-  base::format.data.frame(x, ...)
+  x
 }
 

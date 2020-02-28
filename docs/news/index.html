@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.1.9000</span>
       </span>
     </div>
 
@@ -112,19 +112,39 @@
       <small>Source: <a href='https://github.com/msberends/cleaner/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="cleaner-1-3-1" class="section level1">
+    <div id="cleaner-1319000" class="section level1">
 <h1 class="page-header">
-<a href="#cleaner-1-3-1" class="anchor"></a>cleaner 1.3.1<small> Unreleased </small>
+<a href="#cleaner-1319000" class="anchor"></a>cleaner 1.3.1.9000<small> Unreleased </small>
 </h1>
 <ul>
-<li>Fixed a bug when using a <code>percentage</code> class into the <code><a href="../reference/percentage.html">percentage()</a></code> function, i.e. <code><a href="../reference/percentage.html">percentage(as.percentage(1))</a></code> would fail</li>
+<li>New function <code><a href="../reference/is.Date.html">is.Date()</a></code> that check for a valid date type and also supports the <code>POSIXt</code> date classes</li>
+<li>New function <code><a href="../reference/rdate.html">rdate()</a></code> to generate random dates (as analogy to e.g. <code><a href="https://rdrr.io/r/stats/Uniform.html">runif()</a></code>)</li>
+<li>Frequency tables (<code><a href="../reference/freq.html">freq()</a></code>):
+<ul>
+<li>Added availability to header</li>
+<li>Fix for using <code>na.rm</code>
+</li>
+<li>Fix for transforming to a visual histogram with <code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code>
+</li>
+<li>New method for transforming the values of a frequency table to a vector with <code><a href="https://rdrr.io/r/base/vector.html">as.vector()</a></code>, which also supports dates</li>
+<li>Mew method for using <code><a href="https://rdrr.io/r/base/format.html">format()</a></code> on a frequency table</li>
+</ul>
+</li>
+</ul>
+</div>
+    <div id="cleaner-131" class="section level1">
+<h1 class="page-header">
+<a href="#cleaner-131" class="anchor"></a>cleaner 1.3.1<small> 2020-01-31 </small>
+</h1>
+<ul>
+<li>Fixed a bug when using a <code>percentage</code> class into the <code><a href="../reference/percentage.html">percentage()</a></code> function, i.e. <code><a href="../reference/percentage.html">percentage(as.percentage(1))</a></code> would fail</li>
 <li>Fixed extremely small percentages, like <code><a href="../reference/percentage.html">as.percentage(2.5e-14)</a></code>
 </li>
 </ul>
 </div>
-    <div id="cleaner-1-3-0" class="section level1">
+    <div id="cleaner-130" class="section level1">
 <h1 class="page-header">
-<a href="#cleaner-1-3-0" class="anchor"></a>cleaner 1.3.0<small> 2020-01-24 </small>
+<a href="#cleaner-130" class="anchor"></a>cleaner 1.3.0<small> 2020-01-24 </small>
 </h1>
 <ul>
 <li>Added functions <code><a href="../reference/clean.html">clean_double()</a></code> and <code><a href="../reference/clean.html">clean_integer()</a></code>
@@ -134,9 +154,9 @@
 <li>Fixed a bug in frequency tables where sometimes the number of digits used for percentages would be astronomical</li>
 </ul>
 </div>
-    <div id="cleaner-1-2-0" class="section level1">
+    <div id="cleaner-120" class="section level1">
 <h1 class="page-header">
-<a href="#cleaner-1-2-0" class="anchor"></a>cleaner 1.2.0<small> 2019-11-05 </small>
+<a href="#cleaner-120" class="anchor"></a>cleaner 1.2.0<small> 2019-11-05 </small>
 </h1>
 <ul>
 <li><strong>DUE TO CRAN POLICY: RENAMED TO PACKAGE TO <code>cleaner</code></strong></li>
@@ -148,9 +168,9 @@
 <li>Fix for digits in frequency tables for numeric values</li>
 </ul>
 </div>
-    <div id="clean-1-1-0" class="section level1">
+    <div id="clean-110" class="section level1">
 <h1 class="page-header">
-<a href="#clean-1-1-0" class="anchor"></a>clean 1.1.0<small> Unreleased </small>
+<a href="#clean-110" class="anchor"></a>clean 1.1.0<small> Unreleased </small>
 </h1>
 <ul>
 <li>Added support for currency as a new class: <code><a href="../reference/currency.html">as.currency()</a></code> and <code><a href="../reference/clean.html">clean_currency()</a></code>. They also come with ‘S3 methods’ for <code>print</code>, <code>format</code>, <code>sum</code>, <code>min</code> and <code>max</code>.</li>
@@ -167,9 +187,9 @@
 <li>Fix for <code><a href="../reference/freq.html">freq()</a></code> where the precentage of NAs in the header was not calculated right</li>
 </ul>
 </div>
-    <div id="clean-1-0-0" class="section level1">
+    <div id="clean-100" class="section level1">
 <h1 class="page-header">
-<a href="#clean-1-0-0" class="anchor"></a>clean 1.0.0<small> Unreleased </small>
+<a href="#clean-100" class="anchor"></a>clean 1.0.0<small> Unreleased </small>
 </h1>
 <ul>
 <li>First release</li>
@@ -181,11 +201,12 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#cleaner-1-3-1">1.3.1</a></li>
-        <li><a href="#cleaner-1-3-0">1.3.0</a></li>
-        <li><a href="#cleaner-1-2-0">1.2.0</a></li>
-        <li><a href="#clean-1-1-0">1.1.0</a></li>
-        <li><a href="#clean-1-0-0">1.0.0</a></li>
+        <li><a href="#cleaner-1319000">1.3.1.9000</a></li>
+        <li><a href="#cleaner-131">1.3.1</a></li>
+        <li><a href="#cleaner-130">1.3.0</a></li>
+        <li><a href="#cleaner-120">1.2.0</a></li>
+        <li><a href="#clean-110">1.1.0</a></li>
+        <li><a href="#clean-100">1.0.0</a></li>
       </ul>
     </div>
   </div>

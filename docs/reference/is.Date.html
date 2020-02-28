@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Regular expressions for <code>TRUE</code> and <code>FALSE</code> — regex_true_false • cleaner</title>
+<title>Check for date type — is.Date • cleaner</title>
 
 
 <!-- jquery -->
@@ -37,8 +37,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Regular expressions for <code>TRUE</code> and <code>FALSE</code> — regex_true_false" />
-<meta property="og:description" content="These functions just return a regular expression to define values TRUE and FALSE in the most spoken languages in the world. They are the default input for the function clean_logical." />
+<meta property="og:title" content="Check for date type — is.Date" />
+<meta property="og:description" content="This function checks if the input is a valid date type. It supports all date types, including Date, POSIXct and POSIXlt." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -110,34 +110,32 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Regular expressions for <code>TRUE</code> and <code>FALSE</code></h1>
-    <small class="dont-index">Source: <a href='https://github.com/msberends/cleaner/blob/master/R/regex_true_false.R'><code>R/regex_true_false.R</code></a></small>
-    <div class="hidden name"><code>regex_true_false.Rd</code></div>
+    <h1>Check for date type</h1>
+    <small class="dont-index">Source: <a href='https://github.com/msberends/cleaner/blob/master/R/is.Date.R'><code>R/is.Date.R</code></a></small>
+    <div class="hidden name"><code>is.Date.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>These functions just return a regular expression to define values <code>TRUE</code> and <code>FALSE</code> in the most spoken languages in the world. They are the default input for the function <code><a href='clean.html'>clean_logical</a></code>.</p>
+    <p>This function checks if the input is a valid date type. It supports all date types, including <code>Date</code>, <code>POSIXct</code> and <code>POSIXlt</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>regex_true</span>()
+    <pre class="usage"><span class='fu'>is.Date</span>(<span class='no'>x</span>)</pre>
 
-<span class='fu'>regex_false</span>()</pre>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>input to check</p></td>
+    </tr>
+    </table>
 
-
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p>Wolfram Alpha, query: <a href='https://www.wolframalpha.com/input/?i=20+most+spoken+languages'>https://www.wolframalpha.com/input/?i=20+most+spoken+languages</a></p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Both functions support values "Yes" and "No" in the following languages: Arabic, Bengali, Chinese (Mandarin), Dutch, English, French, German, Hindi, Indonesian, Japanese, Malay, Portuguese, Russian, Spanish, Telugu, Turkish and Urdu.</p>
-<p>Note: all these translations are in Latin characters only (e.g. "da" for Russian, "haan" for Hindi and "hai" for Japanese).</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#source">Source</a></li>
-      <li><a href="#details">Details</a></li>
+      <li><a href="#arguments">Arguments</a></li>
     </ul>
 
   </div>

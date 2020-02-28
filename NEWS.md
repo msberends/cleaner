@@ -1,8 +1,13 @@
 # cleaner 1.3.1.9000
 
+* New function `is.Date()` that check for a valid date type and also supports the `POSIXt` date classes
+* New function `rdate()` to generate random dates (as analogy to e.g. `runif()`)
 * Frequency tables (`freq()`):
   * Added availability to header
-  * Fixed a bug for using `na.rm`
+  * Fix for using `na.rm`
+  * Fix for transforming to a visual histogram with `hist()`
+  * New method for transforming the values of a frequency table to a vector with `as.vector()`, which also supports dates
+  * Mew method for using `format()` on a frequency table
 
 # cleaner 1.3.1
 

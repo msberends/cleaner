@@ -231,18 +231,21 @@ Use `clean()` to clean data. It guesses what kind of data class would best fit y
   
 ### Checking
 
+Any idea why in R `as.numeric()` and `is.numeric()` and `as.Date()` exist, but `is.Date()` doesn't? Me neither, but now it does. And you probably know `runif()` to create random numeric values. Now `rdate()` exists as well, for generating random dates.
+
 The easiest and most comprehensive way to check the data of a column/variable is to create frequency tables. Use `freq()` to do this. It supports a lot of different classes (types of data) and is even extendible by other packages.
 
 ```r
 freq(unclean$gender)
 #> Frequency table 
 #> 
-#> Class:     character
-#> Length:    500 (of which NA: 0 = 0.00%)
-#> Unique:    5
+#> Class:      character
+#> Length:     500
+#> Available:  500 (100%, NA: 0 = 0%)
+#> Unique:     5
 #> 
-#> Shortest:  1
-#> Longest:   6
+#> Shortest:   1
+#> Longest:    6
 #> 
 #>      Item      Count   Percent   Cum. Count   Cum. Percent
 #> ---  -------  ------  --------  -----------  -------------
@@ -260,10 +263,11 @@ freq(clean_factor(unclean$gender,
                   levels = c("^m" = "Male", "^f" = "Female")))
 #> Frequency table 
 #> 
-#> Class:   factor (numeric)
-#> Length:  500 (of which NA: 0 = 0%)
-#> Levels:  2: Male, Female
-#> Unique:  2
+#> Class:      factor (numeric)
+#> Length:     500
+#> Levels:     2: Male, Female
+#> Available:  500 (100%, NA: 0 = 0%)
+#> Unique:     2
 #> 
 #>      Item      Count   Percent   Cum. Count   Cum. Percent
 #> ---  -------  ------  --------  -----------  -------------

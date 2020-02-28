@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Regular expressions for <code>TRUE</code> and <code>FALSE</code> — regex_true_false • cleaner</title>
+<title>Generate random dates — rdate • cleaner</title>
 
 
 <!-- jquery -->
@@ -37,8 +37,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Regular expressions for <code>TRUE</code> and <code>FALSE</code> — regex_true_false" />
-<meta property="og:description" content="These functions just return a regular expression to define values TRUE and FALSE in the most spoken languages in the world. They are the default input for the function clean_logical." />
+<meta property="og:title" content="Generate random dates — rdate" />
+<meta property="og:description" content="This function provides random date generation with a specified range, that defaults to the beginning and end of the current year." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -110,34 +110,50 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Regular expressions for <code>TRUE</code> and <code>FALSE</code></h1>
-    <small class="dont-index">Source: <a href='https://github.com/msberends/cleaner/blob/master/R/regex_true_false.R'><code>R/regex_true_false.R</code></a></small>
-    <div class="hidden name"><code>regex_true_false.Rd</code></div>
+    <h1>Generate random dates</h1>
+    <small class="dont-index">Source: <a href='https://github.com/msberends/cleaner/blob/master/R/is.Date.R'><code>R/is.Date.R</code></a></small>
+    <div class="hidden name"><code>rdate.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>These functions just return a regular expression to define values <code>TRUE</code> and <code>FALSE</code> in the most spoken languages in the world. They are the default input for the function <code><a href='clean.html'>clean_logical</a></code>.</p>
+    <p>This function provides random date generation with a specified range, that defaults to the beginning and end of the current year.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>regex_true</span>()
+    <pre class="usage"><span class='fu'>rdate</span>(
+  <span class='no'>n</span>,
+  <span class='kw'>min</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(), <span class='st'>"%Y"</span>), <span class='st'>"-01-01"</span>),
+  <span class='kw'>max</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(), <span class='st'>"%Y"</span>), <span class='st'>"-12-31"</span>),
+  <span class='no'>...</span>
+)</pre>
 
-<span class='fu'>regex_false</span>()</pre>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>n</th>
+      <td><p>number of observations. If <code>length(n) &gt; 1</code>, the length
+    is taken to be the number required.</p></td>
+    </tr>
+    <tr>
+      <th>min, max</th>
+      <td><p>lower and upper limits of the distribution. Must be (coercible to) valid dates.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>parameters given to <code><a href='https://rdrr.io/r/base/as.Date.html'>as.Date()</a></code> for coercing the values of <code>min</code> and <code>max</code></p></td>
+    </tr>
+    </table>
 
 
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p>Wolfram Alpha, query: <a href='https://www.wolframalpha.com/input/?i=20+most+spoken+languages'>https://www.wolframalpha.com/input/?i=20+most+spoken+languages</a></p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Both functions support values "Yes" and "No" in the following languages: Arabic, Bengali, Chinese (Mandarin), Dutch, English, French, German, Hindi, Indonesian, Japanese, Malay, Portuguese, Russian, Spanish, Telugu, Turkish and Urdu.</p>
-<p>Note: all these translations are in Latin characters only (e.g. "da" for Russian, "haan" for Hindi and "hai" for Japanese).</p>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># generate a million random dates and check the distribution</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='fu'>rdate</span>(<span class='fl'>1000000</span>), <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='st'>"months"</span>)</div><div class='img'><img src='rdate-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#source">Source</a></li>
-      <li><a href="#details">Details</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
