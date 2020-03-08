@@ -36,7 +36,7 @@ test_that("cleaning works", {
   expect_equal(clean_factor(gender_age, levels = c("0-50", "50+"), ordered = TRUE),
                factor(c("0-50", "50+", "0-50", "50+"), levels = c("0-50", "50+"), ordered = TRUE))
   
-  values <- c("no5538", "no929", "yes2390", "no841", "no2610" )
+  values <- c("no5538", "no929", "yes2390", "no841", "no2610")
   expect_equal(clean_logical(values),
                c(FALSE, FALSE, TRUE, FALSE, FALSE))
   expect_equal(clean_character(values),
@@ -51,4 +51,3 @@ test_that("cleaning works", {
   expect_equal(clean_integer(clean_numeric(values) * 0.25),
                c(1384,    232,    597,    210,    652))
 })
-

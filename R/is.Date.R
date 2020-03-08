@@ -37,8 +37,8 @@ is.Date <- function(x) {
 #' # generate a million random dates and check the distribution
 #' hist(rdate(1000000), breaks = "months")
 rdate <- function(n,
-                  min = paste0(format(Sys.Date(), '%Y'), '-01-01'),
-                  max = paste0(format(Sys.Date(), '%Y'), '-12-31'),
+                  min = paste0(format(Sys.Date(), "%Y"), "-01-01"),
+                  max = paste0(format(Sys.Date(), "%Y"), "-12-31"),
                   ...) {
   tryCatch({
     min <- as.Date(min, ...)

@@ -29,7 +29,7 @@
 #' @param droplevels logical to indicate whether non-existing factor levels should be dropped
 #' @param ordered logical to indicate whether the factor levels should be ordered
 #' @param fixed logical to indicate whether regular expressions should be turned off
-#' @param trim logical to indicate whether the result should be trimmed with \code{\link{trimws}(x, which = "both")}
+#' @param trim logical to indicate whether the result should be trimmed with \code{\link{trimws}(..., which = "both")}
 #' @param ignore.case logical to indicate whether matching should be case-insensitive
 #' @param format a date format that will be passed on to \code{\link{format_datetime}}, see Details
 #' @param currency_symbol the currency symbol to use, which will be guessed based on the input and otherwise defaults to the current system locale setting (see \code{\link{Sys.localeconv}})
@@ -53,11 +53,11 @@
 #' 
 #' The use of invalid regular expressions in any of the above functions will not return an error (like in base R), but will instead interpret the expression as a fixed value and will throw a warning.
 #' @rdname clean
-#' @return The \code{clean} functions \strong{always} return the class from the function name:
+#' @return The \code{clean_*} functions \strong{always} return the class from the function name:
 #' \itemize{
 #'   \item{\code{clean_logical()}: class \code{logical}}
 #'   \item{\code{clean_factor()}: class \code{factor}}
-#'   \item{\code{clean_numeric()} & \code{clean_double()}: class \code{numeric}}
+#'   \item{\code{clean_numeric()} and \code{clean_double()}: class \code{numeric}}
 #'   \item{\code{clean_integer()}: class \code{integer}}
 #'   \item{\code{clean_character()}: class \code{character}}
 #'   \item{\code{clean_percentage()}: class \code{percentage}}
@@ -125,7 +125,7 @@ clean.default <- function(x, ...) {
   x_withoutNA <- x[!is.na(x)]
   fns <- c("Date", "percentage", "numeric", "logical", "character")
   n_valid <- integer(length(fns))
-  for (i in 1:length(fns)) {
+  for (i in seq_len(length(fns))) {
     fn <- get(paste0("clean_", fns[i]), envir = asNamespace("cleaner"))
     n_valid[i] <- sum(!is.na(suppressWarnings(suppressMessages(fn(x_withoutNA)))))
   }
@@ -187,7 +187,7 @@ clean_factor <- function(x, levels = unique(x), ordered = FALSE, droplevels = FA
     levels_nchar <- levels[rev(order(nchar(levels)))]
     new_x <- rep(NA_character_, length(x))
     # fill in levels
-    for (i in 1:length(levels_nchar)) {
+    for (i in seq_len(length(levels_nchar))) {
       # first try exact match
       tryCatch(new_x[is.na(new_x) & x == levels_nchar[i]] <- levels_nchar[i], error = function(e) invisible())
       # then regular expressions
@@ -196,7 +196,7 @@ clean_factor <- function(x, levels = unique(x), ordered = FALSE, droplevels = FA
     if (!is.null(names(levels))) {
       # override named levels
       x_set_with_name <- logical(length(x))
-      for (i in 1:length(levels)) {
+      for (i in seq_len(length(levels))) {
         if (names(levels)[i] != "") {
           new_x[grepl_warn_on_error(names(levels)[i], x, ignore.case = ignore.case, fixed = fixed) & x_set_with_name == FALSE] <- levels[i]
           x_set_with_name[grepl_warn_on_error(names(levels)[i], x, ignore.case = ignore.case, fixed = fixed)] <- TRUE
@@ -297,7 +297,8 @@ clean_currency <- function(x, currency_symbol = NULL, remove = "[^0-9.,-]", fixe
   } else {
     currency_symbol <- trimws(Sys.localeconv()["int_curr_symbol"])
   }
-  as.currency(clean_numeric(x = x, remove = remove, fixed = fixed), currency_symbol = currency_symbol)
+  as.currency(clean_numeric(x = x, remove = remove, fixed = fixed),
+              currency_symbol = currency_symbol)
 }
 
 #' @rdname clean
@@ -305,7 +306,7 @@ clean_currency <- function(x, currency_symbol = NULL, remove = "[^0-9.,-]", fixe
 clean_percentage <- function(x, remove = "[^0-9.,-]", fixed = FALSE) {
   x_clean <- clean_numeric(x = x, remove = remove, fixed = fixed)
   x_tested <- logical(length(x))
-  for (i in 1:length(x)) {
+  for (i in seq_len(length(x))) {
     x_tested[i] <- grepl(pattern = paste0(x_clean[i], ".?(%|percent|pct)"),
                          x = x[i], ignore.case = TRUE) |
       grepl(pattern = "(percent|pct)",
@@ -320,10 +321,19 @@ clean_percentage <- function(x, remove = "[^0-9.,-]", fixed = FALSE) {
   }
 }
 
-
 #' @rdname clean
 #' @export
 clean_Date <- function(x, format = NULL, guess_each = FALSE, ...) {
+
+  if (is.Date(x)) {
+    # could also be POSIX, or just Date
+    return(as.Date(x))
+  }
+  
+  if (is.double(x)) {
+    x <- as.integer(x)
+  }
+
   if (!is.null(format)) {
     if (tolower(format) == "excel") {
       return(as.Date(as.numeric(x), origin = "1899-12-30"))
@@ -337,6 +347,14 @@ clean_Date <- function(x, format = NULL, guess_each = FALSE, ...) {
   } else {
     as.Date(unname(sapply(x, guess_Date, throw_note = FALSE)), origin = "1970-01-01")
   }
+}
+
+#' @rdname clean
+#' @export
+clean_POSIXct <- function(x, tz = "", remove = "[^.0-9 :/-]", fixed = FALSE, ...) {
+  x <- trimws(gsub_warn_on_error(remove, "", x, ignore.case = TRUE, fixed = fixed))
+  x <- gsub("[\\./]", "-", x)
+  as.POSIXct(x, tz = tz, ...)
 }
 
 guess_Date <- function(x, throw_note = TRUE) {
@@ -418,7 +436,7 @@ guess_Date <- function(x, throw_note = TRUE) {
     format_spaced <- format
     # remove spaces from the format too, it was already removed from input
     format <- gsub(" ", "", format)
-    for (i in 1:length(format)) {
+    for (i in seq_len(length(format))) {
       validated_dates <- suppressWarnings(as.Date(as.character(x_withoutNAs), 
                                                   format = format_datetime(format[i])))
       if (all(!is.na(validated_dates))
@@ -460,12 +478,4 @@ guess_Date <- function(x, throw_note = TRUE) {
   }
   warning("Date/time format could not be determined automatically, returning NAs", call. = FALSE)
   as.Date(rep(NA, length(x)))
-}
-
-#' @rdname clean
-#' @export
-clean_POSIXct <- function(x, tz = "", remove = "[^.0-9 :/-]", fixed = FALSE, ...) {
-  x <- trimws(gsub_warn_on_error(remove, "", x, ignore.case = TRUE, fixed = fixed))
-  x <- gsub("[\\./]", "-", x)
-  as.POSIXct(x, tz = tz, ...)
 }

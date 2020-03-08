@@ -83,7 +83,7 @@ clean_POSIXct(x, tz = "", remove = "[^.0-9 :/-]", fixed = FALSE, ...)
 
 \item{remove}{\link[base]{regex} to define the character(s) that should be removed, see Details}
 
-\item{trim}{logical to indicate whether the result should be trimmed with \code{\link{trimws}(x, which = "both")}}
+\item{trim}{logical to indicate whether the result should be trimmed with \code{\link{trimws}(..., which = "both")}}
 
 \item{currency_symbol}{the currency symbol to use, which will be guessed based on the input and otherwise defaults to the current system locale setting (see \code{\link{Sys.localeconv}})}
 
@@ -100,11 +100,11 @@ clean_POSIXct(x, tz = "", remove = "[^.0-9 :/-]", fixed = FALSE, ...)
     treated as UTC, on some platforms with a warning.}
 }
 \value{
-The \code{clean} functions \strong{always} return the class from the function name:
+The \code{clean_*} functions \strong{always} return the class from the function name:
 \itemize{
   \item{\code{clean_logical()}: class \code{logical}}
   \item{\code{clean_factor()}: class \code{factor}}
-  \item{\code{clean_numeric()} & \code{clean_double()}: class \code{numeric}}
+  \item{\code{clean_numeric()} and \code{clean_double()}: class \code{numeric}}
   \item{\code{clean_integer()}: class \code{integer}}
   \item{\code{clean_character()}: class \code{character}}
   \item{\code{clean_percentage()}: class \code{percentage}}

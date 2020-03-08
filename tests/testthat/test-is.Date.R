@@ -22,7 +22,7 @@ context("is.Date.R")
 test_that("Date checking works", {
   randomised <- rdate(5000)
   expect_identical(
-    sort(as.vector(freq(as.POSIXct(randomised)))), # as.vector.freq contains a date check
+    sort(as.vector(freq(randomised))), # as.vector.freq contains a date check
     sort(randomised)
   )
 })

@@ -170,7 +170,7 @@ median.currency <- function(x, ...) {
 #' @exportMethod summary.currency
 #' @export
 summary.currency <- function(object, ...) {
-  c("Class" = 'currency',
+  c("Class" = paste0("currency", trimws(attributes(object)$currency_symbol)),
     "<NA>" = length(object[is.na(object)]),
     "Min." = format(min(object)),
     "Mean" = format(mean(object)),

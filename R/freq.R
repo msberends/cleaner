@@ -149,11 +149,6 @@ freq.default <- function(x,
     class(x) <- x_class
   }
   
-  markdown_line <- ""
-  if (markdown == TRUE) {
-    markdown_line <- "  " # ending with two spaces results in newline
-  }
-  
   if (!is.null(levels(x))) {
     header_list$levels <- levels(x)
     header_list$ordered <- is.ordered(x)
@@ -196,10 +191,6 @@ freq.default <- function(x,
   if (NCOL(df) == 2) {
     colnames(df) <- c("item", "count")
   }
-  # above is essentially same as (but I want to keep it non-dplyr-dependent):
-  # df <- tibble(item = x) %>%
-  #   group_by(item) %>%
-  #   summarise(count = n())
   
   if (NROW(df) == 0) {
     # return empty data.frame
@@ -222,9 +213,9 @@ freq.default <- function(x,
     
     # sort according to setting
     if (sort.count == TRUE) {
-      df <- df[order(-df$count),] # descending
+      df <- df[order(-df$count), ] # descending
     } else {
-      df <- df[order(tolower(df$item)),] # ascending
+      df <- df[order(tolower(df$item)), ] # ascending
     }
     rownames(df) <- NULL
     
@@ -261,7 +252,7 @@ freq.default <- function(x,
   structure(.Data = df,
             class = unique(c("freq", class(df))),
             header = header_list, # header info
-            opt = list(header = header, # TRUE/FALSE
+            opt = list(header = header,
                        title = title,
                        format = format,
                        row_names = row.names,
@@ -340,14 +331,14 @@ freq.data.frame <- function(x,
   
   if (length(user_exprs) > 0) {
     new_list <- list(0)
-    for (i in 1:length(user_exprs)) {
+    for (i in seq_len(length(user_exprs))) {
       new_list[[i]] <- tryCatch(eval_tidy(user_exprs[[i]], data = x),
                                 error = function(e) stop(e$message, call. = FALSE))
       if (length(new_list[[i]]) == 1) {
         if (i == 1) {
           # only for first item:
           if (is.character(new_list[[i]]) & new_list[[i]] %in% colnames(x)) {
-            # support: df %>% freq("mycol")
+            # this is to support: df %>% freq("mycol")
             new_list[[i]] <- x[, new_list[[i]]]
           }
         } else {
@@ -397,15 +388,9 @@ freq.character <- function(x, ...) {
 #' @export
 #' @rdname freq
 freq.numeric <- function(x, ..., digits = 2) {
-  Tukey_five = stats::quantile(x, probs = c(0.00, 0.25, 0.50, 0.75, 1.00), na.rm = TRUE, type = 6)
+  Tukey_five <- stats::quantile(x, probs = c(0.00, 0.25, 0.50, 0.75, 1.00), na.rm = TRUE, type = 6)
   Outliers <- grDevices::boxplot.stats(x[!is.na(x)])
-  
-  # create a header like:
-  # Mean:      71.06
-  # SD:        14.12 (CV: 0.20, MAD: 13.34)
-  # Five-Num:  14 | 63 | 74 | 82 | 97 (IQR: 19, CQV: 0.13)
-  # Outliers:  32 (0.34%)
-  
+
   freq.default(x = x, digits = digits, ..., 
                .add_header = list(mean = round2(base::mean(x, na.rm = TRUE), digits = digits),
                                   SD = paste0(round2(stats::sd(x, na.rm = TRUE), digits = digits),
@@ -479,7 +464,7 @@ is.freq <- function(f) {
 
 #' @importFrom crayon silver green red
 format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",", digits = 2) {
-  newline <-"\n"
+  newline <- "\n"
   if (markdown == TRUE) {
     newline <- "  \n"
     # no colours in markdown
@@ -749,7 +734,7 @@ print.freq <- function(x,
       nmax <- getOption("max.print.freq", default = 10)
     }
     
-    x <- x[1:nmax,]
+    x <- x[1:nmax, ]
     
     if (opt$nmax.set == TRUE) {
       footer <- paste("[ reached `nmax = ", opt$nmax, "`", sep = "")
@@ -769,7 +754,7 @@ print.freq <- function(x,
     }
   } else if (opt$tbl_format == "markdown") {
     if (opt$nmax.set == TRUE) {
-      x <- x[1:opt$nmax,]
+      x <- x[1:opt$nmax, ]
       footer <- paste("\n(omitted ",
                       format(x.rows - opt$nmax, big.mark = opt$big.mark, decimal.mark = opt$decimal.mark),
                       " entries, n = ",
@@ -940,8 +925,14 @@ plot.freq <- function(x, y, ...) {
 #' @export
 as.vector.freq <- function(x, ...) {
   v <- as.vector(rep(x$item, x$count), ...)
-  if (is.Date(x$item)) {
-    as.Date(as.POSIXct(v, origin = "1970-01-01 0:00:00"))
+  if (inherits(x$item, "Date")) {
+    as.Date(v, origin = "1970-01-01")
+  } else if (inherits(x$item, "POSIXct")) {
+    tryCatch(as.POSIXct(v),
+             error = function(e) as.POSIXct(v, origin = "1970-01-01 0:00:00"))
+  } else if (inherits(x$item, "POSIXlt")) {
+    tryCatch(as.POSIXlt(v),
+             error = function(e) as.POSIXlt(v, origin = "1970-01-01 0:00:00"))
   } else {
     v
   }
@@ -956,4 +947,3 @@ format.freq <- function(x, digits = 2, ...) {
   x$cum_percent <- percentage(x$cum_percent, digits = digits)
   x
 }
-

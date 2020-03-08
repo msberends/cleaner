@@ -40,16 +40,6 @@ gsub_warn_on_error <- function(pattern, replacement, x, ignore.case = FALSE, per
            })
 }
 
-# # finds start and end of a match and returns that substring
-# find_match <- function(x, keep, fixed) {
-#   lapply(x, function(val) {
-#     match_found <- regexpr(pattern = keep, text = val, fixed = fixed)
-#     matched <- list(start = as.integer(match_found),
-#                     end = -1 + as.integer(match_found) + as.integer(attributes(match_found)['match.length']))
-#     substr(val, matched$start, matched$end)
-#   })
-# }
-
 # works exactly like round(), but rounds `round(44.55, 1)` as 44.6 instead of 44.5
 # and adds decimal zeroes until `digits` is reached when force_zero = TRUE
 round2 <- function(x, digits = 0, force_zero = TRUE) {
@@ -70,7 +60,7 @@ getdecimalplaces <- function(x, minimum = 0, maximum = 3) {
   if (minimum > maximum) {
     minimum <- maximum
   }
-  max_places <- max(unlist(lapply(strsplit(sub('0+$', '', 
+  max_places <- max(unlist(lapply(strsplit(sub("0+$", "", 
                                                as.character(x * 100)), ".", fixed = TRUE),
                                   function(y) ifelse(length(y) == 2, nchar(y[2]), 0))), na.rm = TRUE)
   max(min(max_places,

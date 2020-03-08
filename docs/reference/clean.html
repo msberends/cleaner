@@ -209,7 +209,7 @@
     </tr>
     <tr>
       <th>trim</th>
-      <td><p>logical to indicate whether the result should be trimmed with <code><a href='https://rdrr.io/r/base/trimws.html'>trimws</a>(x, which = "both")</code></p></td>
+      <td><p>logical to indicate whether the result should be trimmed with <code><a href='https://rdrr.io/r/base/trimws.html'>trimws</a>(..., which = "both")</code></p></td>
     </tr>
     <tr>
       <th>currency_symbol</th>
@@ -242,10 +242,10 @@
     <p><a href='http://www.bis.org/publ/rpfx16fx.pdf'>Triennial Central Bank Survey Foreign exchange turnover in April 2016</a> (PDF). Bank for International Settlements. 11 December 2016. p. 10.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The <code>clean</code> functions <strong>always</strong> return the class from the function name:</p><ul>
+    <p>The <code>clean_*</code> functions <strong>always</strong> return the class from the function name:</p><ul>
 <li><p><code>clean_logical()</code>: class <code>logical</code></p></li>
 <li><p><code>clean_factor()</code>: class <code>factor</code></p></li>
-<li><p><code>clean_numeric()</code> &amp; <code>clean_double()</code>: class <code>numeric</code></p></li>
+<li><p><code>clean_numeric()</code> and <code>clean_double()</code>: class <code>numeric</code></p></li>
 <li><p><code>clean_integer()</code>: class <code>integer</code></p></li>
 <li><p><code>clean_character()</code>: class <code>character</code></p></li>
 <li><p><code>clean_percentage()</code>: class <code>percentage</code></p></li>

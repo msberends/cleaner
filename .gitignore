@@ -58,3 +58,4 @@ rsconnect/
 .DS_Store
 *.Rproj
 cran-comments.md
+lintr.R

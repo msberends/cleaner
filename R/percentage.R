@@ -174,7 +174,7 @@ median.percentage <- function(x, ...) {
 #' @exportMethod summary.percentage
 #' @export
 summary.percentage <- function(object, ...) {
-  c("Class" = 'percentage',
+  c("Class" = "percentage",
     "<NA>" = length(object[is.na(object)]),
     "Min." = format(min(object)),
     "Mean" = format(mean(object)),
@@ -189,7 +189,7 @@ type_sum.percentage <- function(x) {
 
 #' @importFrom pillar pillar_shaft
 #' @export
-pillar_shaft.percentage <- function (x, ...) {
+pillar_shaft.percentage <- function(x, ...) {
   pillar_shaft(as.numeric(x) * 100, ...)
 }
 

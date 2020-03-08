@@ -35,42 +35,42 @@
 #' # seconds since the Epoch, 1970-01-01 00:00:00
 #' format(Sys.time(), format_datetime("epoch"))
 format_datetime <- function(format) {
-  if (!any(grepl('%', format, fixed = TRUE))) {
+  if (!any(grepl("%", format, fixed = TRUE))) {
     # first months and minutes, after that everything is caseINsensitive
-    format <- gsub('mmmm', '%B1', format, fixed = TRUE)
-    format <- gsub('mmm', '%b', format, fixed = TRUE)
-    format <- gsub('mm', '%m', format, fixed = TRUE)
-    format <- gsub('MM', '%M1', format, fixed = TRUE)
-    format <- gsub('%m1', '%M', gsub('%b1', '%B', tolower(format), fixed = TRUE), fixed = TRUE)
+    format <- gsub("mmmm", "%B1", format, fixed = TRUE)
+    format <- gsub("mmm", "%b", format, fixed = TRUE)
+    format <- gsub("mm", "%m", format, fixed = TRUE)
+    format <- gsub("MM", "%M1", format, fixed = TRUE)
+    format <- gsub("%m1", "%M", gsub("%b1", "%B", tolower(format), fixed = TRUE), fixed = TRUE)
 
     # dates
-    format <- gsub('dddd', '%A', format, fixed = TRUE)
-    format <- gsub('ddd', '%a', format, fixed = TRUE)
-    format <- gsub('dd', '%!', format, fixed = TRUE)
-    format <- gsub('d', '%e', format, fixed = TRUE)
-    format <- gsub('%!', '%d', format, fixed = TRUE)
-    format <- gsub('ww', '%V', format, fixed = TRUE)
-    format <- gsub('w', '%V', format, fixed = TRUE)
-    format <- gsub('yyyy_iso', '%G', format, fixed = TRUE)
-    format <- gsub('jjjj_iso', '%G', format, fixed = TRUE)
-    format <- gsub('yyyy', '%Y', format, fixed = TRUE)
-    format <- gsub('jjjj', '%Y', format, fixed = TRUE)
-    format <- gsub('yy_iso', '%g', format, fixed = TRUE)
-    format <- gsub('jj_iso', '%g', format, fixed = TRUE)
-    format <- gsub('yy', '%y', format, fixed = TRUE)
-    format <- gsub('jj', '%y', format, fixed = TRUE)
+    format <- gsub("dddd", "%A", format, fixed = TRUE)
+    format <- gsub("ddd", "%a", format, fixed = TRUE)
+    format <- gsub("dd", "%!", format, fixed = TRUE)
+    format <- gsub("d", "%e", format, fixed = TRUE)
+    format <- gsub("%!", "%d", format, fixed = TRUE)
+    format <- gsub("ww", "%V", format, fixed = TRUE)
+    format <- gsub("w", "%V", format, fixed = TRUE)
+    format <- gsub("yyyy_iso", "%G", format, fixed = TRUE)
+    format <- gsub("jjjj_iso", "%G", format, fixed = TRUE)
+    format <- gsub("yyyy", "%Y", format, fixed = TRUE)
+    format <- gsub("jjjj", "%Y", format, fixed = TRUE)
+    format <- gsub("yy_iso", "%g", format, fixed = TRUE)
+    format <- gsub("jj_iso", "%g", format, fixed = TRUE)
+    format <- gsub("yy", "%y", format, fixed = TRUE)
+    format <- gsub("jj", "%y", format, fixed = TRUE)
     
     # time
-    format <- gsub('hh', '%H', format, fixed = TRUE)
-    format <- gsub('h', '%k', format, fixed = TRUE)
-    format <- gsub('ss', '%S', format, fixed = TRUE)
+    format <- gsub("hh", "%H", format, fixed = TRUE)
+    format <- gsub("h", "%k", format, fixed = TRUE)
+    format <- gsub("ss", "%S", format, fixed = TRUE)
     
     # seconds since the Epoch, 1970-01-01 00:00:00
-    format <- gsub('unix', '%s', format, fixed = TRUE)
-    format <- gsub('epoc%k', '%s', format, fixed = TRUE) # the h has become %k
+    format <- gsub("unix", "%s", format, fixed = TRUE)
+    format <- gsub("epoc%k", "%s", format, fixed = TRUE) # the h has become %k
     
     # equivalent to %Y-%m-%d (the ISO 8601 date format)
-    format <- gsub('iso', '%F', format, fixed = TRUE)
+    format <- gsub("iso", "%F", format, fixed = TRUE)
     
   }
   format

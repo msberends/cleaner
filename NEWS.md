@@ -6,8 +6,17 @@
   * Added availability to header
   * Fix for using `na.rm`
   * Fix for transforming to a visual histogram with `hist()`
+  * New method for using `format()` on a frequency table
   * New method for transforming the values of a frequency table to a vector with `as.vector()`, which also supports dates
-  * Mew method for using `format()` on a frequency table
+    ```r
+    library(dplyr)
+    library(cleaner)
+    data.frame(dates = rdate(100)) %>% 
+      freq(dates) %>% 
+      as.vector()
+    ```
+* Fix for `clean_Date()` not accepting `POSIX` or already `Date` formats 
+* Cleaned all code using the `lintr` package
 
 # cleaner 1.3.1
 
