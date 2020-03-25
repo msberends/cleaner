@@ -58,9 +58,16 @@ clean_currency(x, currency_symbol = NULL, remove = "[^0-9.,-]", fixed = FALSE)
 
 clean_percentage(x, remove = "[^0-9.,-]", fixed = FALSE)
 
-clean_Date(x, format = NULL, guess_each = FALSE, ...)
+clean_Date(x, format = NULL, guess_each = FALSE, max_date = Sys.Date(), ...)
 
-clean_POSIXct(x, tz = "", remove = "[^.0-9 :/-]", fixed = FALSE, ...)
+clean_POSIXct(
+  x,
+  tz = "",
+  remove = "[^.0-9 :/-]",
+  fixed = FALSE,
+  max_date = Sys.Date(),
+  ...
+)
 }
 \arguments{
 \item{x}{data to clean}
@@ -87,9 +94,13 @@ clean_POSIXct(x, tz = "", remove = "[^.0-9 :/-]", fixed = FALSE, ...)
 
 \item{currency_symbol}{the currency symbol to use, which will be guessed based on the input and otherwise defaults to the current system locale setting (see \code{\link{Sys.localeconv}})}
 
-\item{format}{a date format that will be passed on to \code{\link{format_datetime}}, see Details}
+\item{format}{character string giving a date-time format as used by \link[base]{strptime}. 
+
+For \code{clean_Date(..., guess_each = TRUE)}, this can be a vector of values to be used for guessing, see Examples.}
 
 \item{guess_each}{logical to indicate whether all items of \code{x} should be guessed one by one, see Examples}
+
+\item{max_date}{date to indicate to maximum allowed of \code{x}, which defaults to today. This is to prevent that \code{clean_Date("23-03-47")} will return 23 March 2047 and instead returns 23 March 1947 with a warning.}
 
 \item{...}{for \code{clean_Date} and \code{clean_POSIXct}: other parameters passed on these functions}
 
@@ -153,6 +164,9 @@ clean_Date("43658")
 clean_Date("14526", "Excel")
 clean_Date(c("1 Oct 13", "October 1st 2012")) # could not be fitted in 1 format
 clean_Date(c("1 Oct 13", "October 1st 2012"), guess_each = TRUE)
+clean_Date(c("12-14-13", "1 Oct 2012"), 
+           guess_each = TRUE,
+           format = c("d mmm yyyy", "mm-yy-dd")) # only these formats will be tried
 
 clean_POSIXct("Created log on 2020/02/11 11:23 by user Joe")
 clean_POSIXct("Created log on 2020.02.11 11:23 by user Joe", tz = "UTC")

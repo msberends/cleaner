@@ -47,8 +47,17 @@ round2 <- function(x, digits = 0, force_zero = TRUE) {
   # https://stackoverflow.com/a/12688836/4575331
   val <- (trunc((abs(x) * 10 ^ digits) + 0.5) / 10 ^ digits) * sign(x)
   if (digits > 0 & force_zero == TRUE) {
-    val[val != as.integer(val) & !is.na(val)] <- paste0(val[val != as.integer(val) & !is.na(val)],
-                                                        strrep("0", max(0, digits - nchar(gsub(".*[.](.*)$", "\\1", val[val != as.integer(val) & !is.na(val)])))))
+    values_trans <- val[val != as.integer(val) & !is.na(val)]
+    val[val != as.integer(val) & !is.na(val)] <- paste0(values_trans,
+                                                        strrep("0", 
+                                                               max(0, 
+                                                                   digits - nchar(
+                                                                     format(
+                                                                       as.double(
+                                                                         gsub(".*[.](.*)$", 
+                                                                              "\\1",
+                                                                              values_trans)),
+                                                                       scientific = FALSE)))))
   }
   as.double(val)
 }
@@ -80,4 +89,26 @@ cqv <- function(x, na.rm = TRUE) {
   # m = p. p[k] = k / (n + 1). Thus p[k] = E[F(x[k])]. This is used by Minitab and by SPSS.
   quartiles <- stats::quantile(x, probs = c(0.25, 0.75), na.rm = na.rm, type = 6)
   (quartiles[2] - quartiles[1]) / (quartiles[2] + quartiles[1])
+}
+
+# on checks if the input is a valid date type. It supports all date types, including \code{Date}, \code{POSIXct} and \code{POSIXlt}.
+is.Date <- function(x) {
+  inherits(x, c("Date", "POSIXt"))
+}
+
+year <- function(x) {
+  as.POSIXlt(x, tz = tz(x))$year + 1900
+}
+
+tz <- function(x) {
+  # from pkg lubridate
+  tzone <- attr(x, "tzone")[[1]]
+  if (is.null(tzone) && !inherits(x, "POSIXt")) 
+    return("UTC")
+  if (is.character(tzone) && nzchar(tzone)) 
+    return(tzone)
+  tzone <- attr(as.POSIXlt(x[1]), "tzone")[[1]]
+  if (is.null(tzone)) 
+    return("UTC")
+  tzone
 }

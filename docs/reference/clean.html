@@ -10,16 +10,16 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -39,7 +39,6 @@
 
 <meta property="og:title" content="Clean column data to a class — clean" />
 <meta property="og:description" content="Use any of these functions to quickly clean columns in your data set. Use clean() to pick the functions that return the least relative number of NAs. They always return the class from the function name (e.g. clean_Date() always returns class Date)." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -92,7 +91,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/msberends/cleaner">
+  <a href="https://github.com/msberends/cleaner/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -160,9 +159,16 @@
 
 <span class='fu'>clean_percentage</span>(<span class='no'>x</span>, <span class='kw'>remove</span> <span class='kw'>=</span> <span class='st'>"[^0-9.,-]"</span>, <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>clean_Date</span>(<span class='no'>x</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guess_each</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>clean_Date</span>(<span class='no'>x</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guess_each</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>max_date</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(), <span class='no'>...</span>)
 
-<span class='fu'>clean_POSIXct</span>(<span class='no'>x</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>remove</span> <span class='kw'>=</span> <span class='st'>"[^.0-9 :/-]"</span>, <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>clean_POSIXct</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>remove</span> <span class='kw'>=</span> <span class='st'>"[^.0-9 :/-]"</span>,
+  <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>max_date</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(),
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -217,11 +223,16 @@
     </tr>
     <tr>
       <th>format</th>
-      <td><p>a date format that will be passed on to <code><a href='format_datetime.html'>format_datetime</a></code>, see Details</p></td>
+      <td><p>character string giving a date-time format as used by <a href='https://rdrr.io/r/base/strptime.html'>strptime</a>.</p>
+<p>For <code>clean_Date(..., guess_each = TRUE)</code>, this can be a vector of values to be used for guessing, see Examples.</p></td>
     </tr>
     <tr>
       <th>guess_each</th>
       <td><p>logical to indicate whether all items of <code>x</code> should be guessed one by one, see Examples</p></td>
+    </tr>
+    <tr>
+      <th>max_date</th>
+      <td><p>date to indicate to maximum allowed of <code>x</code>, which defaults to today. This is to prevent that <code>clean_Date("23-03-47")</code> will return 23 March 2047 and instead returns 23 March 1947 with a warning.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -278,8 +289,10 @@
 #&gt; Levels: M F</div><div class='input'><span class='fu'>clean_factor</span>(<span class='no'>gender_age</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Male"</span>, <span class='st'>"Female"</span>))</div><div class='output co'>#&gt; [1] Male   Male   Female Female
 #&gt; Levels: Male Female</div><div class='input'><span class='fu'>clean_factor</span>(<span class='no'>gender_age</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"0-50"</span>, <span class='st'>"50+"</span>), <span class='kw'>ordered</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] 0-50 50+  0-50 50+ 
 #&gt; Levels: 0-50 &lt; 50+</div><div class='input'>
-<span class='fu'>clean_Date</span>(<span class='st'>"13jul18"</span>, <span class='st'>"ddmmmyy"</span>)</div><div class='output co'>#&gt; [1] "2018-07-13"</div><div class='input'><span class='fu'>clean_Date</span>(<span class='st'>"12 August 2010"</span>)</div><div class='output co'>#&gt; <span class='message'>(assuming format 'dd mmmm yyyy')</span></div><div class='output co'>#&gt; [1] "2010-08-12"</div><div class='input'><span class='fu'>clean_Date</span>(<span class='st'>"12 06 2012"</span>)</div><div class='output co'>#&gt; <span class='message'>(assuming format 'dd mm yyyy')</span></div><div class='output co'>#&gt; [1] "2012-06-12"</div><div class='input'><span class='fu'>clean_Date</span>(<span class='st'>"October 1st 2012"</span>)</div><div class='output co'>#&gt; <span class='message'>(assuming format 'mmmm d yyyy')</span></div><div class='output co'>#&gt; [1] "2012-10-01"</div><div class='input'><span class='fu'>clean_Date</span>(<span class='st'>"43658"</span>)</div><div class='output co'>#&gt; <span class='message'>(assuming Excel format)</span></div><div class='output co'>#&gt; [1] "2019-07-12"</div><div class='input'><span class='fu'>clean_Date</span>(<span class='st'>"14526"</span>, <span class='st'>"Excel"</span>)</div><div class='output co'>#&gt; [1] "1939-10-08"</div><div class='input'><span class='fu'>clean_Date</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"1 Oct 13"</span>, <span class='st'>"October 1st 2012"</span>)) <span class='co'># could not be fitted in 1 format</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Date/time format could not be determined automatically, returning NAs</span></div><div class='output co'>#&gt; [1] NA NA</div><div class='input'><span class='fu'>clean_Date</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"1 Oct 13"</span>, <span class='st'>"October 1st 2012"</span>), <span class='kw'>guess_each</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "2013-10-01" "2012-10-01"</div><div class='input'>
-<span class='fu'>clean_POSIXct</span>(<span class='st'>"Created log on 2020/02/11 11:23 by user Joe"</span>)</div><div class='output co'>#&gt; [1] "2020-02-11 11:23:00 CET"</div><div class='input'><span class='fu'>clean_POSIXct</span>(<span class='st'>"Created log on 2020.02.11 11:23 by user Joe"</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2020-02-11 11:23:00 UTC"</div><div class='input'>
+<span class='fu'>clean_Date</span>(<span class='st'>"13jul18"</span>, <span class='st'>"ddmmmyy"</span>)</div><div class='output co'>#&gt; [1] "2018-07-13"</div><div class='input'><span class='fu'>clean_Date</span>(<span class='st'>"12 August 2010"</span>)</div><div class='output co'>#&gt; <span class='message'>(assuming format 'dd mmmm yyyy')</span></div><div class='output co'>#&gt; [1] "2010-08-12"</div><div class='input'><span class='fu'>clean_Date</span>(<span class='st'>"12 06 2012"</span>)</div><div class='output co'>#&gt; <span class='message'>(assuming format 'dd mm yyyy')</span></div><div class='output co'>#&gt; [1] "2012-06-12"</div><div class='input'><span class='fu'>clean_Date</span>(<span class='st'>"October 1st 2012"</span>)</div><div class='output co'>#&gt; <span class='message'>(assuming format 'mmmm d yyyy')</span></div><div class='output co'>#&gt; [1] "2012-10-01"</div><div class='input'><span class='fu'>clean_Date</span>(<span class='st'>"43658"</span>)</div><div class='output co'>#&gt; <span class='message'>(assuming Excel format)</span></div><div class='output co'>#&gt; [1] "2019-07-12"</div><div class='input'><span class='fu'>clean_Date</span>(<span class='st'>"14526"</span>, <span class='st'>"Excel"</span>)</div><div class='output co'>#&gt; [1] "1939-10-08"</div><div class='input'><span class='fu'>clean_Date</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"1 Oct 13"</span>, <span class='st'>"October 1st 2012"</span>)) <span class='co'># could not be fitted in 1 format</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Date/time format could not be determined automatically, returning NAs</span></div><div class='output co'>#&gt; [1] NA NA</div><div class='input'><span class='fu'>clean_Date</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"1 Oct 13"</span>, <span class='st'>"October 1st 2012"</span>), <span class='kw'>guess_each</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "2013-10-01" "2012-10-01"</div><div class='input'><span class='fu'>clean_Date</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"12-14-13"</span>, <span class='st'>"1 Oct 2012"</span>),
+           <span class='kw'>guess_each</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+           <span class='kw'>format</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"d mmm yyyy"</span>, <span class='st'>"mm-yy-dd"</span>)) <span class='co'># only these formats will be tried</span></div><div class='output co'>#&gt; <span class='message'>(format 'd mmm yyyy' used for 1 items)</span></div><div class='output co'>#&gt; <span class='message'>(format 'mm-yy-dd' used for 1 items)</span></div><div class='output co'>#&gt; [1] "2014-12-13" "2012-10-01"</div><div class='input'>
+<span class='fu'>clean_POSIXct</span>(<span class='st'>"Created log on 2020/02/11 11:23 by user Joe"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Incompatible methods ("Ops.POSIXt", "Ops.Date") for "&gt;"</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Incompatible methods ("Ops.POSIXt", "Ops.Date") for "&gt;"</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Incompatible methods ("Ops.POSIXt", "Ops.Date") for "&gt;"</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some years were decreased by 100 to not exceed today. Use clean_POSIXct(..., max_date = Inf) to prevent this.</span></div><div class='output co'>#&gt; [1] "1920-02-11 11:23:00 AMT"</div><div class='input'><span class='fu'>clean_POSIXct</span>(<span class='st'>"Created log on 2020.02.11 11:23 by user Joe"</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Incompatible methods ("Ops.POSIXt", "Ops.Date") for "&gt;"</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Incompatible methods ("Ops.POSIXt", "Ops.Date") for "&gt;"</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Incompatible methods ("Ops.POSIXt", "Ops.Date") for "&gt;"</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some years were decreased by 100 to not exceed today. Use clean_POSIXct(..., max_date = Inf) to prevent this.</span></div><div class='output co'>#&gt; [1] "1920-02-11 11:23:00 UTC"</div><div class='input'>
 <span class='fu'>clean_numeric</span>(<span class='st'>"qwerty123456"</span>)</div><div class='output co'>#&gt; [1] 123456</div><div class='input'><span class='fu'>clean_numeric</span>(<span class='st'>"Positive (0.143)"</span>)</div><div class='output co'>#&gt; [1] 0.143</div><div class='input'><span class='fu'>clean_numeric</span>(<span class='st'>"0,143"</span>)</div><div class='output co'>#&gt; [1] 0.143</div><div class='input'><span class='fu'>clean_numeric</span>(<span class='st'>"minus 12 degrees"</span>)</div><div class='output co'>#&gt; [1] -12</div><div class='input'>
 <span class='fu'>clean_percentage</span>(<span class='st'>"PCT: 0.143"</span>)</div><div class='output co'>#&gt; [1] 0.143%</div><div class='input'><span class='fu'>clean_percentage</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Total of -12.3%"</span>, <span class='st'>"Total of +4.5%"</span>))</div><div class='output co'>#&gt; [1] -12.3%   4.5%</div><div class='input'>
 <span class='fu'>clean_character</span>(<span class='st'>"qwerty123456"</span>)</div><div class='output co'>#&gt; [1] "qwerty"</div><div class='input'><span class='fu'>clean_character</span>(<span class='st'>"Positive (0.143)"</span>)</div><div class='output co'>#&gt; [1] "Positive"</div><div class='input'>
@@ -295,7 +308,7 @@
 #&gt; 1 2016-04-02  TRUE -12.3% 0.4513
 #&gt; 2 2020-02-05 FALSE   4.5% 0.2732</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
@@ -315,7 +328,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>

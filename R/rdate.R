@@ -17,15 +17,6 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 # ==================================================================== #
 
-#' Check for date type
-#' 
-#' This function checks if the input is a valid date type. It supports all date types, including \code{Date}, \code{POSIXct} and \code{POSIXlt}.
-#' @param x input to check 
-#' @export
-is.Date <- function(x) {
-  inherits(x, c("Date", "POSIXt"))
-}
-
 #' Generate random dates
 #' 
 #' This function provides random date generation with a specified range, that defaults to the beginning and end of the current year.

@@ -4,11 +4,13 @@
 \name{unclean}
 \alias{unclean}
 \title{Example data that is not clean}
-\format{A \code{\link{data.frame}} with 500 observations and the following variables:
+\format{
+A \code{\link{data.frame}} with 500 observations and the following variables:
 \describe{
   \item{\code{date}}{Dates imported from Excel, they are integers ranging from ~30,000 to ~43,000.}
   \item{\code{gender}}{Characters with mixed values observed in original data about patients gender.}
-}}
+}
+}
 \usage{
 unclean
 }
