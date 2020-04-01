@@ -23,7 +23,7 @@
 #' @param x data to clean
 #' @param true \link[base]{regex} to interpret values as \code{TRUE} (which defaults to \code{\link{regex_true}}), see Details
 #' @param false \link[base]{regex} to interpret values as \code{FALSE} (which defaults to \code{\link{regex_false}}), see Details
-#' @param na  \link[base]{regex} to force interpret values as \code{NA}, i.e. not as \code{TRUE} or \code{FALSE}
+#' @param na \link[base]{regex} to force interpret values as \code{NA}, i.e. not as \code{TRUE} or \code{FALSE}
 #' @param remove \link[base]{regex} to define the character(s) that should be removed, see Details
 #' @param levels new factor levels, may be named with regular expressions to match existing values, see Details
 #' @param droplevels logical to indicate whether non-existing factor levels should be dropped
@@ -382,11 +382,13 @@ clean_Date <- function(x, format = NULL, guess_each = FALSE, max_date = Sys.Date
     time_lt[final_result > max_date]$year <- time_lt[final_result > max_date]$year - 100
     x <- as.Date(time_lt)
     if (any(year(final_result) != year(x), na.rm = TRUE)) {
-      warning("Some years were decreased by 100 to not exceed today. Use clean_Date(..., max_date = Inf) to prevent this.")
+      warning("Some years were decreased by 100 to not exceed ", 
+              ifelse(max_date == Sys.Date(), "today", format(max_date, format_datetime("d mmmm yyyy"))), 
+              ". Use clean_Date(..., max_date = Inf) to prevent this.", call. = FALSE)
     }
   },
   error = function(e) x <<- final_result)
-
+  
   x
 }
 
@@ -415,7 +417,9 @@ clean_POSIXct <- function(x, tz = "", remove = "[^.0-9 :/-]", fixed = FALSE, max
     time_lt[time_ct > max_date]$year <- time_lt[time_ct > max_date]$year - 100
     x <- as.POSIXct(time_lt, tz = tz, ...)
     if (any(year(time_ct) != year(x), na.rm = TRUE)) {
-      warning("Some years were decreased by 100 to not exceed today. Use clean_POSIXct(..., max_date = Inf) to prevent this.")
+      warning("Some years were decreased by 100 to not exceed ", 
+              ifelse(max_date == Sys.Date(), "today", format(max_date, format_datetime("d mmmm yyyy"))), 
+              ". Use clean_Date(..., max_date = Inf) to prevent this.", call. = FALSE)
     }
   },
   error = function(e) x <<- time_ct)

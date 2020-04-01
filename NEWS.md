@@ -14,8 +14,8 @@
       freq(dates) %>% 
       as.vector()
     ```
-* Fix for `clean_Date()` not accepting `POSIX` or already `Date` formats 
-* When using `clean_Date(..., guess_each = TRUE)` it now accepts the `format` parameter as a vector of options to choose from
+* Fix for `clean_Date()` not accepting already `POSIX` or `Date` input 
+* When using `clean_Date(..., guess_each = TRUE)` it now accepts the `format` parameter as a vector of options to let it choose from
 * `clean_Date()` and `clean_POSIXct` gained a parameter `max_date` (that defaults to today), so that they will never return years beyond a specified date:
   ```r
   # old

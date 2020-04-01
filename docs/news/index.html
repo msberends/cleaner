@@ -135,8 +135,8 @@
 </li>
 </ul>
 </li>
-<li><p>Fix for <code><a href="../reference/clean.html">clean_Date()</a></code> not accepting <code>POSIX</code> or already <code>Date</code> formats</p></li>
-<li><p>When using <code><a href="../reference/clean.html">clean_Date(..., guess_each = TRUE)</a></code> it now accepts the <code>format</code> parameter as a vector of options to choose from</p></li>
+<li><p>Fix for <code><a href="../reference/clean.html">clean_Date()</a></code> not accepting already <code>POSIX</code> or <code>Date</code> input</p></li>
+<li><p>When using <code><a href="../reference/clean.html">clean_Date(..., guess_each = TRUE)</a></code> it now accepts the <code>format</code> parameter as a vector of options to let it choose from</p></li>
 <li>
 <p><code><a href="../reference/clean.html">clean_Date()</a></code> and <code>clean_POSIXct</code> gained a parameter <code>max_date</code> (that defaults to today), so that they will never return years beyond a specified date:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># old</span></span>
