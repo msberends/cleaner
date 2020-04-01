@@ -1,4 +1,4 @@
-# cleaner 1.3.1.9000
+# cleaner 1.4.0
 
 * New function `rdate()` to generate random dates (in analogy to e.g. `runif()`)
 * Frequency tables (`freq()`):

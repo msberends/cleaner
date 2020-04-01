@@ -181,10 +181,16 @@ summary.percentage <- function(object, ...) {
     "Max." = format(max(object)))
 }
 
-#' @importFrom pillar type_sum
+#' @importFrom vctrs vec_ptype_abbr
 #' @export
-type_sum.percentage <- function(x) {
+vec_ptype_abbr.percentage <- function(x, ...) {
   "pct"
+}
+
+#' @importFrom vctrs vec_ptype_full
+#' @export
+vec_ptype_full.percentage <- function(x, ...) {
+  "percentage"
 }
 
 #' @importFrom pillar pillar_shaft

@@ -70,7 +70,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.0</span>
       </span>
     </div>
 
@@ -127,6 +127,7 @@
   <span class='no'>x</span>,
   <span class='kw'>decimal.mark</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"OutDec"</span>),
   <span class='kw'>big.mark</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>decimal.mark</span> <span class='kw'>==</span> <span class='st'>","</span>, <span class='st'>"."</span>, <span class='st'>","</span>),
+  <span class='kw'>as_symbol</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='no'>...</span>
 )
 
@@ -136,6 +137,7 @@
   <span class='kw'>currency_symbol</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span>(<span class='no'>x</span>)$<span class='no'>currency_symbol</span>,
   <span class='kw'>decimal.mark</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"OutDec"</span>),
   <span class='kw'>big.mark</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>decimal.mark</span> <span class='kw'>==</span> <span class='st'>","</span>, <span class='st'>"."</span>, <span class='st'>","</span>),
+  <span class='kw'>as_symbol</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -162,6 +164,10 @@
       <th>big.mark</th>
       <td><p>symbol to use as a thousands separator, defaults to a dot if <code>decimal.mark</code> is a comma, and a comma otherwise</p></td>
     </tr>
+    <tr>
+      <th>as_symbol</th>
+      <td><p>try to format and print using currency symbols instead of text</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -170,9 +176,9 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>money</span> <span class='kw'>&lt;-</span> <span class='fu'>as.currency</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.25</span>, <span class='fl'>2.5</span>, <span class='fl'>25</span>, <span class='fl'>25000</span>))
-<span class='no'>money</span></div><div class='output co'>#&gt; [1] `USD 0.25`      `USD 2.50`      `USD 25.00`     `USD 25,000.00`</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>money</span>)</div><div class='output co'>#&gt; [1] `USD 25,027.75`</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='no'>money</span>)</div><div class='output co'>#&gt; [1] `USD 25,000.00`</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>money</span>)</div><div class='output co'>#&gt; [1] `USD 6,256.94`</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='no'>money</span>, <span class='kw'>currency_symbol</span> <span class='kw'>=</span> <span class='st'>"$"</span>)</div><div class='output co'>#&gt; [1] "$ 0.25"      "$ 2.50"      "$ 25.00"     "$ 25,000.00"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='no'>money</span>, <span class='kw'>currency_symbol</span> <span class='kw'>=</span> <span class='st'>"€"</span>, <span class='kw'>decimal.mark</span> <span class='kw'>=</span> <span class='st'>","</span>)</div><div class='output co'>#&gt; [1] "€ 0,25"      "€ 2,50"      "€ 25,00"     "€ 25.000,00"</div><div class='input'>
-<span class='fu'>as.currency</span>(<span class='fl'>2.5e+04</span>)</div><div class='output co'>#&gt; [1] `USD 25,000.00`</div></pre>
+<span class='no'>money</span></div><div class='output co'>#&gt; [1] `$ 0.25`      `$ 2.50`      `$ 25.00`     `$ 25,000.00`</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>money</span>)</div><div class='output co'>#&gt; [1] `$ 25,027.75`</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='no'>money</span>)</div><div class='output co'>#&gt; [1] `$ 25,000.00`</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>money</span>)</div><div class='output co'>#&gt; [1] `$ 6,256.94`</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='no'>money</span>, <span class='kw'>currency_symbol</span> <span class='kw'>=</span> <span class='st'>"USD"</span>)</div><div class='output co'>#&gt; [1] "$ 0.25"      "$ 2.50"      "$ 25.00"     "$ 25,000.00"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='no'>money</span>, <span class='kw'>currency_symbol</span> <span class='kw'>=</span> <span class='st'>"EUR"</span>, <span class='kw'>decimal.mark</span> <span class='kw'>=</span> <span class='st'>","</span>)</div><div class='output co'>#&gt; [1] "€ 0,25"      "€ 2,50"      "€ 25,00"     "€ 25.000,00"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='no'>money</span>, <span class='kw'>currency_symbol</span> <span class='kw'>=</span> <span class='st'>"EUR"</span>, <span class='kw'>as_symbol</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "EUR 0.25"      "EUR 2.50"      "EUR 25.00"     "EUR 25,000.00"</div><div class='input'>
+<span class='fu'>as.currency</span>(<span class='fl'>2.5e+04</span>)</div><div class='output co'>#&gt; [1] `$ 25,000.00`</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>

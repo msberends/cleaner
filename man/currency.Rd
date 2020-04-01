@@ -16,6 +16,7 @@ is.currency(x)
   x,
   decimal.mark = getOption("OutDec"),
   big.mark = ifelse(decimal.mark == ",", ".", ","),
+  as_symbol = TRUE,
   ...
 )
 
@@ -24,6 +25,7 @@ is.currency(x)
   currency_symbol = attributes(x)$currency_symbol,
   decimal.mark = getOption("OutDec"),
   big.mark = ifelse(decimal.mark == ",", ".", ","),
+  as_symbol = TRUE,
   ...
 )
 }
@@ -37,6 +39,8 @@ is.currency(x)
 \item{decimal.mark}{symbol to use as a decimal separator, defaults to \code{\link{getOption}("OutDec")}}
 
 \item{big.mark}{symbol to use as a thousands separator, defaults to a dot if \code{decimal.mark} is a comma, and a comma otherwise}
+
+\item{as_symbol}{try to format and print using currency symbols instead of text}
 }
 \description{
 Transform input to a currency. The actual values are numeric, but will be printed as formatted currency values.
@@ -51,8 +55,9 @@ sum(money)
 max(money)
 mean(money)
 
-format(money, currency_symbol = "$")
-format(money, currency_symbol = "€", decimal.mark = ",")
+format(money, currency_symbol = "USD")
+format(money, currency_symbol = "EUR", decimal.mark = ",")
+format(money, currency_symbol = "EUR", as_symbol = FALSE)
 
 as.currency(2.5e+04)
 }

@@ -24,6 +24,7 @@
 #' @param currency_symbol the currency symbol to use, which defaults to the current system locale setting (see \code{\link{Sys.localeconv}})
 #' @param decimal.mark symbol to use as a decimal separator, defaults to \code{\link{getOption}("OutDec")}
 #' @param big.mark symbol to use as a thousands separator, defaults to a dot if \code{decimal.mark} is a comma, and a comma otherwise 
+#' @param as_symbol try to format and print using currency symbols instead of text
 #' @param ... other parameters passed on to methods
 #' @details Printing currency will always have a currency symbol followed by a space, 2 decimal places and is never written in scientific format (like 2.5e+04).
 #' @rdname currency
@@ -36,14 +37,15 @@
 #' max(money)
 #' mean(money)
 #' 
-#' format(money, currency_symbol = "$")
-#' format(money, currency_symbol = "€", decimal.mark = ",")
+#' format(money, currency_symbol = "USD")
+#' format(money, currency_symbol = "EUR", decimal.mark = ",")
+#' format(money, currency_symbol = "EUR", as_symbol = FALSE)
 #' 
 #' as.currency(2.5e+04)
 as.currency <- function(x, currency_symbol = Sys.localeconv()["int_curr_symbol"], ...) {
   structure(.Data = as.double(x, ...),
             class = c("currency", "numeric"),
-            currency_symbol = unname(currency_symbol))
+            currency_symbol = toupper(unname(currency_symbol)))
 }
 
 #' @rdname currency
@@ -93,14 +95,30 @@ c.currency <- function(x, ...) {
   y
 }
 
+txt2symb <- function(txt) {
+  switch(txt,
+         "USD" = "\u0024",
+         "EUR" = "\u20ac",
+         "JPY" = "\u00a5",
+         "GBP" = "\u00a3",
+         "CNY" = "\u5143",
+         "KRW" = "\u20a9", 
+         txt)
+}
+
 #' @rdname currency
 #' @exportMethod print.currency
 #' @export
 print.currency <- function(x, 
                            decimal.mark = getOption("OutDec"),
                            big.mark = ifelse(decimal.mark == ",", ".", ","),
+                           as_symbol = TRUE,
                            ...) {
-  print(paste0("`", trimws(paste0(trimws(attributes(x)$currency_symbol), " ",
+  currency_symbol <- toupper(trimws(attributes(x)$currency_symbol))
+  if (isTRUE(as_symbol)) {
+    currency_symbol <- txt2symb(currency_symbol)
+  }
+  print(paste0("`", trimws(paste0(currency_symbol, " ",
                                   trimws(format(as.numeric(x), 
                                                 decimal.mark = decimal.mark, 
                                                 big.mark = big.mark,
@@ -119,8 +137,13 @@ format.currency <- function(x,
                             currency_symbol = attributes(x)$currency_symbol,
                             decimal.mark = getOption("OutDec"),
                             big.mark = ifelse(decimal.mark == ",", ".", ","),
+                            as_symbol = TRUE,
                             ...) {
-  trimws(paste0(trimws(currency_symbol), " ",
+  currency_symbol <- toupper(trimws(currency_symbol))
+  if (isTRUE(as_symbol)) {
+    currency_symbol <- txt2symb(currency_symbol)
+  }
+  trimws(paste0(currency_symbol, " ",
                 trimws(format(as.numeric(x), 
                               decimal.mark = decimal.mark, 
                               big.mark = big.mark,
@@ -170,17 +193,23 @@ median.currency <- function(x, ...) {
 #' @exportMethod summary.currency
 #' @export
 summary.currency <- function(object, ...) {
-  c("Class" = paste0("currency", trimws(attributes(object)$currency_symbol)),
+  c("Class" = paste0("currency", txt2symb(trimws(attributes(object)$currency_symbol))),
     "<NA>" = length(object[is.na(object)]),
     "Min." = format(min(object)),
     "Mean" = format(mean(object)),
     "Max." = format(max(object)))
 }
 
-#' @importFrom pillar type_sum
+#' @importFrom vctrs vec_ptype_abbr
 #' @export
-type_sum.currency <- function(x) {
-  paste0("crncy/", trimws(attributes(x)$currency_symbol))
+vec_ptype_abbr.currency <- function(x, ...) {
+  paste0("crncy/", txt2symb(trimws(attributes(x)$currency_symbol)))
+}
+
+#' @importFrom vctrs vec_ptype_full
+#' @export
+vec_ptype_full.currency <- function(x, ...) {
+  paste0("currency/", txt2symb(trimws(attributes(x)$currency_symbol)))
 }
 
 #' @importFrom pillar pillar_shaft
