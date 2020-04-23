@@ -54,13 +54,14 @@
 #' \dontrun{
 #' # practical way using tidyverse
 #' library(dplyr)
-#' mtcars %>% 
-#'   na_replace(mpg, hp)
+#' starwars %>% 
+#'   na_replace()
 #' 
 #' # even maintains groups
-#' mtcars %>%
-#'   group_by(mpg) %>%
-#'   na_replace(mpg)
+#' starwars %>%
+#'   group_by(hair_color) %>%
+#'   na_replace(hair_color, replacement = "TEST!") %>% 
+#'   summarise(n = n())
 #' }
 na_replace <- function(x, ...) {
   UseMethod("na_replace")
@@ -95,7 +96,7 @@ na_replace.data.frame <- function(x, ..., replacement = NULL) {
   
   user_exprs <- enquos(...)
   if (length(user_exprs) == 0) {
-    # affect all columns, but don't include lists
+    # affect all columns if none is set, but don't include lists
     user_exprs <- as.list(colnames(x[, !sapply(x, is.list)]))
   }
   if (!is.null(replacement)) {
@@ -120,7 +121,8 @@ na_replace.data.frame <- function(x, ..., replacement = NULL) {
   
   for (col in seq_len(length(names(y)))) {
     vctr <- y[[col]]
-    attr_vctr <- attributes(x[, names(y)[col]])
+    vctr_colname <- names(y)[col]
+    attr_vctr <- attributes(x[, vctr_colname])
     if (is.null(replacement)) {
       replace_val <- ifelse(is.numeric(vctr), 0,
                             ifelse(is.logical(vctr), FALSE,
@@ -130,9 +132,18 @@ na_replace.data.frame <- function(x, ..., replacement = NULL) {
       replace_val <- replacement[col]
     }
     vctr[is.na(vctr)] <- replace_val
-    x[, names(y)[col]] <- vctr
-    attributes(x[, names(y)[col]]) <- attr_vctr
+    x[, vctr_colname] <- vctr
+    attributes(x[, vctr_colname]) <- attr_vctr
+    # special need for dplyr grouping: support it without the need to be dependent on dplyr :-)
+    if (!is.null(attrbt$groups)) {
+      if (vctr_colname %in% colnames(attrbt$groups)) {
+        attrbt$groups[which(is.na(attrbt$groups[, vctr_colname, drop = TRUE])), vctr_colname] <- replace_val
+        # groups are always ordered on alphabet, so order it again with the new replacement value
+        attrbt$groups <- attrbt$groups[order(attrbt$groups[, vctr_colname]),]
+      }
+    }
   }
+  
   attributes(x) <- attrbt
   x
 }

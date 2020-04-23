@@ -67,12 +67,13 @@ head(na_replace(mtcars, mpg, hp, replacement = c(999, 123)))
 \dontrun{
 # practical way using tidyverse
 library(dplyr)
-mtcars \%>\% 
-  na_replace(mpg, hp)
+starwars \%>\% 
+  na_replace()
 
 # even maintains groups
-mtcars \%>\%
-  group_by(mpg) \%>\%
-  na_replace(mpg)
+starwars \%>\%
+  group_by(hair_color) \%>\%
+  na_replace(hair_color, replacement = "TEST!") \%>\% 
+  summarise(n = n())
 }
 }

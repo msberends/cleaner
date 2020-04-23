@@ -3,8 +3,13 @@
 * New function `format_names()` to quickly and easily change names of `data.frame` columns, `list`s or `character` vectors.
   ```r
   format_names(df, snake_case = TRUE)
-  format_names(df, camelCase = TRUE)
   format_names(df, c(old.name = "new_name", value = "measurement"))
+  
+  library(dplyr)
+  starwars %>% 
+    format_names(camelCase = TRUE) %>% # column names
+    mutate(name = name %>% 
+             format_names(snake_case = TRUE)) # values in column
   ```
   
 * New generic function `na_replace()` to replace `NA` values in any data type. Its default replacement value is dependent on the data type that is given as input: `0` for numeric values and class `matrix`, `FALSE` for class `logical`, today for class `Date`, and `""` otherwise.

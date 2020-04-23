@@ -124,8 +124,13 @@
 <li>
 <p>New function <code><a href="../reference/format_names.html">format_names()</a></code> to quickly and easily change names of <code>data.frame</code> columns, <code>list</code>s or <code>character</code> vectors.</p>
 <div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="../reference/format_names.html">format_names</a></span>(<span class="no">df</span>, <span class="kw">snake_case</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
-<span class="fu"><a href="../reference/format_names.html">format_names</a></span>(<span class="no">df</span>, <span class="kw">camelCase</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
-<span class="fu"><a href="../reference/format_names.html">format_names</a></span>(<span class="no">df</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">old.name</span> <span class="kw">=</span> <span class="st">"new_name"</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="st">"measurement"</span>))</pre></div>
+<span class="fu"><a href="../reference/format_names.html">format_names</a></span>(<span class="no">df</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">old.name</span> <span class="kw">=</span> <span class="st">"new_name"</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="st">"measurement"</span>))
+
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
+<span class="no">starwars</span> <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../reference/format_names.html">format_names</a></span>(<span class="kw">camelCase</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="kw">%&gt;%</span> <span class="co"># column names</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="no">name</span> <span class="kw">%&gt;%</span>
+           <span class="fu"><a href="../reference/format_names.html">format_names</a></span>(<span class="kw">snake_case</span> <span class="kw">=</span> <span class="fl">TRUE</span>)) <span class="co"># values in column</span></pre></div>
 </li>
 <li>
 <p>New generic function <code><a href="../reference/na_replace.html">na_replace()</a></code> to replace <code>NA</code> values in any data type. Its default replacement value is dependent on the data type that is given as input: <code>0</code> for numeric values and class <code>matrix</code>, <code>FALSE</code> for class <code>logical</code>, today for class <code>Date</code>, and <code>""</code> otherwise.</p>
