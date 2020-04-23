@@ -1,3 +1,27 @@
+# cleaner 1.4.0.9000
+
+* New function `format_names()` to quickly and easily change names of `data.frame` columns, `list`s or `character` vectors.
+  ```r
+  format_names(df, snake_case = TRUE)
+  format_names(df, camelCase = TRUE)
+  format_names(df, c(old.name = "new_name", value = "measurement"))
+  ```
+  
+* New generic function `na_replace()` to replace `NA` values in any data type. Its default replacement value is dependent on the data type that is given as input: `0` for numeric values and class `matrix`, `FALSE` for class `logical`, today for class `Date`, and `""` otherwise.
+  ```r
+  na_replace(c(1, 2, NA, NA))
+  #> [1] 1 2 0 0
+  na_replace(c(1, 2, NA, NA), replacement = -1)
+  #> [1]  1  2 -1 -1
+  
+  library(dplyr)
+  starwars %>% 
+    na_replace(hair_color) # only replace NAs in this column
+    
+  starwars %>% 
+    na_replace() # replace NAs in all columns ("" for hair_color and 0 for birth_year)
+  ```
+
 # cleaner 1.4.0
 
 * New function `rdate()` to generate random dates (in analogy to e.g. `runif()`)
