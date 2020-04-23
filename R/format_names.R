@@ -17,12 +17,13 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 # ==================================================================== #
 
-#' Cleaning column names
+#' Format names and values
 #' 
+#' This function can be used on any \code{data.frame}, \code{list} or character vector to format their names or values. It supports \href{https://en.wikipedia.org/wiki/Snake_case}{snake case} and \href{https://en.wikipedia.org/wiki/Camel_case}{camel case}. 
 #' @param x a \code{data.frame}, \code{list} or character vector
 #' @param ... when \code{x} is a \code{data.frame}: new column names to set, which can be named (in the form \code{old = "new"}). The original column names do not need to be quoted, see Examples.
 #' @param snake_case logical to indicate whether the column names must be in \href{https://en.wikipedia.org/wiki/Snake_case}{snake case}. This will have no effect on manually set column names.
-#' @param camelCase logical to indicate whether the column names must be in \href{https://en.wikipedia.org/wiki/camelCase}{camel case}. This will have no effect on manually set column names.
+#' @param camelCase logical to indicate whether the column names must be in \href{https://en.wikipedia.org/wiki/Camel_case}{camel case}. This will have no effect on manually set column names.
 #' @param tolower,toupper logical to indicate whether the column names must be lower/upper case. This will have no effect on manually set column names.
 #' @export
 #' @examples 
@@ -46,9 +47,10 @@
 #' \dontrun{
 #' library(dplyr)
 #' starwars %>%
-#'   format_names(camelCase = TRUE) %>%            # new column names
-#'   mutate(name = format_names(name, 
-#'                               snake_case = TRUE)) # new values in column
+#'   format_names(camelCase = TRUE) %>%        # new column names
+#'   mutate(name = name %>% 
+#'            format_names(name, 
+#'                         snake_case = TRUE)) # new values in column
 #' }
 format_names <- function(x,
                          ...,

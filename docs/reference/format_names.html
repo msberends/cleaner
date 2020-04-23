@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cleaning column names — format_names • cleaner</title>
+<title>Format names and values — format_names • cleaner</title>
 
 
 <!-- jquery -->
@@ -41,8 +41,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Cleaning column names — format_names" />
-<meta property="og:description" content="Cleaning column names" />
+<meta property="og:title" content="Format names and values — format_names" />
+<meta property="og:description" content="This function can be used on any data.frame, list or character vector to format their names or values. It supports snake case and camel case." />
 
 
 
@@ -113,13 +113,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Cleaning column names</h1>
+    <h1>Format names and values</h1>
     <small class="dont-index">Source: <a href='https://github.com/msberends/cleaner/blob/master/R/format_names.R'><code>R/format_names.R</code></a></small>
     <div class="hidden name"><code>format_names.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Cleaning column names</p>
+    <p>This function can be used on any <code>data.frame</code>, <code>list</code> or character vector to format their names or values. It supports <a href='https://en.wikipedia.org/wiki/Snake_case'>snake case</a> and <a href='https://en.wikipedia.org/wiki/Camel_case'>camel case</a>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>format_names</span>(
@@ -148,7 +148,7 @@
     </tr>
     <tr>
       <th>camelCase</th>
-      <td><p>logical to indicate whether the column names must be in <a href='https://en.wikipedia.org/wiki/camelCase'>camel case</a>. This will have no effect on manually set column names.</p></td>
+      <td><p>logical to indicate whether the column names must be in <a href='https://en.wikipedia.org/wiki/Camel_case'>camel case</a>. This will have no effect on manually set column names.</p></td>
     </tr>
     <tr>
       <th>tolower, toupper</th>
@@ -213,9 +213,10 @@
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>starwars</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>format_names</span>(<span class='kw'>camelCase</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>            <span class='co'># new column names</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'>format_names</span>(<span class='no'>name</span>,
-                              <span class='kw'>snake_case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) <span class='co'># new values in column</span>
+  <span class='fu'>format_names</span>(<span class='kw'>camelCase</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>        <span class='co'># new column names</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>name</span> <span class='kw'>%&gt;%</span>
+           <span class='fu'>format_names</span>(<span class='no'>name</span>,
+                        <span class='kw'>snake_case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) <span class='co'># new values in column</span>
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

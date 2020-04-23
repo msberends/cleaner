@@ -2,7 +2,7 @@
 % Please edit documentation in R/format_names.R
 \name{format_names}
 \alias{format_names}
-\title{Cleaning column names}
+\title{Format names and values}
 \usage{
 format_names(
   x,
@@ -20,12 +20,12 @@ format_names(
 
 \item{snake_case}{logical to indicate whether the column names must be in \href{https://en.wikipedia.org/wiki/Snake_case}{snake case}. This will have no effect on manually set column names.}
 
-\item{camelCase}{logical to indicate whether the column names must be in \href{https://en.wikipedia.org/wiki/camelCase}{camel case}. This will have no effect on manually set column names.}
+\item{camelCase}{logical to indicate whether the column names must be in \href{https://en.wikipedia.org/wiki/Camel_case}{camel case}. This will have no effect on manually set column names.}
 
 \item{tolower, toupper}{logical to indicate whether the column names must be lower/upper case. This will have no effect on manually set column names.}
 }
 \description{
-Cleaning column names
+This function can be used on any \code{data.frame}, \code{list} or character vector to format their names or values. It supports \href{https://en.wikipedia.org/wiki/Snake_case}{snake case} and \href{https://en.wikipedia.org/wiki/Camel_case}{camel case}.
 }
 \examples{
 df <- data.frame(Name.341ABC = "value", 
@@ -48,8 +48,9 @@ format_names(list(a = 1, b = 2), c("new_1", "new_2"))
 \dontrun{
 library(dplyr)
 starwars \%>\%
-  format_names(camelCase = TRUE) \%>\%            # new column names
-  mutate(name = format_names(name, 
-                              snake_case = TRUE)) # new values in column
+  format_names(camelCase = TRUE) \%>\%        # new column names
+  mutate(name = name \%>\% 
+           format_names(name, 
+                        snake_case = TRUE)) # new values in column
 }
 }
