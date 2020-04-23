@@ -17,16 +17,20 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
+
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -55,7 +59,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -69,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.0.9000</span>
       </span>
     </div>
 
@@ -108,65 +112,93 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
+      <h1 data-toc-skip>Changelog <small></small></h1>
       <small>Source: <a href='https://github.com/msberends/cleaner/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="cleaner-140" class="section level1">
-<h1 class="page-header">
-<a href="#cleaner-140" class="anchor"></a>cleaner 1.4.0<small> Unreleased </small>
+    <div id="cleaner-1-4-0-9000" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.0.9000">
+<a href="#cleaner-1-4-0-9000" class="anchor"></a>cleaner 1.4.0.9000<small> Unreleased </small>
 </h1>
 <ul>
-<li><p>New function <code><a href="../reference/rdate.html">rdate()</a></code> to generate random dates (in analogy to e.g. <code><a href="https://rdrr.io/r/stats/Uniform.html">runif()</a></code>)</p></li>
 <li>
-<p>Frequency tables (<code><a href="../reference/freq.html">freq()</a></code>):</p>
+<p>New function <code><a href="../reference/format_names.html">format_names()</a></code> to quickly and easily change names of <code>data.frame</code> columns, <code>list</code>s or <code>character</code> vectors.</p>
+<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="../reference/format_names.html">format_names</a></span>(<span class="no">df</span>, <span class="kw">snake_case</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="fu"><a href="../reference/format_names.html">format_names</a></span>(<span class="no">df</span>, <span class="kw">camelCase</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="fu"><a href="../reference/format_names.html">format_names</a></span>(<span class="no">df</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">old.name</span> <span class="kw">=</span> <span class="st">"new_name"</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="st">"measurement"</span>))</pre></div>
+</li>
+<li>
+<p>New generic function <code><a href="../reference/na_replace.html">na_replace()</a></code> to replace <code>NA</code> values in any data type. Its default replacement value is dependent on the data type that is given as input: <code>0</code> for numeric values and class <code>matrix</code>, <code>FALSE</code> for class <code>logical</code>, today for class <code>Date</code>, and <code>""</code> otherwise.</p>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="../reference/na_replace.html">na_replace</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">NA</span>, <span class="fl">NA</span>))
+<span class="co">#&gt; [1] 1 2 0 0</span>
+<span class="fu"><a href="../reference/na_replace.html">na_replace</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">NA</span>, <span class="fl">NA</span>), <span class="kw">replacement</span> <span class="kw">=</span> -<span class="fl">1</span>)
+<span class="co">#&gt; [1]  1  2 -1 -1</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
+<span class="no">starwars</span> <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../reference/na_replace.html">na_replace</a></span>(<span class="no">hair_color</span>) <span class="co"># only replace NAs in this column</span>
+
+<span class="no">starwars</span> <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../reference/na_replace.html">na_replace</a></span>() <span class="co"># replace NAs in all columns ("" for hair_color and 0 for birth_year)</span></pre></div>
+</li>
+</ul>
+</div>
+    <div id="cleaner-1-4-0" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.0">
+<a href="#cleaner-1-4-0" class="anchor"></a>cleaner 1.4.0<small> 2020-04-01 </small>
+</h1>
 <ul>
-<li><p>Added availability of data to header</p></li>
-<li><p>Fix for using <code>na.rm</code></p></li>
-<li><p>Fix for transforming to a visual histogram with <code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code></p></li>
-<li><p>New method for using <code><a href="https://rdrr.io/r/base/format.html">format()</a></code> on a frequency table</p></li>
+<li>New function <code><a href="../reference/rdate.html">rdate()</a></code> to generate random dates (in analogy to e.g. <code><a href="https://rdrr.io/r/stats/Uniform.html">runif()</a></code>)</li>
+<li>Frequency tables (<code><a href="../reference/freq.html">freq()</a></code>):
+<ul>
+<li>Added availability of data to header</li>
+<li>Fix for using <code>na.rm</code>
+</li>
+<li>Fix for transforming to a visual histogram with <code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code>
+</li>
+<li>New method for using <code><a href="https://rdrr.io/r/base/format.html">format()</a></code> on a frequency table</li>
 <li>
 <p>New method for transforming the values of a frequency table to a vector with <code><a href="https://rdrr.io/r/base/vector.html">as.vector()</a></code>, which also supports dates</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(cleaner)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">dates =</span> <span class="kw"><a href="../reference/rdate.html">rdate</a></span>(<span class="dv">100</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(dates) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span>()</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">cleaner</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">dates</span> <span class="kw">=</span> <span class="fu"><a href="../reference/rdate.html">rdate</a></span>(<span class="fl">100</span>)) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../reference/freq.html">freq</a></span>(<span class="no">dates</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span>()</pre></div>
 </li>
 </ul>
 </li>
-<li><p>Fix for <code><a href="../reference/clean.html">clean_Date()</a></code> not accepting already <code>POSIX</code> or <code>Date</code> input</p></li>
-<li><p>When using <code><a href="../reference/clean.html">clean_Date(..., guess_each = TRUE)</a></code> it now accepts the <code>format</code> parameter as a vector of options to let it choose from</p></li>
+<li>Fix for <code><a href="../reference/clean.html">clean_Date()</a></code> not accepting already <code>POSIX</code> or <code>Date</code> input</li>
+<li>When using <code><a href="../reference/clean.html">clean_Date(..., guess_each = TRUE)</a></code> it now accepts the <code>format</code> parameter as a vector of options to let it choose from</li>
 <li>
 <p><code><a href="../reference/clean.html">clean_Date()</a></code> and <code>clean_POSIXct</code> gained a parameter <code>max_date</code> (that defaults to today), so that they will never return years beyond a specified date:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># old</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="kw"><a href="../reference/clean.html">clean_Date</a></span>(<span class="st">"23-01-67"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt; [1] "2067-01-23"</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co"># new</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="kw"><a href="../reference/clean.html">clean_Date</a></span>(<span class="st">"23-01-67"</span>)</span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#&gt; [1] "1967-01-23"</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt; Warning: Some years were decreased by 100 to not exceed today.</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt;          Use clean_Date(..., max_date = Inf) to prevent this.</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="kw"><a href="../reference/clean.html">clean_Date</a></span>(<span class="st">"23-01-67"</span>, <span class="dt">max_date =</span> <span class="ot">Inf</span>)</span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="co">#&gt; [1] "2067-01-23"</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="r"><span class="co"># old</span>
+<span class="fu"><a href="../reference/clean.html">clean_Date</a></span>(<span class="st">"23-01-67"</span>)
+<span class="co">#&gt; [1] "2067-01-23"</span>
+
+<span class="co"># new</span>
+<span class="fu"><a href="../reference/clean.html">clean_Date</a></span>(<span class="st">"23-01-67"</span>)
+<span class="co">#&gt; [1] "1967-01-23"</span>
+<span class="co">#&gt; Warning: Some years were decreased by 100 to not exceed today.</span>
+<span class="co">#&gt;          Use clean_Date(..., max_date = Inf) to prevent this.</span>
+<span class="fu"><a href="../reference/clean.html">clean_Date</a></span>(<span class="st">"23-01-67"</span>, <span class="kw">max_date</span> <span class="kw">=</span> <span class="fl">Inf</span>)
+<span class="co">#&gt; [1] "2067-01-23"</span></pre></div>
 </li>
 <li><p>Cleaned all code using the <code>lintr</code> package</p></li>
 </ul>
 </div>
-    <div id="cleaner-131" class="section level1">
-<h1 class="page-header">
-<a href="#cleaner-131" class="anchor"></a>cleaner 1.3.1<small> 2020-01-31 </small>
+    <div id="cleaner-1-3-1" class="section level1">
+<h1 class="page-header" data-toc-text="1.3.1">
+<a href="#cleaner-1-3-1" class="anchor"></a>cleaner 1.3.1<small> 2020-01-31 </small>
 </h1>
 <ul>
-<li>Fixed a bug when using a <code>percentage</code> class into the <code><a href="../reference/percentage.html">percentage()</a></code> function, i.e. <code><a href="../reference/percentage.html">percentage(as.percentage(1))</a></code> would fail</li>
+<li>Fixed a bug when using a <code>percentage</code> class into the <code><a href="../reference/percentage.html">percentage()</a></code> function, i.e. <code><a href="../reference/percentage.html">percentage(as.percentage(1))</a></code> would fail</li>
 <li>Fixed extremely small percentages, like <code><a href="../reference/percentage.html">as.percentage(2.5e-14)</a></code>
 </li>
 </ul>
 </div>
-    <div id="cleaner-130" class="section level1">
-<h1 class="page-header">
-<a href="#cleaner-130" class="anchor"></a>cleaner 1.3.0<small> 2020-01-24 </small>
+    <div id="cleaner-1-3-0" class="section level1">
+<h1 class="page-header" data-toc-text="1.3.0">
+<a href="#cleaner-1-3-0" class="anchor"></a>cleaner 1.3.0<small> 2020-01-24 </small>
 </h1>
 <ul>
 <li>Added functions <code><a href="../reference/clean.html">clean_double()</a></code> and <code><a href="../reference/clean.html">clean_integer()</a></code>
@@ -176,9 +208,9 @@
 <li>Fixed a bug in frequency tables where sometimes the number of digits used for percentages would be astronomical</li>
 </ul>
 </div>
-    <div id="cleaner-120" class="section level1">
-<h1 class="page-header">
-<a href="#cleaner-120" class="anchor"></a>cleaner 1.2.0<small> 2019-11-05 </small>
+    <div id="cleaner-1-2-0" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.0">
+<a href="#cleaner-1-2-0" class="anchor"></a>cleaner 1.2.0<small> 2019-11-05 </small>
 </h1>
 <ul>
 <li><strong>DUE TO CRAN POLICY: RENAMED TO PACKAGE TO <code>cleaner</code></strong></li>
@@ -190,9 +222,9 @@
 <li>Fix for digits in frequency tables for numeric values</li>
 </ul>
 </div>
-    <div id="clean-110" class="section level1">
-<h1 class="page-header">
-<a href="#clean-110" class="anchor"></a>clean 1.1.0<small> Unreleased </small>
+    <div id="clean-1-1-0" class="section level1">
+<h1 class="page-header" data-toc-text="1.1.0">
+<a href="#clean-1-1-0" class="anchor"></a>clean 1.1.0<small> Unreleased </small>
 </h1>
 <ul>
 <li>Added support for currency as a new class: <code><a href="../reference/currency.html">as.currency()</a></code> and <code><a href="../reference/clean.html">clean_currency()</a></code>. They also come with ‘S3 methods’ for <code>print</code>, <code>format</code>, <code>sum</code>, <code>min</code> and <code>max</code>.</li>
@@ -209,9 +241,9 @@
 <li>Fix for <code><a href="../reference/freq.html">freq()</a></code> where the precentage of NAs in the header was not calculated right</li>
 </ul>
 </div>
-    <div id="clean-100" class="section level1">
-<h1 class="page-header">
-<a href="#clean-100" class="anchor"></a>clean 1.0.0<small> Unreleased </small>
+    <div id="clean-1-0-0" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.0">
+<a href="#clean-1-0-0" class="anchor"></a>clean 1.0.0<small> Unreleased </small>
 </h1>
 <ul>
 <li>First release</li>
@@ -220,17 +252,9 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#cleaner-140">1.4.0</a></li>
-        <li><a href="#cleaner-131">1.3.1</a></li>
-        <li><a href="#cleaner-130">1.3.0</a></li>
-        <li><a href="#cleaner-120">1.2.0</a></li>
-        <li><a href="#clean-110">1.1.0</a></li>
-        <li><a href="#clean-100">1.0.0</a></li>
-      </ul>
-    </div>
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 
 </div>
@@ -242,7 +266,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>
