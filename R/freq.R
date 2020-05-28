@@ -82,7 +82,7 @@
 #' @section Extending the \code{freq()} function:
 #' Interested in extending the \code{freq()} function with your own class? Add a method like below to your package, and optionally define some header info by passing a \code{\link{list}} to the \code{.add_header} parameter, like below example for class \code{difftime}. This example assumes that you use the \code{roxygen2} package for package development.
 #' \preformatted{
-#' #' @exportMethod freq.difftime
+#' #' @method freq difftime
 #' #' @importFrom cleaner freq.default
 #' #' @export
 #' #' @noRd
@@ -100,7 +100,6 @@
 #' @name freq
 #' @return A \code{data.frame} (with an additional class \code{"freq"}) with five columns: \code{item}, \code{count}, \code{percent}, \code{cum_count} and \code{cum_percent}.
 #' @export
-#' @exportMethod freq
 #' @examples
 #' freq(unclean$gender, markdown = FALSE)
 #' 
@@ -115,7 +114,7 @@ freq <- function(x, ...) {
   UseMethod("freq")
 }
 
-#' @exportMethod freq.default
+#' @method freq default
 # force export this to support other packages:
 #' @export
 #' @export freq.default 
@@ -267,7 +266,7 @@ freq.default <- function(x,
                        nmax.set = nmax.set))
 }
 
-#' @exportMethod freq.default
+#' @method freq factor
 #' @export
 #' @rdname freq
 freq.factor <- function(x, ..., droplevels = FALSE) {
@@ -278,21 +277,21 @@ freq.factor <- function(x, ..., droplevels = FALSE) {
   }
 }
 
-#' @exportMethod freq.list
+#' @method freq list
 #' @export
 #' @noRd
 freq.list <- function(x, ...) {
   freq(as.data.frame(x, stringsAsFactors = FALSE), ...)
 }
 
-#' @exportMethod freq.matrix
+#' @method freq matrix
 #' @export
 #' @rdname freq
 freq.matrix <- function(x, ..., quote = FALSE) {
   freq(as.data.frame(x, stringsAsFactors = FALSE), ..., quote = quote)
 }
 
-#' @exportMethod freq.table
+#' @method freq table
 #' @export
 #' @rdname freq
 freq.table <- function(x, ..., sep = " ") {
@@ -304,7 +303,7 @@ freq.table <- function(x, ..., sep = " ") {
   freq(x, ...)
 }
 
-#' @exportMethod freq.data.frame
+#' @method freq data.frame
 #' @importFrom rlang enquos eval_tidy
 #' @export
 #' @noRd
@@ -332,8 +331,12 @@ freq.data.frame <- function(x,
   if (length(user_exprs) > 0) {
     new_list <- list(0)
     for (i in seq_len(length(user_exprs))) {
-      new_list[[i]] <- tryCatch(eval_tidy(user_exprs[[i]], data = x),
+      eval_result <- tryCatch(eval_tidy(user_exprs[[i]], data = x),
                                 error = function(e) stop(e$message, call. = FALSE))
+      if (is.data.frame(eval_result)) {
+        stop("a data.frame (instead of e.g. a column name) was passed as a parameter to freq(df, ...), this is not allowed.", call. = FALSE)
+      }
+      new_list[[i]] <- eval_result
       if (length(new_list[[i]]) == 1) {
         if (i == 1) {
           # only for first item:
@@ -375,7 +378,7 @@ freq.data.frame <- function(x,
        big.mark = big.mark)
 }
 
-#' @exportMethod freq.character
+#' @method freq character
 #' @export
 #' @noRd
 freq.character <- function(x, ...) {
@@ -384,7 +387,7 @@ freq.character <- function(x, ...) {
                                   longest = max(nchar(x), na.rm = TRUE)))
 }
 
-#' @exportMethod freq.numeric
+#' @method freq numeric
 #' @export
 #' @rdname freq
 freq.numeric <- function(x, ..., digits = 2) {
@@ -404,19 +407,19 @@ freq.numeric <- function(x, ..., digits = 2) {
                                   outliers = paste0(length(Outliers$out),
                                                     " (", percentage(length(Outliers$out) / length(x[!is.na(x)]), digits = digits), ")")))
 }
-#' @exportMethod freq.double
+#' @method freq double
 #' @export
 #' @noRd
 freq.double <- function(x, ...) {
   freq.numeric(x, ...)
 }
-#' @exportMethod freq.integer
+#' @method freq integer
 #' @export
 #' @noRd
 freq.integer <- function(x, ...) {
   freq.numeric(x, ...)
 }
-#' @exportMethod freq.Date
+#' @method freq Date
 #' @export
 #' @rdname freq
 freq.Date <- function(x, ..., format = "yyyy-mm-dd") {
@@ -430,21 +433,21 @@ freq.Date <- function(x, ..., format = "yyyy-mm-dd") {
                                     " (+", as.integer(max(x, na.rm = TRUE) - min(x, na.rm = TRUE)),
                                     " days)")))
 }
-#' @exportMethod freq.POSIXt
+#' @method freq POSIXt
 #' @export
 #' @noRd
 freq.POSIXt <- function(x, ...) {
   freq.Date(x, ...)
 }
 
-#' @exportMethod freq.difftime
+#' @method freq difftime
 #' @export
 #' @noRd
 freq.difftime <- function(x, ...) {
   freq.default(x = x, ...,
                .add_header = list(units = attributes(x)$units))
 }
-#' @exportMethod freq.hms
+#' @method freq hms
 #' @export
 #' @rdname freq
 freq.hms <- function(x, ..., format = "HH:MM:SS") {
@@ -605,7 +608,7 @@ header <- function(f, property = NULL) {
 }
 
 #' @rdname freq
-#' @exportMethod print.freq
+#' @method print freq
 #' @importFrom knitr kable
 #' @importFrom crayon bold silver
 #' @export
@@ -744,7 +747,7 @@ print.freq <- function(x,
     footer <- paste(footer,
                     " -- omitted ",
                     format(x.rows - opt$nmax, big.mark = opt$big.mark, decimal.mark = opt$decimal.mark),
-                    " entries, n = ",
+                    paste0(" ", ifelse(x.rows - opt$nmax == 1, "entry", "entries"), ", n = "),
                     format(x.unprinted, big.mark = opt$big.mark, decimal.mark = opt$decimal.mark),
                     " (",
                     percentage(x.unprinted / (x.unprinted + x.printed), digits = opt$digits, decimal.mark = opt$decimal.mark),
@@ -843,7 +846,7 @@ print.freq <- function(x,
 }
 
 #' @noRd
-#' @exportMethod as.data.frame.freq
+#' @method as.data.frame freq
 #' @export
 as.data.frame.freq <- function(x, ...) {
   attr(x, "opt") <- NULL
@@ -852,7 +855,7 @@ as.data.frame.freq <- function(x, ...) {
 }
 
 #' @noRd
-#' @exportMethod hist.freq
+#' @method hist freq
 #' @export
 #' @importFrom graphics hist
 hist.freq <- function(x, breaks = "Sturges", main = NULL, xlab = NULL, ...) {
@@ -880,7 +883,7 @@ hist.freq <- function(x, breaks = "Sturges", main = NULL, xlab = NULL, ...) {
 }
 
 #' @noRd
-#' @exportMethod boxplot.freq
+#' @method boxplot freq
 #' @export
 #' @importFrom graphics boxplot
 boxplot.freq <- function(x, main = NULL, xlab = NULL, ...) {
@@ -907,7 +910,7 @@ boxplot.freq <- function(x, main = NULL, xlab = NULL, ...) {
 }
 
 #' @noRd
-#' @exportMethod plot.freq
+#' @method plot freq
 #' @importFrom graphics plot
 #' @export
 plot.freq <- function(x, y, ...) {
@@ -921,7 +924,7 @@ plot.freq <- function(x, y, ...) {
 }
 
 #' @noRd
-#' @exportMethod as.vector.freq
+#' @method as.vector freq
 #' @export
 as.vector.freq <- function(x, ...) {
   v <- as.vector(rep(x$item, x$count), ...)
@@ -939,7 +942,7 @@ as.vector.freq <- function(x, ...) {
 }
 
 #' @noRd
-#' @exportMethod format.freq
+#' @method format freq
 #' @export
 format.freq <- function(x, digits = 2, ...) {
   x <- as.data.frame(x) # there's a method for that: as.data.frame.freq

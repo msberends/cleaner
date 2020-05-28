@@ -70,7 +70,6 @@
 #'   \item{\code{clean_POSIXct()}: classes \code{POSIXct/POSIXt}}
 #' }
 #' @export
-#' @exportMethod clean
 #' @source \href{http://www.bis.org/publ/rpfx16fx.pdf}{Triennial Central Bank Survey Foreign exchange turnover in April 2016} (PDF). Bank for International Settlements. 11 December 2016. p. 10.
 #' @examples 
 #' clean_logical(c("Yes", "No"))   # English
@@ -125,7 +124,7 @@ clean <- function(x) {
   UseMethod("clean")
 }
 
-#' @exportMethod clean.default
+#' @method clean default
 #' @export
 #' @noRd
 clean.default <- function(x, ...) {
@@ -158,7 +157,7 @@ clean.default <- function(x, ...) {
   fn_winner(x)
 }
 
-#' @exportMethod clean.data.frame
+#' @method clean data.frame
 #' @export
 #' @rdname clean
 clean.data.frame <- function(x) {

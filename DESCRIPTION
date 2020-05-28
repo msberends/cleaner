@@ -1,7 +1,7 @@
 Package: cleaner
 Title: Fast and Easy Data Cleaning
 Version: 1.4.0.9000
-Date: 2020-04-23
+Date: 2020-05-28
 Authors@R: 
   person(
     given = c("Matthijs", "S."),

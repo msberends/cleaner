@@ -54,7 +54,7 @@ is.currency <- function(x) {
   identical(class(x), c("currency", "numeric"))
 }
 
-#' @exportMethod [.currency
+#' @method [ currency
 #' @export
 #' @noRd
 "[.currency" <- function(x, ...) {
@@ -62,7 +62,7 @@ is.currency <- function(x) {
   attributes(y) <- attributes(x)
   y
 }
-#' @exportMethod [<-.currency
+#' @method [<- currency
 #' @export
 #' @noRd
 "[<-.currency" <- function(value) {
@@ -70,7 +70,7 @@ is.currency <- function(x) {
   attributes(y) <- attributes(value)
   y
 }
-#' @exportMethod [[.currency
+#' @method [[ currency
 #' @export
 #' @noRd
 "[[.currency" <- function(x, ...) {
@@ -78,7 +78,7 @@ is.currency <- function(x) {
   attributes(y) <- attributes(x)
   y
 }
-#' @exportMethod [[<-.currency
+#' @method [[<- currency
 #' @export
 #' @noRd
 "[[<-.currency" <- function(value) {
@@ -86,7 +86,7 @@ is.currency <- function(x) {
   attributes(y) <- attributes(value)
   y
 }
-#' @exportMethod c.currency
+#' @method c currency
 #' @export
 #' @noRd
 c.currency <- function(x, ...) {
@@ -107,7 +107,7 @@ txt2symb <- function(txt) {
 }
 
 #' @rdname currency
-#' @exportMethod print.currency
+#' @method print currency
 #' @export
 print.currency <- function(x, 
                            decimal.mark = getOption("OutDec"),
@@ -131,7 +131,7 @@ print.currency <- function(x,
 }
 
 #' @rdname currency
-#' @exportMethod format.currency
+#' @method format currency
 #' @export
 format.currency <- function(x, 
                             currency_symbol = attributes(x)$currency_symbol,
@@ -154,35 +154,35 @@ format.currency <- function(x,
 }
 
 #' @noRd
-#' @exportMethod sum.currency
+#' @method sum currency
 #' @export
 sum.currency <- function(x, ...) {
   as.currency(sum(as.numeric(x), ...), currency_symbol = attributes(x)$currency_symbol)
 }
 
 #' @noRd
-#' @exportMethod min.currency
+#' @method min currency
 #' @export
 min.currency <- function(x, ...) {
   as.currency(min(as.numeric(x), ...), currency_symbol = attributes(x)$currency_symbol)
 }
 
 #' @noRd
-#' @exportMethod max.currency
+#' @method max currency
 #' @export
 max.currency <- function(x, ...) {
   as.currency(max(as.numeric(x), ...), currency_symbol = attributes(x)$currency_symbol)
 }
 
 #' @noRd
-#' @exportMethod mean.currency
+#' @method mean currency
 #' @export
 mean.currency <- function(x, ...) {
   as.currency(mean(as.numeric(x), ...), currency_symbol = attributes(x)$currency_symbol)
 }
 
 #' @noRd
-#' @exportMethod median.currency
+#' @method median currency
 #' @importFrom stats median
 #' @export
 median.currency <- function(x, ...) {
@@ -190,7 +190,7 @@ median.currency <- function(x, ...) {
 }
 
 #' @noRd
-#' @exportMethod summary.currency
+#' @method summary currency
 #' @export
 summary.currency <- function(object, ...) {
   c("Class" = paste0("currency", txt2symb(trimws(attributes(object)$currency_symbol))),

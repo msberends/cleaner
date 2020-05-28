@@ -160,7 +160,7 @@ The function \code{top_freq} will include more than \code{n} rows if there are t
 
 Interested in extending the \code{freq()} function with your own class? Add a method like below to your package, and optionally define some header info by passing a \code{\link{list}} to the \code{.add_header} parameter, like below example for class \code{difftime}. This example assumes that you use the \code{roxygen2} package for package development.
 \preformatted{
-#' @exportMethod freq.difftime
+#' @method freq difftime
 #' @importFrom cleaner freq.default
 #' @export
 #' @noRd

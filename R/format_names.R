@@ -71,7 +71,10 @@ format_names <- function(x,
     current <- gsub("[^a-zA-Z0-9]+", "", current)
     current <- gsub("^(.)", "\\L\\1", current, perl = TRUE)
   } else if (isTRUE(snake_case)) {
-    current <- tolower(gsub("[^a-zA-Z0-9]+", "_", current))
+    current <- gsub("[^a-zA-Z0-9]+", "_", current)
+    current <- gsub("([a-z0-9])([A-Z])", "\\1_\\2", current)
+    current <- gsub("([a-zA-Z])([0-9])", "\\1_\\2", current)
+    current <- tolower(current)
   }
   
   if (isTRUE(toupper)) {

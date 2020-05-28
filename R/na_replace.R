@@ -25,7 +25,6 @@
 #' @param replacement value to replace \code{NA} with. This is at default: \code{0} for numeric values and class \link{matrix}, \code{FALSE} for class \link{logical}, today for class \code{Date}, and \code{""} otherwise. Can also be a vector with the length of the number of NAs of \code{x} (\code{sum(is.na(x))}). When \code{x} is a \code{data.frame}, this can be a vector with the length of the number of columns to be affected, see Examples.
 #' @details All functions preserve attributes. Within a \code{list} or \code{data.frame}, all attributes per index/item/column are also preserved.
 #' @export
-#' @exportMethod na_replace
 #' @rdname na_replace
 #' @examples
 #' mtrx <- matrix(c(1, 2, NA, 3), nrow = 2)
@@ -79,14 +78,14 @@ na_replace_exec <- function(x, replacement) {
   x
 }
 
-#' @exportMethod na_replace.default
+#' @method na_replace default
 #' @export
 #' @rdname na_replace
 na_replace.default <- function(x, replacement = "", ...) {
   na_replace_exec(x, replacement)
 }
 
-#' @exportMethod na_replace.data.frame
+#' @method na_replace data.frame
 #' @importFrom rlang enquos eval_tidy as_name
 #' @rdname na_replace
 #' @export
@@ -148,7 +147,7 @@ na_replace.data.frame <- function(x, ..., replacement = NULL) {
   x
 }
 
-#' @exportMethod na_replace.matrix
+#' @method na_replace matrix
 #' @rdname na_replace
 #' @export
 na_replace.matrix <- function(x, replacement = 0, ...) {
@@ -163,7 +162,7 @@ na_replace.matrix <- function(x, replacement = 0, ...) {
   mtrx
 }
 
-#' @exportMethod na_replace.list
+#' @method na_replace list
 #' @rdname na_replace
 #' @export
 na_replace.list <- function(x, replacement = NULL, ...) {
@@ -186,35 +185,35 @@ na_replace.list <- function(x, replacement = NULL, ...) {
   lst
 }
 
-#' @exportMethod na_replace.character
+#' @method na_replace character
 #' @noRd
 #' @export
 na_replace.character <- function(x, replacement = "", ...) {
   na_replace_exec(x, replacement)
 }
 
-#' @exportMethod na_replace.numeric
+#' @method na_replace numeric
 #' @rdname na_replace
 #' @export
 na_replace.numeric <- function(x, replacement = 0, ...) {
   na_replace_exec(x, replacement)
 }
 
-#' @exportMethod na_replace.integer
+#' @method na_replace integer
 #' @noRd
 #' @export
 na_replace.integer <- function(x, replacement = 0, ...) {
   na_replace_exec(x, replacement)
 }
 
-#' @exportMethod na_replace.Date
+#' @method na_replace Date
 #' @rdname na_replace
 #' @export
 na_replace.Date <- function(x, replacement = Sys.Date(), ...) {
   na_replace_exec(x, replacement)
 }
 
-#' @exportMethod na_replace.logical
+#' @method na_replace logical
 #' @rdname na_replace
 #' @export
 na_replace.logical <- function(x, replacement = FALSE, ...) {

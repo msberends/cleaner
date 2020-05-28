@@ -57,7 +57,7 @@ as.percentage <- function(x, ...) {
 }
 
 #' @noRd
-#' @exportMethod as.double.percentage
+#' @method as.double percentage
 #' @export
 as.double.percentage <- function(x, ...) {
   as.double(structure(x, class = "numeric"))
@@ -69,7 +69,7 @@ is.percentage <- function(x) {
   identical(class(x), c("percentage", "numeric"))
 }
 
-#' @exportMethod [.percentage
+#' @method [ percentage
 #' @export
 #' @noRd
 "[.percentage" <- function(x, ...) {
@@ -77,7 +77,7 @@ is.percentage <- function(x) {
   attributes(y) <- attributes(x)
   y
 }
-#' @exportMethod [<-.percentage
+#' @method [<- percentage
 #' @export
 #' @noRd
 "[<-.percentage" <- function(value) {
@@ -85,7 +85,7 @@ is.percentage <- function(x) {
   attributes(y) <- attributes(value)
   y
 }
-#' @exportMethod [[.percentage
+#' @method [[ percentage
 #' @export
 #' @noRd
 "[[.percentage" <- function(x, ...) {
@@ -93,7 +93,7 @@ is.percentage <- function(x) {
   attributes(y) <- attributes(x)
   y
 }
-#' @exportMethod [[<-.percentage
+#' @method [[<- percentage
 #' @export
 #' @noRd
 "[[<-.percentage" <- function(value) {
@@ -101,7 +101,7 @@ is.percentage <- function(x) {
   attributes(y) <- attributes(value)
   y
 }
-#' @exportMethod c.percentage
+#' @method c percentage
 #' @export
 #' @noRd
 c.percentage <- function(x, ...) {
@@ -111,14 +111,14 @@ c.percentage <- function(x, ...) {
 }
 
 #' @rdname percentage
-#' @exportMethod print.percentage
+#' @method print percentage
 #' @export
 print.percentage <- function(x, ...) {
   print(format(x), quote = FALSE)
 }
 
 #' @rdname percentage
-#' @exportMethod format.percentage
+#' @method format percentage
 #' @export
 format.percentage <- function(x, digits = NULL, ...) {
   if (is.null(digits)) {
@@ -136,42 +136,42 @@ format.percentage <- function(x, digits = NULL, ...) {
 }
 
 #' @noRd
-#' @exportMethod sum.percentage
+#' @method sum percentage
 #' @export
 sum.percentage <- function(x, ...) {
   as.percentage(sum(as.double(x), ...))
 }
 
 #' @noRd
-#' @exportMethod min.percentage
+#' @method min percentage
 #' @export
 min.percentage <- function(x, ...) {
   as.percentage(min(as.double(x), ...))
 }
 
 #' @noRd
-#' @exportMethod max.percentage
+#' @method max percentage
 #' @export
 max.percentage <- function(x, ...) {
   as.percentage(max(as.double(x), ...))
 }
 
 #' @noRd
-#' @exportMethod mean.percentage
+#' @method mean percentage
 #' @export
 mean.percentage <- function(x, ...) {
   as.percentage(mean(as.double(x), ...))
 }
 
 #' @noRd
-#' @exportMethod median.percentage
+#' @method median percentage
 #' @export
 median.percentage <- function(x, ...) {
   as.percentage(median(as.double(x), ...))
 }
 
 #' @noRd
-#' @exportMethod summary.percentage
+#' @method summary percentage
 #' @export
 summary.percentage <- function(object, ...) {
   c("Class" = "percentage",
