@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -162,8 +162,8 @@
                  <span class='kw'>name_123def</span> <span class='kw'>=</span> <span class='st'>"value"</span>,
                  <span class='kw'>This.is.a.column</span> <span class='kw'>=</span> <span class='st'>"value"</span>)
 
-<span class='fu'>format_names</span>(<span class='no'>df</span>, <span class='kw'>snake_case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;   name_341abc name_123def this_is_a_column
-#&gt; 1       value       value            value</div><div class='input'>
+<span class='fu'>format_names</span>(<span class='no'>df</span>, <span class='kw'>snake_case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;   name_341_abc name_123def this_is_a_column
+#&gt; 1        value       value            value</div><div class='input'>
 <span class='fu'>format_names</span>(<span class='no'>df</span>, <span class='kw'>camelCase</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;   name341ABC name123def thisIsAColumn
 #&gt; 1      value      value         value</div><div class='input'>
 <span class='fu'>format_names</span>(<span class='no'>df</span>, <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt;       a     b     c
@@ -172,20 +172,20 @@
 #&gt; 1       value       value         value</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>mtcars</span>) <span class='kw'>&lt;-</span> <span class='fu'>format_names</span>(<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>mtcars</span>), <span class='kw'>snake_case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>]</div><div class='output co'>#&gt;                      mpg cyl  disp  hp drat
-#&gt; mazda_rx4           21.0   6 160.0 110 3.90
-#&gt; mazda_rx4_wag       21.0   6 160.0 110 3.90
+#&gt; mazda_rx_4          21.0   6 160.0 110 3.90
+#&gt; mazda_rx_4_wag      21.0   6 160.0 110 3.90
 #&gt; datsun_710          22.8   4 108.0  93 3.85
 #&gt; hornet_4_drive      21.4   6 258.0 110 3.08
 #&gt; hornet_sportabout   18.7   8 360.0 175 3.15
 #&gt; valiant             18.1   6 225.0 105 2.76
 #&gt; duster_360          14.3   8 360.0 245 3.21
-#&gt; merc_240d           24.4   4 146.7  62 3.69
+#&gt; merc_240_d          24.4   4 146.7  62 3.69
 #&gt; merc_230            22.8   4 140.8  95 3.92
 #&gt; merc_280            19.2   6 167.6 123 3.92
-#&gt; merc_280c           17.8   6 167.6 123 3.92
-#&gt; merc_450se          16.4   8 275.8 180 3.07
-#&gt; merc_450sl          17.3   8 275.8 180 3.07
-#&gt; merc_450slc         15.2   8 275.8 180 3.07
+#&gt; merc_280_c          17.8   6 167.6 123 3.92
+#&gt; merc_450_se         16.4   8 275.8 180 3.07
+#&gt; merc_450_sl         17.3   8 275.8 180 3.07
+#&gt; merc_450_slc        15.2   8 275.8 180 3.07
 #&gt; cadillac_fleetwood  10.4   8 472.0 205 2.93
 #&gt; lincoln_continental 10.4   8 460.0 215 3.00
 #&gt; chrysler_imperial   14.7   8 440.0 230 3.23
@@ -195,15 +195,15 @@
 #&gt; toyota_corona       21.5   4 120.1  97 3.70
 #&gt; dodge_challenger    15.5   8 318.0 150 2.76
 #&gt; amc_javelin         15.2   8 304.0 150 3.15
-#&gt; camaro_z28          13.3   8 350.0 245 3.73
+#&gt; camaro_z_28         13.3   8 350.0 245 3.73
 #&gt; pontiac_firebird    19.2   8 400.0 175 3.08
-#&gt; fiat_x1_9           27.3   4  79.0  66 4.08
+#&gt; fiat_x_1_9          27.3   4  79.0  66 4.08
 #&gt; porsche_914_2       26.0   4 120.3  91 4.43
 #&gt; lotus_europa        30.4   4  95.1 113 3.77
 #&gt; ford_pantera_l      15.8   8 351.0 264 4.22
 #&gt; ferrari_dino        19.7   6 145.0 175 3.62
 #&gt; maserati_bora       15.0   8 301.0 335 3.54
-#&gt; volvo_142e          21.4   4 121.0 109 4.11</div><div class='input'>
+#&gt; volvo_142_e         21.4   4 121.0 109 4.11</div><div class='input'>
 <span class='fu'>format_names</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"new_1"</span>, <span class='st'>"new_2"</span>))</div><div class='output co'>#&gt; $new_1
 #&gt; [1] 1
 #&gt; 
@@ -233,7 +233,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

@@ -1,4 +1,4 @@
-# cleaner 1.4.0.9000
+# cleaner 1.5.0
 
 * New function `format_names()` to quickly and easily change names of `data.frame` columns, `list`s or `character` vectors.
   ```r
@@ -26,6 +26,7 @@
   starwars %>% 
     na_replace() # replace NAs in all columns ("" for hair_color and 0 for birth_year)
   ```
+* Support for the upcoming R 4.1.0
 
 # cleaner 1.4.0
 

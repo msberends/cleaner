@@ -138,7 +138,7 @@ na_replace.data.frame <- function(x, ..., replacement = NULL) {
       if (vctr_colname %in% colnames(attrbt$groups)) {
         attrbt$groups[which(is.na(attrbt$groups[, vctr_colname, drop = TRUE])), vctr_colname] <- replace_val
         # groups are always ordered on alphabet, so order it again with the new replacement value
-        attrbt$groups <- attrbt$groups[order(attrbt$groups[, vctr_colname]),]
+        attrbt$groups <- attrbt$groups[order(attrbt$groups[, vctr_colname]), ]
       }
     }
   }

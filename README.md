@@ -228,6 +228,49 @@ Use `clean()` to clean data. It guesses what kind of data class would best fit y
   #> 2       31.40
   ```
 
+#### Other cleaning
+
+* Use `format_names()` to quickly and easily change names of `data.frame` columns, `list`s or `character` vectors.
+  ```r
+  format_names(df, snake_case = TRUE)
+  format_names(df, c(old.name = "new_name", value = "measurement"))
+  
+  library(dplyr)
+  starwars %>% 
+    format_names(camelCase = TRUE) %>% # changes column names
+    mutate(name = name %>% 
+             format_names(snake_case = TRUE)) # changes values in column
+  ```
+  
+* Use the generic function `na_replace()` to replace `NA` values in any data type. Its default replacement value is dependent on the data type that is given as input: `0` for numeric values and class `matrix`, `FALSE` for class `logical`, today for class `Date`, and `""` otherwise.
+
+  ```r
+  na_replace(c(1, 2, NA, NA))
+  #> [1] 1 2 0 0
+  na_replace(c(1, 2, NA, NA), replacement = -1)
+  #> [1]  1  2 -1 -1
+  na_replace(c(1, 2, NA, NA), replacement = c(0, -1))
+  #> [1]  1  2  0 -1
+  
+  na_replace(c("a", "b", NA, NA))
+  #> [1] "a" "b" ""  ""
+  ```
+  
+  It also supports replacing `NA`s in complete data sets and supports grouped variables used by the `dplyr` package:
+  
+  ```r
+  library(dplyr)
+  starwars %>% 
+    na_replace(hair_color) # only replace NAs in this column
+    
+  starwars %>% 
+    na_replace() # replace NAs in all columns ("" for hair_color and 0 for birth_year)
+    
+  starwars %>%
+    group_by(hair_color) %>%
+    na_replace(hair_color, replacement = "TEST!") %>%
+    summarise(n = n())
+  ```
   
 ### Checking
 

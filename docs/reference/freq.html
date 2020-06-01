@@ -75,7 +75,7 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -307,7 +307,7 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
     
 
 <p>Interested in extending the <code>freq()</code> function with your own class? Add a method like below to your package, and optionally define some header info by passing a <code><a href='https://rdrr.io/r/base/list.html'>list</a></code> to the <code>.add_header</code> parameter, like below example for class <code>difftime</code>. This example assumes that you use the <code>roxygen2</code> package for package development.</p><pre>
-<span class='co'>#' @exportMethod freq.difftime</span>
+<span class='co'>#' @method freq difftime</span>
 <span class='co'>#' @importFrom cleaner freq.default</span>
 <span class='co'>#' @export</span>
 <span class='co'>#' @noRd</span>
@@ -371,7 +371,7 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -116,9 +116,9 @@
       <small>Source: <a href='https://github.com/msberends/cleaner/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="cleaner-1-4-0-9000" class="section level1">
-<h1 class="page-header" data-toc-text="1.4.0.9000">
-<a href="#cleaner-1-4-0-9000" class="anchor"></a>cleaner 1.4.0.9000<small> Unreleased </small>
+    <div id="cleaner-150" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.0">
+<a href="#cleaner-150" class="anchor"></a>cleaner 1.5.0<small> Unreleased </small>
 </h1>
 <ul>
 <li>
@@ -146,22 +146,22 @@
 <span class="no">starwars</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/na_replace.html">na_replace</a></span>() <span class="co"># replace NAs in all columns ("" for hair_color and 0 for birth_year)</span></pre></div>
 </li>
+<li><p>Support for the upcoming R 4.1.0</p></li>
 </ul>
 </div>
-    <div id="cleaner-1-4-0" class="section level1">
+    <div id="cleaner-140" class="section level1">
 <h1 class="page-header" data-toc-text="1.4.0">
-<a href="#cleaner-1-4-0" class="anchor"></a>cleaner 1.4.0<small> 2020-04-01 </small>
+<a href="#cleaner-140" class="anchor"></a>cleaner 1.4.0<small> 2020-04-01 </small>
 </h1>
 <ul>
-<li>New function <code><a href="../reference/rdate.html">rdate()</a></code> to generate random dates (in analogy to e.g. <code><a href="https://rdrr.io/r/stats/Uniform.html">runif()</a></code>)</li>
-<li>Frequency tables (<code><a href="../reference/freq.html">freq()</a></code>):
+<li><p>New function <code><a href="../reference/rdate.html">rdate()</a></code> to generate random dates (in analogy to e.g. <code><a href="https://rdrr.io/r/stats/Uniform.html">runif()</a></code>)</p></li>
+<li>
+<p>Frequency tables (<code><a href="../reference/freq.html">freq()</a></code>):</p>
 <ul>
-<li>Added availability of data to header</li>
-<li>Fix for using <code>na.rm</code>
-</li>
-<li>Fix for transforming to a visual histogram with <code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code>
-</li>
-<li>New method for using <code><a href="https://rdrr.io/r/base/format.html">format()</a></code> on a frequency table</li>
+<li><p>Added availability of data to header</p></li>
+<li><p>Fix for using <code>na.rm</code></p></li>
+<li><p>Fix for transforming to a visual histogram with <code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code></p></li>
+<li><p>New method for using <code><a href="https://rdrr.io/r/base/format.html">format()</a></code> on a frequency table</p></li>
 <li>
 <p>New method for transforming the values of a frequency table to a vector with <code><a href="https://rdrr.io/r/base/vector.html">as.vector()</a></code>, which also supports dates</p>
 <div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
@@ -172,8 +172,8 @@
 </li>
 </ul>
 </li>
-<li>Fix for <code><a href="../reference/clean.html">clean_Date()</a></code> not accepting already <code>POSIX</code> or <code>Date</code> input</li>
-<li>When using <code><a href="../reference/clean.html">clean_Date(..., guess_each = TRUE)</a></code> it now accepts the <code>format</code> parameter as a vector of options to let it choose from</li>
+<li><p>Fix for <code><a href="../reference/clean.html">clean_Date()</a></code> not accepting already <code>POSIX</code> or <code>Date</code> input</p></li>
+<li><p>When using <code><a href="../reference/clean.html">clean_Date(..., guess_each = TRUE)</a></code> it now accepts the <code>format</code> parameter as a vector of options to let it choose from</p></li>
 <li>
 <p><code><a href="../reference/clean.html">clean_Date()</a></code> and <code>clean_POSIXct</code> gained a parameter <code>max_date</code> (that defaults to today), so that they will never return years beyond a specified date:</p>
 <div class="sourceCode" id="cb4"><pre class="r"><span class="co"># old</span>
@@ -191,19 +191,19 @@
 <li><p>Cleaned all code using the <code>lintr</code> package</p></li>
 </ul>
 </div>
-    <div id="cleaner-1-3-1" class="section level1">
+    <div id="cleaner-131" class="section level1">
 <h1 class="page-header" data-toc-text="1.3.1">
-<a href="#cleaner-1-3-1" class="anchor"></a>cleaner 1.3.1<small> 2020-01-31 </small>
+<a href="#cleaner-131" class="anchor"></a>cleaner 1.3.1<small> 2020-01-31 </small>
 </h1>
 <ul>
-<li>Fixed a bug when using a <code>percentage</code> class into the <code><a href="../reference/percentage.html">percentage()</a></code> function, i.e. <code><a href="../reference/percentage.html">percentage(as.percentage(1))</a></code> would fail</li>
+<li>Fixed a bug when using a <code>percentage</code> class into the <code><a href="../reference/percentage.html">percentage()</a></code> function, i.e. <code><a href="../reference/percentage.html">percentage(as.percentage(1))</a></code> would fail</li>
 <li>Fixed extremely small percentages, like <code><a href="../reference/percentage.html">as.percentage(2.5e-14)</a></code>
 </li>
 </ul>
 </div>
-    <div id="cleaner-1-3-0" class="section level1">
+    <div id="cleaner-130" class="section level1">
 <h1 class="page-header" data-toc-text="1.3.0">
-<a href="#cleaner-1-3-0" class="anchor"></a>cleaner 1.3.0<small> 2020-01-24 </small>
+<a href="#cleaner-130" class="anchor"></a>cleaner 1.3.0<small> 2020-01-24 </small>
 </h1>
 <ul>
 <li>Added functions <code><a href="../reference/clean.html">clean_double()</a></code> and <code><a href="../reference/clean.html">clean_integer()</a></code>
@@ -213,9 +213,9 @@
 <li>Fixed a bug in frequency tables where sometimes the number of digits used for percentages would be astronomical</li>
 </ul>
 </div>
-    <div id="cleaner-1-2-0" class="section level1">
+    <div id="cleaner-120" class="section level1">
 <h1 class="page-header" data-toc-text="1.2.0">
-<a href="#cleaner-1-2-0" class="anchor"></a>cleaner 1.2.0<small> 2019-11-05 </small>
+<a href="#cleaner-120" class="anchor"></a>cleaner 1.2.0<small> 2019-11-05 </small>
 </h1>
 <ul>
 <li><strong>DUE TO CRAN POLICY: RENAMED TO PACKAGE TO <code>cleaner</code></strong></li>
@@ -227,9 +227,9 @@
 <li>Fix for digits in frequency tables for numeric values</li>
 </ul>
 </div>
-    <div id="clean-1-1-0" class="section level1">
+    <div id="clean-110" class="section level1">
 <h1 class="page-header" data-toc-text="1.1.0">
-<a href="#clean-1-1-0" class="anchor"></a>clean 1.1.0<small> Unreleased </small>
+<a href="#clean-110" class="anchor"></a>clean 1.1.0<small> Unreleased </small>
 </h1>
 <ul>
 <li>Added support for currency as a new class: <code><a href="../reference/currency.html">as.currency()</a></code> and <code><a href="../reference/clean.html">clean_currency()</a></code>. They also come with ‘S3 methods’ for <code>print</code>, <code>format</code>, <code>sum</code>, <code>min</code> and <code>max</code>.</li>
@@ -246,9 +246,9 @@
 <li>Fix for <code><a href="../reference/freq.html">freq()</a></code> where the precentage of NAs in the header was not calculated right</li>
 </ul>
 </div>
-    <div id="clean-1-0-0" class="section level1">
+    <div id="clean-100" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.0">
-<a href="#clean-1-0-0" class="anchor"></a>clean 1.0.0<small> Unreleased </small>
+<a href="#clean-100" class="anchor"></a>clean 1.0.0<small> Unreleased </small>
 </h1>
 <ul>
 <li>First release</li>
@@ -271,7 +271,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
