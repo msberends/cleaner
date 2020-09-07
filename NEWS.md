@@ -1,3 +1,7 @@
+# cleaner 1.5.9xxx
+
+* New function `format_p_value()` to format raw p values according to the APA guideline
+
 # cleaner 1.5.0
 
 * New function `format_names()` to quickly and easily change names of `data.frame` columns, `list`s or `character` vectors.

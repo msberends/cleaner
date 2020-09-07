@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.9000</span>
       </span>
     </div>
 
@@ -123,12 +123,12 @@
     </div>
 
     <pre class="usage"><span class='fu'>format_names</span>(
-  <span class='no'>x</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>snake_case</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>camelCase</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>tolower</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>toupper</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='kw'>x</span>,
+  <span class='kw'>...</span>,
+  snake_case = <span class='fl'>FALSE</span>,
+  camelCase = <span class='fl'>FALSE</span>,
+  tolower = <span class='fl'>FALSE</span>,
+  toupper = <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -158,20 +158,25 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>Name.341ABC</span> <span class='kw'>=</span> <span class='st'>"value"</span>,
-                 <span class='kw'>name_123def</span> <span class='kw'>=</span> <span class='st'>"value"</span>,
-                 <span class='kw'>This.is.a.column</span> <span class='kw'>=</span> <span class='st'>"value"</span>)
-
-<span class='fu'>format_names</span>(<span class='no'>df</span>, <span class='kw'>snake_case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;   name_341_abc name_123def this_is_a_column
+    <pre class="examples"><div class='input'><span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(Name.341ABC = <span class='st'>"value"</span>, 
+                 name_123def = <span class='st'>"value"</span>,
+                 This.is.a.column = <span class='st'>"value"</span>)
+                 
+<span class='fu'>format_names</span>(<span class='kw'>df</span>, snake_case = <span class='fl'>TRUE</span>)
+</div><div class='output co'>#&gt;   name_341_abc name_123def this_is_a_column
 #&gt; 1        value       value            value</div><div class='input'>
-<span class='fu'>format_names</span>(<span class='no'>df</span>, <span class='kw'>camelCase</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;   name341ABC name123def thisIsAColumn
+<span class='fu'>format_names</span>(<span class='kw'>df</span>, camelCase = <span class='fl'>TRUE</span>)
+</div><div class='output co'>#&gt;   name341ABC name123def thisIsAColumn
 #&gt; 1      value      value         value</div><div class='input'>
-<span class='fu'>format_names</span>(<span class='no'>df</span>, <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt;       a     b     c
+<span class='fu'>format_names</span>(<span class='kw'>df</span>, <span class='kw'>letters</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>])
+</div><div class='output co'>#&gt;       a     b     c
 #&gt; 1 value value value</div><div class='input'>
-<span class='fu'>format_names</span>(<span class='no'>df</span>, <span class='kw'>This.is.a.column</span> <span class='kw'>=</span> <span class='st'>"a_new_colname"</span>)</div><div class='output co'>#&gt;   Name.341ABC name_123def a_new_colname
+<span class='fu'>format_names</span>(<span class='kw'>df</span>, This.is.a.column = <span class='st'>"a_new_colname"</span>)
+</div><div class='output co'>#&gt;   Name.341ABC name_123def a_new_colname
 #&gt; 1       value       value         value</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>mtcars</span>) <span class='kw'>&lt;-</span> <span class='fu'>format_names</span>(<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>mtcars</span>), <span class='kw'>snake_case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>mtcars</span>[, <span class='fl'>1</span>:<span class='fl'>5</span>]</div><div class='output co'>#&gt;                      mpg cyl  disp  hp drat
+<span class='fu'><a href='https://tibble.tidyverse.org/reference/rownames.html'>rownames</a></span>(<span class='kw'>mtcars</span>) <span class='op'>&lt;-</span> <span class='fu'>format_names</span>(<span class='fu'><a href='https://tibble.tidyverse.org/reference/rownames.html'>rownames</a></span>(<span class='kw'>mtcars</span>), snake_case = <span class='fl'>TRUE</span>)
+<span class='kw'>mtcars</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>]
+</div><div class='output co'>#&gt;                      mpg cyl  disp  hp drat
 #&gt; mazda_rx_4          21.0   6 160.0 110 3.90
 #&gt; mazda_rx_4_wag      21.0   6 160.0 110 3.90
 #&gt; datsun_710          22.8   4 108.0  93 3.85
@@ -204,20 +209,22 @@
 #&gt; ferrari_dino        19.7   6 145.0 175 3.62
 #&gt; maserati_bora       15.0   8 301.0 335 3.54
 #&gt; volvo_142_e         21.4   4 121.0 109 4.11</div><div class='input'>
-<span class='fu'>format_names</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"new_1"</span>, <span class='st'>"new_2"</span>))</div><div class='output co'>#&gt; $new_1
+<span class='fu'>format_names</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(a = <span class='fl'>1</span>, b = <span class='fl'>2</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"new_1"</span>, <span class='st'>"new_2"</span>))
+</div><div class='output co'>#&gt; $new_1
 #&gt; [1] 1
 #&gt; 
 #&gt; $new_2
 #&gt; [1] 2
 #&gt; </div><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='no'>starwars</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>format_names</span>(<span class='kw'>camelCase</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>        <span class='co'># new column names</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>name</span> <span class='kw'>%&gt;%</span>
-           <span class='fu'>format_names</span>(<span class='no'>name</span>,
-                        <span class='kw'>snake_case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) <span class='co'># new values in column</span>
-}</div></pre>
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
+<span class='kw'>starwars</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>format_names</span>(camelCase = <span class='fl'>TRUE</span>) <span class='op'>%&gt;%</span>        <span class='co'># new column names</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(name = <span class='kw'>name</span> <span class='op'>%&gt;%</span> 
+           <span class='fu'>format_names</span>(<span class='kw'>name</span>, 
+                        snake_case = <span class='fl'>TRUE</span>)) <span class='co'># new values in column</span>
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -233,7 +240,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

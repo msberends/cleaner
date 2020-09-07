@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.9000</span>
       </span>
     </div>
 
@@ -122,28 +122,28 @@
     <p>This is a generic function to replace NA values in data. It takes most data types as input and is extendible by other packages.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>na_replace</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>na_replace</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>na_replace</span>(<span class='no'>x</span>, <span class='kw'>replacement</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='no'>...</span>)
+<span class='fu'>na_replace</span>(<span class='kw'>x</span>, replacement = <span class='st'>""</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>na_replace</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>replacement</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>na_replace</span>(<span class='kw'>x</span>, <span class='kw'>...</span>, replacement = <span class='kw'>NULL</span>)
 
 <span class='co'># S3 method for matrix</span>
-<span class='fu'>na_replace</span>(<span class='no'>x</span>, <span class='kw'>replacement</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)
+<span class='fu'>na_replace</span>(<span class='kw'>x</span>, replacement = <span class='fl'>0</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for list</span>
-<span class='fu'>na_replace</span>(<span class='no'>x</span>, <span class='kw'>replacement</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>na_replace</span>(<span class='kw'>x</span>, replacement = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>na_replace</span>(<span class='no'>x</span>, <span class='kw'>replacement</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)
+<span class='fu'>na_replace</span>(<span class='kw'>x</span>, replacement = <span class='fl'>0</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for Date</span>
-<span class='fu'>na_replace</span>(<span class='no'>x</span>, <span class='kw'>replacement</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(), <span class='no'>...</span>)
+<span class='fu'>na_replace</span>(<span class='kw'>x</span>, replacement = <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(), <span class='kw'>...</span>)
 
 <span class='co'># S3 method for logical</span>
-<span class='fu'>na_replace</span>(<span class='no'>x</span>, <span class='kw'>replacement</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>na_replace</span>(<span class='kw'>x</span>, replacement = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -167,51 +167,64 @@
     <p>All functions preserve attributes. Within a <code>list</code> or <code>data.frame</code>, all attributes per index/item/column are also preserved.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>mtrx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>NA</span>, <span class='fl'>3</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-<span class='no'>mtrx</span></div><div class='output co'>#&gt;      [,1] [,2]
+    <pre class="examples"><div class='input'><span class='kw'>mtrx</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>NA</span>, <span class='fl'>3</span>), nrow = <span class='fl'>2</span>)
+<span class='kw'>mtrx</span>
+</div><div class='output co'>#&gt;      [,1] [,2]
 #&gt; [1,]    1   NA
-#&gt; [2,]    2    3</div><div class='input'><span class='fu'>na_replace</span>(<span class='no'>mtrx</span>)</div><div class='output co'>#&gt;      [,1] [,2]
+#&gt; [2,]    2    3</div><div class='input'><span class='fu'>na_replace</span>(<span class='kw'>mtrx</span>)
+</div><div class='output co'>#&gt;      [,1] [,2]
 #&gt; [1,]    1    0
 #&gt; [2,]    2    3</div><div class='input'>
-<span class='fu'>na_replace</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>))</div><div class='output co'>#&gt; [1] 1 2 0 0</div><div class='input'><span class='fu'>na_replace</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>), <span class='kw'>replacement</span> <span class='kw'>=</span> -<span class='fl'>1</span>)</div><div class='output co'>#&gt; [1]  1  2 -1 -1</div><div class='input'><span class='fu'>na_replace</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>), <span class='kw'>replacement</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, -<span class='fl'>1</span>))</div><div class='output co'>#&gt; [1]  1  2  0 -1</div><div class='input'>
-<span class='fu'>na_replace</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(), <span class='fl'>NA</span>)) <span class='co'># replacement defaults to 'today'</span></div><div class='output co'>#&gt; [1] "2020-06-01" "2020-06-01"</div><div class='input'>
-<span class='fu'>na_replace</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>FALSE</span>, <span class='fl'>NA</span>))</div><div class='output co'>#&gt; [1]  TRUE FALSE FALSE</div><div class='input'><span class='fu'>na_replace</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>FALSE</span>, <span class='fl'>NA</span>), <span class='kw'>replacement</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1]  TRUE FALSE  TRUE</div><div class='input'>
+<span class='fu'>na_replace</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>))
+</div><div class='output co'>#&gt; [1] 1 2 0 0</div><div class='input'><span class='fu'>na_replace</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>), replacement = <span class='op'>-</span><span class='fl'>1</span>)
+</div><div class='output co'>#&gt; [1]  1  2 -1 -1</div><div class='input'><span class='fu'>na_replace</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>), replacement = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='op'>-</span><span class='fl'>1</span>))
+</div><div class='output co'>#&gt; [1]  1  2  0 -1</div><div class='input'>
+<span class='fu'>na_replace</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(), <span class='fl'>NA</span>)) <span class='co'># replacement defaults to 'today'</span>
+</div><div class='output co'>#&gt; [1] "2020-09-07" "2020-09-07"</div><div class='input'>
+<span class='fu'>na_replace</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>FALSE</span>, <span class='fl'>NA</span>))
+</div><div class='output co'>#&gt; [1]  TRUE FALSE FALSE</div><div class='input'><span class='fu'>na_replace</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>FALSE</span>, <span class='fl'>NA</span>), replacement = <span class='fl'>TRUE</span>)
+</div><div class='output co'>#&gt; [1]  TRUE FALSE  TRUE</div><div class='input'>
 <span class='co'># we're flexible, the class only remains the same if</span>
 <span class='co'># the replacement value allows it</span>
-<span class='fu'>na_replace</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>NA</span>), <span class='kw'>replacement</span> <span class='kw'>=</span> <span class='st'>"-"</span>)</div><div class='output co'>#&gt; [1] "1" "2" "3" "-"</div><div class='input'>
+<span class='fu'>na_replace</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>NA</span>), replacement = <span class='st'>"-"</span>)
+</div><div class='output co'>#&gt; [1] "1" "2" "3" "-"</div><div class='input'>
 <span class='co'># data.frame is a special case</span>
-<span class='no'>mtcars</span>[<span class='fl'>1</span>:<span class='fl'>6</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mpg"</span>, <span class='st'>"hp"</span>)] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>mtcars</span>)</div><div class='output co'>#&gt;                   mpg cyl disp hp drat    wt  qsec vs am gear carb
+<span class='kw'>mtcars</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mpg"</span>, <span class='st'>"hp"</span>)] <span class='op'>&lt;-</span> <span class='fl'>NA</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>mtcars</span>)
+</div><div class='output co'>#&gt;                   mpg cyl disp hp drat    wt  qsec vs am gear carb
 #&gt; Mazda RX4          NA   6  160 NA 3.90 2.620 16.46  0  1    4    4
 #&gt; Mazda RX4 Wag      NA   6  160 NA 3.90 2.875 17.02  0  1    4    4
 #&gt; Datsun 710         NA   4  108 NA 3.85 2.320 18.61  1  1    4    1
 #&gt; Hornet 4 Drive     NA   6  258 NA 3.08 3.215 19.44  1  0    3    1
 #&gt; Hornet Sportabout  NA   8  360 NA 3.15 3.440 17.02  0  0    3    2
-#&gt; Valiant            NA   6  225 NA 2.76 3.460 20.22  1  0    3    1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>na_replace</span>(<span class='no'>mtcars</span>, <span class='no'>mpg</span>, <span class='no'>hp</span>)) <span class='co'># no need to quote columns (but you can)</span></div><div class='output co'>#&gt;                   mpg cyl disp hp drat    wt  qsec vs am gear carb
+#&gt; Valiant            NA   6  225 NA 2.76 3.460 20.22  1  0    3    1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>na_replace</span>(<span class='kw'>mtcars</span>, <span class='kw'>mpg</span>, <span class='kw'>hp</span>)) <span class='co'># no need to quote columns (but you can)</span>
+</div><div class='output co'>#&gt;                   mpg cyl disp hp drat    wt  qsec vs am gear carb
 #&gt; Mazda RX4           0   6  160  0 3.90 2.620 16.46  0  1    4    4
 #&gt; Mazda RX4 Wag       0   6  160  0 3.90 2.875 17.02  0  1    4    4
 #&gt; Datsun 710          0   4  108  0 3.85 2.320 18.61  1  1    4    1
 #&gt; Hornet 4 Drive      0   6  258  0 3.08 3.215 19.44  1  0    3    1
 #&gt; Hornet Sportabout   0   8  360  0 3.15 3.440 17.02  0  0    3    2
-#&gt; Valiant             0   6  225  0 2.76 3.460 20.22  1  0    3    1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>na_replace</span>(<span class='no'>mtcars</span>, <span class='no'>mpg</span>, <span class='no'>hp</span>, <span class='kw'>replacement</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>999</span>, <span class='fl'>123</span>)))</div><div class='output co'>#&gt;                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+#&gt; Valiant             0   6  225  0 2.76 3.460 20.22  1  0    3    1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>na_replace</span>(<span class='kw'>mtcars</span>, <span class='kw'>mpg</span>, <span class='kw'>hp</span>, replacement = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>999</span>, <span class='fl'>123</span>)))
+</div><div class='output co'>#&gt;                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
 #&gt; Mazda RX4         999   6  160 123 3.90 2.620 16.46  0  1    4    4
 #&gt; Mazda RX4 Wag     999   6  160 123 3.90 2.875 17.02  0  1    4    4
 #&gt; Datsun 710        999   4  108 123 3.85 2.320 18.61  1  1    4    1
 #&gt; Hornet 4 Drive    999   6  258 123 3.08 3.215 19.44  1  0    3    1
 #&gt; Hornet Sportabout 999   8  360 123 3.15 3.440 17.02  0  0    3    2
 #&gt; Valiant           999   6  225 123 2.76 3.460 20.22  1  0    3    1</div><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># practical way using tidyverse</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='no'>starwars</span> <span class='kw'>%&gt;%</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
+<span class='kw'>starwars</span> <span class='op'>%&gt;%</span> 
   <span class='fu'>na_replace</span>()
 
 <span class='co'># even maintains groups</span>
-<span class='no'>starwars</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hair_color</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>na_replace</span>(<span class='no'>hair_color</span>, <span class='kw'>replacement</span> <span class='kw'>=</span> <span class='st'>"TEST!"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/n.html'>n</a></span>())
-}</div></pre>
+<span class='kw'>starwars</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>hair_color</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>na_replace</span>(<span class='kw'>hair_color</span>, replacement = <span class='st'>"TEST!"</span>) <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(n = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span>())
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -227,7 +240,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

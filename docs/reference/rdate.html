@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.9000</span>
       </span>
     </div>
 
@@ -123,10 +123,10 @@
     </div>
 
     <pre class="usage"><span class='fu'>rdate</span>(
-  <span class='no'>n</span>,
-  <span class='kw'>min</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(), <span class='st'>"%Y"</span>), <span class='st'>"-01-01"</span>),
-  <span class='kw'>max</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(), <span class='st'>"%Y"</span>), <span class='st'>"-12-31"</span>),
-  <span class='no'>...</span>
+  <span class='kw'>n</span>,
+  min = <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(), <span class='st'>"%Y"</span>), <span class='st'>"-01-01"</span>),
+  max = <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(), <span class='st'>"%Y"</span>), <span class='st'>"-12-31"</span>),
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -150,7 +150,8 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># generate a million random dates and check the distribution</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='fu'>rdate</span>(<span class='fl'>1000000</span>), <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='st'>"months"</span>)</div><div class='img'><img src='rdate-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='fu'>rdate</span>(<span class='fl'>1000000</span>), breaks = <span class='st'>"months"</span>)
+</div><div class='img'><img src='rdate-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -166,7 +167,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

@@ -75,7 +75,7 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.9000</span>
       </span>
     </div>
 
@@ -124,60 +124,60 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
 <p><code>top_freq</code> can be used to get the top/bottom <em>n</em> items of a frequency table, with counts as names. It respects ties.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>freq</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>freq</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>freq</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>sort.count</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>nmax</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"max.print.freq"</span>),
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>markdown</span> <span class='kw'>=</span> !<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>(),
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>quote</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>na</span> <span class='kw'>=</span> <span class='st'>"&lt;NA&gt;"</span>,
-  <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>" "</span>,
-  <span class='kw'>decimal.mark</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"OutDec"</span>),
-  <span class='kw'>big.mark</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='no'>...</span>
+  <span class='kw'>x</span>,
+  sort.count = <span class='fl'>TRUE</span>,
+  nmax = <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"max.print.freq"</span>),
+  na.rm = <span class='fl'>TRUE</span>,
+  row.names = <span class='fl'>TRUE</span>,
+  markdown = <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>(),
+  digits = <span class='fl'>2</span>,
+  quote = <span class='kw'>NULL</span>,
+  header = <span class='fl'>TRUE</span>,
+  title = <span class='kw'>NULL</span>,
+  na = <span class='st'>"&lt;NA&gt;"</span>,
+  sep = <span class='st'>" "</span>,
+  decimal.mark = <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"OutDec"</span>),
+  big.mark = <span class='st'>""</span>,
+  <span class='kw'>...</span>
 )
 
 <span class='co'># S3 method for factor</span>
-<span class='fu'>freq</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>droplevels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>freq</span>(<span class='kw'>x</span>, <span class='kw'>...</span>, droplevels = <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for matrix</span>
-<span class='fu'>freq</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>quote</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>freq</span>(<span class='kw'>x</span>, <span class='kw'>...</span>, quote = <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for table</span>
-<span class='fu'>freq</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>" "</span>)
+<span class='fu'>freq</span>(<span class='kw'>x</span>, <span class='kw'>...</span>, sep = <span class='st'>" "</span>)
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>freq</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='fu'>freq</span>(<span class='kw'>x</span>, <span class='kw'>...</span>, digits = <span class='fl'>2</span>)
 
 <span class='co'># S3 method for Date</span>
-<span class='fu'>freq</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"yyyy-mm-dd"</span>)
+<span class='fu'>freq</span>(<span class='kw'>x</span>, <span class='kw'>...</span>, format = <span class='st'>"yyyy-mm-dd"</span>)
 
 <span class='co'># S3 method for hms</span>
-<span class='fu'>freq</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"HH:MM:SS"</span>)
+<span class='fu'>freq</span>(<span class='kw'>x</span>, <span class='kw'>...</span>, format = <span class='st'>"HH:MM:SS"</span>)
 
-<span class='fu'>is.freq</span>(<span class='no'>f</span>)
+<span class='fu'>is.freq</span>(<span class='kw'>f</span>)
 
-<span class='fu'>top_freq</span>(<span class='no'>f</span>, <span class='no'>n</span>)
+<span class='fu'>top_freq</span>(<span class='kw'>f</span>, <span class='kw'>n</span>)
 
-<span class='fu'>header</span>(<span class='no'>f</span>, <span class='kw'>property</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>header</span>(<span class='kw'>f</span>, property = <span class='kw'>NULL</span>)
 
 <span class='co'># S3 method for freq</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(
-  <span class='no'>x</span>,
-  <span class='kw'>nmax</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"max.print.freq"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>10</span>),
-  <span class='kw'>markdown</span> <span class='kw'>=</span> !<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>(),
-  <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>decimal.mark</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"OutDec"</span>),
-  <span class='kw'>big.mark</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>decimal.mark</span> <span class='kw'>!=</span> <span class='st'>","</span>, <span class='st'>","</span>, <span class='st'>"."</span>),
-  <span class='no'>...</span>
+  <span class='kw'>x</span>,
+  nmax = <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"max.print.freq"</span>, default = <span class='fl'>10</span>),
+  markdown = <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>(),
+  header = <span class='fl'>TRUE</span>,
+  decimal.mark = <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"OutDec"</span>),
+  big.mark = <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='kw'>decimal.mark</span> != <span class='st'>","</span>, <span class='st'>","</span>, <span class='st'>"."</span>),
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -276,14 +276,16 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
 
     <p>Frequency tables (or frequency distributions) are summaries of the distribution of values in a sample. With the `freq` function, you can create univariate frequency tables. Multiple variables will be pasted into one variable, so it forces a univariate distribution.</p>
 <p>Input can be done in many different ways. Base R methods are:</p><pre>
-<span class='fu'>freq</span>(<span class='no'>df</span>$<span class='no'>variable</span>)
-<span class='fu'>freq</span>(<span class='no'>df</span>[, <span class='st'>"variable"</span>])</pre>
+<span class='fu'>freq</span>(<span class='kw'>df</span><span class='op'>$</span><span class='kw'>variable</span>)
+<span class='fu'>freq</span>(<span class='kw'>df</span>[, <span class='st'>"variable"</span>])
+</pre>
 
 <p>Tidyverse methods are:</p><pre>
-<span class='no'>df</span>$<span class='no'>variable</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>freq</span>()
-<span class='no'>df</span>[, <span class='st'>"variable"</span>] <span class='kw'>%&amp;gt;%</span> <span class='fu'>freq</span>()
-<span class='no'>df</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>freq</span>(<span class='st'>"variable"</span>)
-<span class='no'>df</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>freq</span>(<span class='no'>variable</span>)</pre>
+<span class='kw'>df</span><span class='op'>$</span><span class='kw'>variable</span> <span class='op'>%&gt;%</span> <span class='fu'>freq</span>()
+<span class='kw'>df</span>[, <span class='st'>"variable"</span>] <span class='op'>%&gt;%</span> <span class='fu'>freq</span>()
+<span class='kw'>df</span> <span class='op'>%&gt;%</span> <span class='fu'>freq</span>(<span class='st'>"variable"</span>)
+<span class='kw'>df</span> <span class='op'>%&gt;%</span> <span class='fu'>freq</span>(<span class='kw'>variable</span>)
+</pre>
 
 <p>For numeric values of any class, these additional values will all be calculated with <code>na.rm = TRUE</code> and shown into the header:</p><ul>
 <li><p>Mean, using <code><a href='https://rdrr.io/r/base/mean.html'>mean</a></code></p></li>
@@ -311,15 +313,18 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
 <span class='co'>#' @importFrom cleaner freq.default</span>
 <span class='co'>#' @export</span>
 <span class='co'>#' @noRd</span>
-<span class='no'>freq.difftime</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>...</span>) {
-  <span class='fu'>freq.default</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='no'>...</span>,
-               <span class='kw'>.add_header</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>units</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span>(<span class='no'>x</span>)$<span class='no'>units</span>))
-}</pre><p>Be sure to call <code>freq.default</code> in your function and not just <code>freq</code>. Also, add <code>cleaner</code> to the <code>Imports:</code> field of your <code>DESCRIPTION</code> file, to make sure that it will be installed with your package, e.g.:</p><pre>
-<span class='no'>Imports</span>: <span class='no'>cleaner</span></pre>
+<span class='kw'>freq.difftime</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>x</span>, <span class='kw'>...</span>) {
+  <span class='fu'>freq.default</span>(x = <span class='kw'>x</span>, <span class='kw'>...</span>,
+               .add_header = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(units = <span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span>(<span class='kw'>x</span>)<span class='op'>$</span><span class='kw'>units</span>))
+}
+</pre><p>Be sure to call <code>freq.default</code> in your function and not just <code>freq</code>. Also, add <code>cleaner</code> to the <code>Imports:</code> field of your <code>DESCRIPTION</code> file, to make sure that it will be installed with your package, e.g.:</p><pre>
+<span class='kw'>Imports</span><span class='op'>:</span> <span class='kw'>cleaner</span>
+</pre>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>freq</span>(<span class='no'>unclean</span>$<span class='no'>gender</span>, <span class='kw'>markdown</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Frequency table</span><span> 
+    <pre class="examples"><div class='input'><span class='fu'>freq</span>(<span class='kw'>unclean</span><span class='op'>$</span><span class='kw'>gender</span>, markdown = <span class='fl'>FALSE</span>)
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Frequency table</span><span> 
 #&gt; 
 #&gt; Class:      character
 #&gt; Length:     500
@@ -337,13 +342,14 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
 #&gt; 4    m            15      3.0%          497          99.4%
 #&gt; 5    F             3      0.6%          500         100.0%
 #&gt; </div><div class='input'>
-<span class='fu'>freq</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='clean.html'>clean_factor</a></span>(<span class='no'>unclean</span>$<span class='no'>gender</span>,
-                      <span class='kw'>levels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"^m"</span> <span class='kw'>=</span> <span class='st'>"Male"</span>,
-                                 <span class='st'>"^f"</span> <span class='kw'>=</span> <span class='st'>"Female"</span>)),
-     <span class='kw'>markdown</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-     <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Frequencies of a cleaned version for a markdown report!"</span>,
-     <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-     <span class='kw'>quote</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>freq</span>(x = <span class='fu'><a href='clean.html'>clean_factor</a></span>(<span class='kw'>unclean</span><span class='op'>$</span><span class='kw'>gender</span>, 
+                      levels = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"^m"</span> = <span class='st'>"Male"</span>, 
+                                 <span class='st'>"^f"</span> = <span class='st'>"Female"</span>)),
+     markdown = <span class='fl'>TRUE</span>,
+     title = <span class='st'>"Frequencies of a cleaned version for a markdown report!"</span>,
+     header = <span class='fl'>FALSE</span>,
+     quote = <span class='fl'>TRUE</span>)
+</div><div class='output co'>#&gt; 
 #&gt; 
 #&gt; **Frequencies of a cleaned version for a markdown report!**   
 #&gt; 
@@ -371,7 +377,7 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>
