@@ -17,7 +17,7 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 # ==================================================================== #
 
-context("is.Date.R")
+context("rdate.R")
 
 test_that("Date checking works", {
   randomised <- rdate(5000)

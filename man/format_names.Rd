@@ -14,7 +14,7 @@ format_names(
 )
 }
 \arguments{
-\item{x}{a \code{data.frame}, \code{list} or character vector}
+\item{x}{a \code{data.frame}, \code{list} or \code{character} vector}
 
 \item{...}{when \code{x} is a \code{data.frame}: new column names to set, which can be named (in the form \code{old = "new"}). The original column names do not need to be quoted, see Examples.}
 

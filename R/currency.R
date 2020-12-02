@@ -39,7 +39,7 @@
 #' 
 #' format(money, currency_symbol = "USD")
 #' format(money, currency_symbol = "EUR", decimal.mark = ",")
-#' format(money, currency_symbol = "EUR", as_symbol = FALSE)
+#' format(money, currency_symbol = "EUR", as_symbol = TRUE)
 #' 
 #' as.currency(2.5e+04)
 as.currency <- function(x, currency_symbol = Sys.localeconv()["int_curr_symbol"], ...) {
@@ -101,8 +101,15 @@ txt2symb <- function(txt) {
          "EUR" = "\u20ac",
          "JPY" = "\u00a5",
          "GBP" = "\u00a3",
-         "CNY" = "\u5143",
-         "KRW" = "\u20a9", 
+         txt)
+}
+
+symb2txt <- function(txt) {
+  switch(txt,
+         "\u0024" = "USD",
+         "\u20ac" = "EUR",
+         "\u00a5" = "JPY",
+         "\u00a3" = "GBP",
          txt)
 }
 
@@ -112,7 +119,7 @@ txt2symb <- function(txt) {
 print.currency <- function(x, 
                            decimal.mark = getOption("OutDec"),
                            big.mark = ifelse(decimal.mark == ",", ".", ","),
-                           as_symbol = TRUE,
+                           as_symbol = FALSE,
                            ...) {
   currency_symbol <- toupper(trimws(attributes(x)$currency_symbol))
   if (isTRUE(as_symbol)) {
@@ -137,7 +144,7 @@ format.currency <- function(x,
                             currency_symbol = attributes(x)$currency_symbol,
                             decimal.mark = getOption("OutDec"),
                             big.mark = ifelse(decimal.mark == ",", ".", ","),
-                            as_symbol = TRUE,
+                            as_symbol = FALSE,
                             ...) {
   currency_symbol <- toupper(trimws(currency_symbol))
   if (isTRUE(as_symbol)) {
@@ -193,7 +200,7 @@ median.currency <- function(x, ...) {
 #' @method summary currency
 #' @export
 summary.currency <- function(object, ...) {
-  c("Class" = paste0("currency", txt2symb(trimws(attributes(object)$currency_symbol))),
+  c("Class" = paste0("currency", symb2txt(trimws(attributes(object)$currency_symbol))),
     "<NA>" = length(object[is.na(object)]),
     "Min." = format(min(object)),
     "Mean" = format(mean(object)),
@@ -203,13 +210,13 @@ summary.currency <- function(object, ...) {
 #' @importFrom vctrs vec_ptype_abbr
 #' @export
 vec_ptype_abbr.currency <- function(x, ...) {
-  paste0("crncy/", txt2symb(trimws(attributes(x)$currency_symbol)))
+  paste0("crncy/", symb2txt(trimws(attributes(x)$currency_symbol)))
 }
 
 #' @importFrom vctrs vec_ptype_full
 #' @export
 vec_ptype_full.currency <- function(x, ...) {
-  paste0("currency/", txt2symb(trimws(attributes(x)$currency_symbol)))
+  paste0("currency/", symb2txt(trimws(attributes(x)$currency_symbol)))
 }
 
 #' @importFrom pillar pillar_shaft

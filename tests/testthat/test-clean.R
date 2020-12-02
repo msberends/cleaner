@@ -50,4 +50,8 @@ test_that("cleaning works", {
                c(1384.50, 232.25, 597.50, 210.25, 652.50))
   expect_equal(clean_integer(clean_numeric(values) * 0.25),
                c(1384,    232,    597,    210,    652))
+  
+  expect_equal(clean_Date("2020-11-12 12:24:12"),
+               as.Date("2020-11-12"))
+  
 })

@@ -1,12 +1,21 @@
-# cleaner 1.5.9xxx
+# cleaner 1.5.1
 
 * New function `format_p_value()` to format raw p values according to the APA guideline
+* `clean_Date()` now works with POSIX standards:
+  ```r
+  clean_Date("2020-11-12 12:24:12")
+  clean_Date(c("2020-11-12 12:24:12", "2020-11-13"), guess_each = TRUE)
+  ```
+* Currency now prints and formats without symbols as default, use `as_symbol = TRUE` to print/format with currency symbols
+* Support for older versions of R (v3.2)
 
 # cleaner 1.5.0
 
 * New function `format_names()` to quickly and easily change names of `data.frame` columns, `list`s or `character` vectors.
   ```r
+  df <- data.frame(old.name = "test1", value = "test2")
   format_names(df, snake_case = TRUE)
+  format_names(df, camelCase = TRUE)
   format_names(df, c(old.name = "new_name", value = "measurement"))
   
   library(dplyr)

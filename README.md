@@ -2,13 +2,11 @@
 
 # `cleaner`: Fast and Easy Data Cleaning
 
-**(Previously called `clean`, but renamed to `cleaner` upon CRAN request)**
-
 **Website of this package: https://msberends.github.io/cleaner**
 
 [![CRAN_Badge](https://www.r-pkg.org/badges/version/cleaner)](https://CRAN.R-project.org/package=cleaner)
 
-The R package for **cleaning and checking data columns** in a fast and easy way. Relying on very few dependencies, it provides **smart guessing**, but with user options to override anything if needed.
+The small R package for **cleaning and checking data columns** in a fast and easy way. Relying on very few dependencies, it provides **smart guessing**, but with user options to override anything if needed.
 
 It also provides two new data types that are not available in base R: `currency` and `percentage`.
 
@@ -26,7 +24,7 @@ Contents:
 ----
 
 ## Why this package
-As a data scientist, I'm often served with data that is not clean, not tidy and consquently not ready for analysis at all. For tidying data, there's of course the `tidyverse` (https://www.tidyverse.org), which lets you manipulate data in any way you can think of. But for *cleaning*, I think our community was still lacking a neat solution that makes data cleaning fast and easy with functions that kind of 'think on their own' to do that.
+As a data scientist, I'm often served with data that is not clean, not tidy and consequently not ready for analysis at all. For tidying data, there's of course the `tidyverse` (https://www.tidyverse.org), which lets you manipulate data in any way you can think of. But for *cleaning*, I think our community was still lacking a neat solution that makes data cleaning fast and easy with functions that kind of 'think on their own' to do that.
 
 If the CRAN button at the top of this page is green, install the package with:
 
@@ -36,8 +34,8 @@ install.packages("cleaner")
 
 Otherwise, or if you are looking for the latest stable development version, install the package with:
 ```r
-install.packages("devtools") # if you haven't already
-devtools::install_github("msberends/cleaner")
+install.packages("remotes") # if you haven't already
+remotes::install_github("msberends/cleaner")
 ```
 
 ## How it works
@@ -213,26 +211,29 @@ Use `clean()` to clean data. It guesses what kind of data class would best fit y
   
   format(sum(received), 
          currency_symbol = "€", decimal.mark = ",")
-  #> [1] "€ 56,40"
+  #> [1] "EUR 56,40"
   ```
   
   This new class also comes with support for printing in `tibble`s, used by the [`tidyverse`](https://www.tidyverse.org):
   
   ```r
-  library(tibble)
-  tibble(money = clean_currency(c("Jack sent £ 25", "Bill sent £ 31.40")))
-  #> # A tibble: 2 x 1
-  #>         money
-  #>   <crncy/GBP>
-  #> 1       25.00
-  #> 2       31.40
+  library(dplyr)
+  tibble(money = c("Jack sent £ 25", "Bill sent £ 31.40")) %>% 
+    mutate(mutate_cleaner = clean_currency(money))
+  #> # A tibble: 2 x 2
+  #>   money               mutate_cleaner
+  #>   <chr>                  <crncy/GBP>
+  #> 1 Jack sent £ 25               25.00
+  #> 2 Bill sent £ 31.40            31.40
   ```
 
 #### Other cleaning
 
 * Use `format_names()` to quickly and easily change names of `data.frame` columns, `list`s or `character` vectors.
   ```r
+  df <- data.frame(old.name = "test1", value = "test2")
   format_names(df, snake_case = TRUE)
+  format_names(df, camelCase = TRUE)
   format_names(df, c(old.name = "new_name", value = "measurement"))
   
   library(dplyr)
@@ -272,38 +273,51 @@ Use `clean()` to clean data. It guesses what kind of data class would best fit y
     summarise(n = n())
   ```
   
+* Use the function `format_p_value()` to format p values according to the international APA guideline. It tries to round to two decimals, but has a exception for values that would round to `alpha` (defaults to 0.05):
+
+   ```r
+   format_p_value(c(0.345678, 0.123))
+   #> [1] "0.35" "0.12"
+   
+   # a value of 0.0499 must not be "0.05", but is not "0.049" either,
+   # so the function will add as many decimals as needed:
+   format_p_value(0.04993) 
+   #> [1] "0.0499"
+   ```
+  
 ### Checking
 
-Any idea why in R `as.numeric()` and `is.numeric()` and `as.Date()` exist, but `is.Date()` doesn't? Me neither, but now it does. And you probably know `runif()` to create random numeric values. Now `rdate()` exists as well, for generating random dates.
-
-The easiest and most comprehensive way to check the data of a column/variable is to create frequency tables. Use `freq()` to do this. It supports a lot of different classes (types of data) and is even extendible by other packages.
+The easiest and most comprehensive way to check the data of a column/variable is to create frequency tables. Use `freq()` to do this. It supports a lot of different classes (types of data) and is even extendible by other packages. In markdown documents (like this README file), it formats as real markdown.
 
 ```r
 freq(unclean$gender)
-#> Frequency table 
-#> 
-#> Class:      character
-#> Length:     500
-#> Available:  500 (100%, NA: 0 = 0%)
-#> Unique:     5
-#> 
-#> Shortest:   1
-#> Longest:    6
-#> 
-#>      Item      Count   Percent   Cum. Count   Cum. Percent
-#> ---  -------  ------  --------  -----------  -------------
-#> 1    male        240     48.0%          240          48.0%
-#> 2    female      220     44.0%          460          92.0%
-#> 3    man          22      4.4%          482          96.4%
-#> 4    m            15      3.0%          497          99.4%
-#> 5    F             3      0.6%          500         100.0%
 ```
 
-Clean it and check again:
+**Frequency table**   
+
+Class:      character  
+Length:     500  
+Available:  500 (100%, NA: 0 = 0%)  
+Unique:     5  
+  
+Shortest:   1  
+Longest:    6
+
+
+|   |Item   | Count| Percent| Cum. Count| Cum. Percent|
+|:--|:------|-----:|-------:|----------:|------------:|
+|1  |male   |   240|   48.0%|        240|        48.0%|
+|2  |female |   220|   44.0%|        460|        92.0%|
+|3  |man    |    22|    4.4%|        482|        96.4%|
+|4  |m      |    15|    3.0%|        497|        99.4%|
+|5  |F      |     3|    0.6%|        500|       100.0%|
+
+Clean it and check again (using `markdown = FALSE` to show how it would look in the R console):
 
 ```r
 freq(clean_factor(unclean$gender, 
-                  levels = c("^m" = "Male", "^f" = "Female")))
+                  levels = c("^m" = "Male", "^f" = "Female")),
+     markdown = FALSE)
 #> Frequency table 
 #> 
 #> Class:      factor (numeric)

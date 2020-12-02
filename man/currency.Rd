@@ -16,7 +16,7 @@ is.currency(x)
   x,
   decimal.mark = getOption("OutDec"),
   big.mark = ifelse(decimal.mark == ",", ".", ","),
-  as_symbol = TRUE,
+  as_symbol = FALSE,
   ...
 )
 
@@ -25,7 +25,7 @@ is.currency(x)
   currency_symbol = attributes(x)$currency_symbol,
   decimal.mark = getOption("OutDec"),
   big.mark = ifelse(decimal.mark == ",", ".", ","),
-  as_symbol = TRUE,
+  as_symbol = FALSE,
   ...
 )
 }
@@ -57,7 +57,7 @@ mean(money)
 
 format(money, currency_symbol = "USD")
 format(money, currency_symbol = "EUR", decimal.mark = ",")
-format(money, currency_symbol = "EUR", as_symbol = FALSE)
+format(money, currency_symbol = "EUR", as_symbol = TRUE)
 
 as.currency(2.5e+04)
 }

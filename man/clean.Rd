@@ -15,7 +15,7 @@
 \alias{clean_POSIXct}
 \title{Clean column data to a class}
 \source{
-\href{http://www.bis.org/publ/rpfx16fx.pdf}{Triennial Central Bank Survey Foreign exchange turnover in April 2016} (PDF). Bank for International Settlements. 11 December 2016. p. 10.
+\href{https://www.bis.org/publ/rpfx16fx.pdf}{Triennial Central Bank Survey Foreign exchange turnover in April 2016} (PDF). Bank for International Settlements. 11 December 2016. p. 10.
 }
 \usage{
 clean(x)

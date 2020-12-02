@@ -70,7 +70,7 @@
 #'   \item{\code{clean_POSIXct()}: classes \code{POSIXct/POSIXt}}
 #' }
 #' @export
-#' @source \href{http://www.bis.org/publ/rpfx16fx.pdf}{Triennial Central Bank Survey Foreign exchange turnover in April 2016} (PDF). Bank for International Settlements. 11 December 2016. p. 10.
+#' @source \href{https://www.bis.org/publ/rpfx16fx.pdf}{Triennial Central Bank Survey Foreign exchange turnover in April 2016} (PDF). Bank for International Settlements. 11 December 2016. p. 10.
 #' @examples 
 #' clean_logical(c("Yes", "No"))   # English
 #' clean_logical(c("Oui", "Non"))  # French
@@ -355,7 +355,7 @@ clean_Date <- function(x, format = NULL, guess_each = FALSE, max_date = Sys.Date
     }
   } else {
     if (guess_each == FALSE) {
-      final_result <- guess_Date(x = x, throw_note = TRUE)
+      final_result <- guess_Date(x = x, throw_note = TRUE, guess_each = guess_each)
     } else {
       if (length(format) > 1) {
         # checking date according to set vector of format options
@@ -426,7 +426,7 @@ clean_POSIXct <- function(x, tz = "", remove = "[^.0-9 :/-]", fixed = FALSE, max
   as.POSIXct(x)
 }
 
-guess_Date <- function(x, throw_note = TRUE, format_options = NULL) {
+guess_Date <- function(x, throw_note = TRUE, format_options = NULL, guess_each = guess_each) {
   msg_clean_as <- function(format_set, sep = " ") {
     if (throw_note == TRUE) {
       if (tolower(format_set) == "excel") {
@@ -442,6 +442,12 @@ guess_Date <- function(x, throw_note = TRUE, format_options = NULL) {
     # is Excel date
     msg_clean_as("Excel")
     return(as.Date(x_numeric, origin = "1899-12-30"))
+  }
+  
+  # check for POSIX (yyyy-mm-dd HH:MM:SS)
+  if (all(grepl("^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{1,2}:[0-9]{2}:[0-9]{2}$", x))) {
+    msg_clean_as("yyyy-mm-dd HH:MM:SS", sep = " ")
+    return(as.Date(as.POSIXct(x)))
   }
   
   # replace any non-number/separators ("-", ".", etc.) with space
@@ -545,6 +551,7 @@ guess_Date <- function(x, throw_note = TRUE, format_options = NULL) {
   if (!is.null(new_format)) {
     return(as.Date(as.character(x), format = new_format))
   }
-  warning("Date/time format could not be determined automatically, returning NAs", call. = FALSE)
+  warning(ifelse(guess_each == FALSE, "Try guess_each = TRUE to guess the format for each value.\n", ""),
+          "Date/time format could not be determined automatically, returning NAs", call. = FALSE)
   as.Date(rep(NA, length(x)))
 }

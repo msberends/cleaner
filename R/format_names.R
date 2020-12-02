@@ -20,7 +20,7 @@
 #' Format names and values
 #' 
 #' This function can be used on any \code{data.frame}, \code{list} or character vector to format their names or values. It supports \href{https://en.wikipedia.org/wiki/Snake_case}{snake case} and \href{https://en.wikipedia.org/wiki/Camel_case}{camel case}. 
-#' @param x a \code{data.frame}, \code{list} or character vector
+#' @param x a \code{data.frame}, \code{list} or \code{character} vector
 #' @param ... when \code{x} is a \code{data.frame}: new column names to set, which can be named (in the form \code{old = "new"}). The original column names do not need to be quoted, see Examples.
 #' @param snake_case logical to indicate whether the column names must be in \href{https://en.wikipedia.org/wiki/Snake_case}{snake case}. This will have no effect on manually set column names.
 #' @param camelCase logical to indicate whether the column names must be in \href{https://en.wikipedia.org/wiki/Camel_case}{camel case}. This will have no effect on manually set column names.
