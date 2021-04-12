@@ -849,7 +849,7 @@ print.freq <- function(x,
                  row.names = opt$row_names,
                  col.names = opt$column_names,
                  align = opt$column_align,
-                 padding = 1)
+                 padding = 2)
   )
   
   if (!is.null(footer)) {
