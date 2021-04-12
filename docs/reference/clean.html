@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.1.9000</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -96,7 +96,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/msberends/cleaner/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -314,8 +314,8 @@
            format <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"d mmm yyyy"</span>, <span class='st'>"mm-yy-dd"</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># only these formats will be tried</span>
 </div><div class='output co'>#&gt; <span class='message'>(format 'd mmm yyyy' used for 1 items)</span></div><div class='output co'>#&gt; <span class='message'>(format 'mm-yy-dd' used for 1 items)</span></div><div class='output co'>#&gt; [1] "2014-12-13" "2012-10-01"</div><div class='input'>
 <span class='fu'>clean_POSIXct</span><span class='op'>(</span><span class='st'>"Created log on 2020/02/11 11:23 by user Joe"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Incompatible methods ("Ops.POSIXt", "Ops.Date") for "&gt;"</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Incompatible methods ("Ops.POSIXt", "Ops.Date") for "&gt;"</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Incompatible methods ("Ops.POSIXt", "Ops.Date") for "&gt;"</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some years were decreased by 100 to not exceed today. Use clean_Date(..., max_date = Inf) to prevent this.</span></div><div class='output co'>#&gt; [1] "1920-02-11 11:23:00 AMT"</div><div class='input'><span class='fu'>clean_POSIXct</span><span class='op'>(</span><span class='st'>"Created log on 2020.02.11 11:23 by user Joe"</span>, tz <span class='op'>=</span> <span class='st'>"UTC"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Incompatible methods ("Ops.POSIXt", "Ops.Date") for "&gt;"</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Incompatible methods ("Ops.POSIXt", "Ops.Date") for "&gt;"</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Incompatible methods ("Ops.POSIXt", "Ops.Date") for "&gt;"</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Some years were decreased by 100 to not exceed today. Use clean_Date(..., max_date = Inf) to prevent this.</span></div><div class='output co'>#&gt; [1] "1920-02-11 11:23:00 UTC"</div><div class='input'>
+</div><div class='output co'>#&gt; [1] "2020-02-11 11:23:00 CET"</div><div class='input'><span class='fu'>clean_POSIXct</span><span class='op'>(</span><span class='st'>"Created log on 2020.02.11 11:23 by user Joe"</span>, tz <span class='op'>=</span> <span class='st'>"UTC"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "2020-02-11 11:23:00 UTC"</div><div class='input'>
 <span class='fu'>clean_numeric</span><span class='op'>(</span><span class='st'>"qwerty123456"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 123456</div><div class='input'><span class='fu'>clean_numeric</span><span class='op'>(</span><span class='st'>"Positive (0.143)"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 0.143</div><div class='input'><span class='fu'>clean_numeric</span><span class='op'>(</span><span class='st'>"0,143"</span><span class='op'>)</span>

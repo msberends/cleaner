@@ -37,6 +37,7 @@
 #' @param droplevels a logical value indicating whether in factors empty levels should be dropped
 #' @param format a character to define the printing format (it supports \code{\link{format_datetime}} to transform e.g. \code{"d mmmm yyyy"} to \code{"\%e \%B \%Y"})
 #' @param sep a character string to separate the terms when selecting multiple columns
+#' @param wt frequency weights. If a variable, computes \code{sum(wt)} instead of counting the rows.
 #' @inheritParams base::format
 #' @param f a frequency table
 #' @param n number of top \emph{n} items to return, use -n for the bottom \emph{n} items. It will include more than \code{n} rows if there are ties.
@@ -133,6 +134,7 @@ freq.default <- function(x,
                          sep = " ",
                          decimal.mark = getOption("OutDec"),
                          big.mark = "",
+                         wt = NULL,
                          ...) {
   
   format <- list(...)$format
@@ -165,9 +167,9 @@ freq.default <- function(x,
   nmax.set <- !missing(nmax)
   if (identical(nmax, -1)) {
     nmax.set <- FALSE
-    nmax <- base::getOption("max.print.freq")
+    nmax <- getOption("max.print.freq")
   }
-  if (!nmax.set & is.null(nmax) & is.null(base::getOption("max.print.freq", default = NULL))) {
+  if (!nmax.set & is.null(nmax) & is.null(getOption("max.print.freq", default = NULL))) {
     # default for max print setting
     nmax <- 10
   } else if (is.null(nmax)) {
@@ -185,12 +187,25 @@ freq.default <- function(x,
   column_align <- c(x_align, "r", "r", "r", "r")
   
   # create the data.frame
-  df <- base::as.data.frame(base::table(x, useNA = ifelse(na.rm, "no", "ifany")), stringsAsFactors = FALSE)
+  if (!is.null(wt)) {
+    if (!length(wt) %in% c(1, length(x))) {
+      stop("length of weights ('wt') must be 1 or ", length(x), ", not ", length(wt), call. = FALSE)
+    }
+    if (!is.numeric(wt)) {
+      stop("argument 'wt' must be numeric", call. = FALSE)
+    }
+    if (length(wt) == 1) {
+      wt <- rep(wt, length(x))
+    }
+    df <- stats::aggregate(x = list(wt = wt), by = list(x = x), FUN = sum)
+  } else {
+    df <- as.data.frame(table(x, useNA = ifelse(na.rm, "no", "ifany")), stringsAsFactors = FALSE)
+  }
   
   if (NCOL(df) == 2) {
     colnames(df) <- c("item", "count")
   }
-  
+
   if (NROW(df) == 0) {
     # return empty data.frame
     df <- data.frame(item = character(),
@@ -235,9 +250,9 @@ freq.default <- function(x,
       df$item <- paste0('"', df$item, '"')
     }
     
-    df$percent <- df$count / base::sum(df$count, na.rm = TRUE)
-    df$cum_count <- base::cumsum(df$count)
-    df$cum_percent <- df$cum_count / base::sum(df$count, na.rm = TRUE)
+    df$percent <- df$count / sum(df$count, na.rm = TRUE)
+    df$cum_count <- cumsum(df$count)
+    df$cum_percent <- df$cum_count / sum(df$count, na.rm = TRUE)
   }
   
   if (markdown == TRUE) {
@@ -304,7 +319,7 @@ freq.table <- function(x, ..., sep = " ") {
 }
 
 #' @method freq data.frame
-#' @importFrom rlang enquos eval_tidy
+#' @importFrom rlang enquo enquos eval_tidy
 #' @export
 #' @noRd
 freq.data.frame <- function(x,
@@ -321,10 +336,12 @@ freq.data.frame <- function(x,
                             na = "<NA>",
                             sep = " ",
                             decimal.mark = getOption("OutDec"),
-                            big.mark = ifelse(decimal.mark != ",", ",", ".")) {
+                            big.mark = ifelse(decimal.mark != ",", ",", "."),
+                            wt = NULL) {
   # unset data.table, tbl_df, etc.
   # also removes groups made by dplyr::group_by
   x <- as.data.frame(x, stringsAsFactors = FALSE)
+  x.bak <- x
   
   user_exprs <- enquos(...)
   
@@ -352,6 +369,15 @@ freq.data.frame <- function(x,
     }
     x <- as.data.frame(new_list, stringsAsFactors = FALSE)
   }
+  if (!missing(wt) || !is.null(wt)) {
+    wt <- enquo(wt)
+    eval_result <- tryCatch(eval_tidy(wt, data = x.bak),
+                            error = function(e) stop(e$message, call. = FALSE))
+    if (is.data.frame(eval_result)) {
+      stop("a data.frame (instead of e.g. a column name) was passed as a parameter to 'wt', this is not allowed.", call. = FALSE)
+    }
+    wt <- eval_result
+  }
   
   if (NCOL(x) > 9) {
     stop("maximum of 9 columns allowed", call. = FALSE)
@@ -375,7 +401,8 @@ freq.data.frame <- function(x,
        na = na,
        sep = sep,
        decimal.mark = decimal.mark,
-       big.mark = big.mark)
+       big.mark = big.mark,
+       wt = wt)
 }
 
 #' @method freq character
@@ -395,7 +422,7 @@ freq.numeric <- function(x, ..., digits = 2) {
   Outliers <- grDevices::boxplot.stats(x[!is.na(x)])
 
   freq.default(x = x, digits = digits, ..., 
-               .add_header = list(mean = round2(base::mean(x, na.rm = TRUE), digits = digits),
+               .add_header = list(mean = round2(mean(x, na.rm = TRUE), digits = digits),
                                   SD = paste0(round2(stats::sd(x, na.rm = TRUE), digits = digits),
                                               " (CV: ", round2(cv(x, na.rm = TRUE), digits = digits),
                                               ", MAD: ", round2(stats::mad(x, na.rm = TRUE), digits = digits),
@@ -726,8 +753,8 @@ print.freq <- function(x,
   options(knitr.kable.NA = opt$na)
   
   x.rows <- nrow(x)
-  x.unprinted <- base::sum(x[(opt$nmax + 1):nrow(x), "count"], na.rm = TRUE)
-  x.printed <- base::sum(x$count) - x.unprinted
+  x.unprinted <- sum(x[(opt$nmax + 1):nrow(x), "count"], na.rm = TRUE)
+  x.printed <- sum(x$count) - x.unprinted
   
   if (nrow(x) > opt$nmax & isTRUE(opt$tbl_format != "markdown")) {
     

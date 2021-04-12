@@ -287,7 +287,7 @@ Use `clean()` to clean data. It guesses what kind of data class would best fit y
   
 ### Checking
 
-The easiest and most comprehensive way to check the data of a column/variable is to create frequency tables. Use `freq()` to do this. It supports a lot of different classes (types of data) and is even extendible by other packages. In markdown documents (like this README file), it formats as real markdown.
+The easiest and most comprehensive way to check the data of a column/variable is to create frequency tables. Use `freq()` to do this. It supports a lot of different classes (types of data), weights, and is even extendible by other packages. In markdown documents (like this README file), it formats as real markdown.
 
 ```r
 freq(unclean$gender)

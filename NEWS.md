@@ -1,3 +1,17 @@
+# cleaner 1.5.1.9000
+
+* `clean_Date()` now supports month-year format for which it sets the day as 1:
+  ```r
+  clean_Date("March")
+  #> (assuming format 'mmmm')
+  #> [1] "2021-03-01"
+  clean_Date("March 2020")
+  #> (assuming format 'mmmm yyyy')
+ #> [1] "2020-03-01"
+  ```
+* `freq()` now contains a `wt` argument to set the weights. The default (`NULL`) yields the old behaviour.
+* Fixed a bug in `clean_POSIXct()` that led to the warning `Incompatible methods ("Ops.POSIXt", "Ops.Date") for ">"`
+
 # cleaner 1.5.1
 
 * New function `format_p_value()` to format raw p values according to the APA guideline

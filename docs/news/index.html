@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.1.9000</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -95,7 +95,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/msberends/cleaner/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -116,17 +116,38 @@
       <small>Source: <a href='https://github.com/msberends/cleaner/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="cleaner-1519000" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.1.9000">
+<a href="#cleaner-1519000" class="anchor"></a>cleaner 1.5.1.9000<small> Unreleased </small>
+</h1>
+<ul>
+<li>
+<p><code><a href="../reference/clean.html">clean_Date()</a></code> now supports month-year format for which it sets the day as 1:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="fu"><a href="../reference/clean.html">clean_Date</a></span><span class="op">(</span><span class="st">"March"</span><span class="op">)</span>
+<span class="co">#&gt; (assuming format 'mmmm')</span>
+<span class="co">#&gt; [1] "2021-03-01"</span>
+<span class="fu"><a href="../reference/clean.html">clean_Date</a></span><span class="op">(</span><span class="st">"March 2020"</span><span class="op">)</span>
+<span class="co">#&gt; (assuming format 'mmmm yyyy')</span>
+ <span class="co">#&gt; [1] "2020-03-01"</span></code></pre></div>
+</li>
+<li><p><code><a href="../reference/freq.html">freq()</a></code> now contains a <code>wt</code> argument to set the weights. The default (<code>NULL</code>) yields the old behaviour.</p></li>
+<li><p>Fixed a bug in <code><a href="../reference/clean.html">clean_POSIXct()</a></code> that led to the warning <code>Incompatible methods ("Ops.POSIXt", "Ops.Date") for "&gt;"</code></p></li>
+</ul>
+</div>
     <div id="cleaner-151" class="section level1">
 <h1 class="page-header" data-toc-text="1.5.1">
-<a href="#cleaner-151" class="anchor"></a>cleaner 1.5.1<small> Unreleased </small>
+<a href="#cleaner-151" class="anchor"></a>cleaner 1.5.1<small> 2020-12-02 </small>
 </h1>
 <ul>
 <li><p>New function <code><a href="../reference/format_p_value.html">format_p_value()</a></code> to format raw p values according to the APA guideline</p></li>
 <li>
 <p><code><a href="../reference/clean.html">clean_Date()</a></code> now works with POSIX standards:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="fu"><a href="../reference/clean.html">clean_Date</a></span><span class="op">(</span><span class="st">"2020-11-12 12:24:12"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/clean.html">clean_Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-11-12 12:24:12"</span>, <span class="st">"2020-11-13"</span><span class="op">)</span>, guess_each <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../reference/clean.html">clean_Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2020-11-12 12:24:12"</span>, <span class="st">"2020-11-13"</span><span class="op">)</span>, guess_each <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </li>
 <li><p>Currency now prints and formats without symbols as default, use <code>as_symbol = TRUE</code> to print/format with currency symbols</p></li>
 <li><p>Support for older versions of R (v3.2)</p></li>
@@ -139,7 +160,8 @@
 <ul>
 <li>
 <p>New function <code><a href="../reference/format_names.html">format_names()</a></code> to quickly and easily change names of <code>data.frame</code> columns, <code>list</code>s or <code>character</code> vectors.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>old.name <span class="op">=</span> <span class="st">"test1"</span>, value <span class="op">=</span> <span class="st">"test2"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/format_names.html">format_names</a></span><span class="op">(</span><span class="va">df</span>, snake_case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="../reference/format_names.html">format_names</a></span><span class="op">(</span><span class="va">df</span>, camelCase <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
@@ -149,11 +171,12 @@
 <span class="va">starwars</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/format_names.html">format_names</a></span><span class="op">(</span>camelCase <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># column names</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>name <span class="op">=</span> <span class="va">name</span> <span class="op">%&gt;%</span> 
-           <span class="fu"><a href="../reference/format_names.html">format_names</a></span><span class="op">(</span>snake_case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="co"># values in column</span></pre></div>
+           <span class="fu"><a href="../reference/format_names.html">format_names</a></span><span class="op">(</span>snake_case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="co"># values in column</span></code></pre></div>
 </li>
 <li>
 <p>New generic function <code><a href="../reference/na_replace.html">na_replace()</a></code> to replace <code>NA</code> values in any data type. Its default replacement value is dependent on the data type that is given as input: <code>0</code> for numeric values and class <code>matrix</code>, <code>FALSE</code> for class <code>logical</code>, today for class <code>Date</code>, and <code>""</code> otherwise.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="fu"><a href="../reference/na_replace.html">na_replace</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="cn">NA</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] 1 2 0 0</span>
 <span class="fu"><a href="../reference/na_replace.html">na_replace</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="cn">NA</span>, <span class="cn">NA</span><span class="op">)</span>, replacement <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span>
@@ -164,7 +187,7 @@
   <span class="fu"><a href="../reference/na_replace.html">na_replace</a></span><span class="op">(</span><span class="va">hair_color</span><span class="op">)</span> <span class="co"># only replace NAs in this column</span>
 
 <span class="va">starwars</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/na_replace.html">na_replace</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># replace NAs in all columns ("" for hair_color and 0 for birth_year)</span></pre></div>
+  <span class="fu"><a href="../reference/na_replace.html">na_replace</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># replace NAs in all columns ("" for hair_color and 0 for birth_year)</span></code></pre></div>
 </li>
 <li><p>Support for the upcoming R 4.1.0</p></li>
 </ul>
@@ -184,12 +207,13 @@
 <li><p>New method for using <code><a href="https://rdrr.io/r/base/format.html">format()</a></code> on a frequency table</p></li>
 <li>
 <p>New method for transforming the values of a frequency table to a vector with <code><a href="https://rdrr.io/r/base/vector.html">as.vector()</a></code>, which also supports dates</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/msberends/cleaner">cleaner</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>dates <span class="op">=</span> <span class="fu"><a href="../reference/rdate.html">rdate</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/freq.html">freq</a></span><span class="op">(</span><span class="va">dates</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </li>
 </ul>
 </li>
@@ -197,7 +221,8 @@
 <li><p>When using <code><a href="../reference/clean.html">clean_Date(..., guess_each = TRUE)</a></code> it now accepts the <code>format</code> parameter as a vector of options to let it choose from</p></li>
 <li>
 <p><code><a href="../reference/clean.html">clean_Date()</a></code> and <code>clean_POSIXct</code> gained a parameter <code>max_date</code> (that defaults to today), so that they will never return years beyond a specified date:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="co"># old</span>
 <span class="fu"><a href="../reference/clean.html">clean_Date</a></span><span class="op">(</span><span class="st">"23-01-67"</span><span class="op">)</span>
 <span class="co">#&gt; [1] "2067-01-23"</span>
@@ -208,7 +233,7 @@
 <span class="co">#&gt; Warning: Some years were decreased by 100 to not exceed today.</span>
 <span class="co">#&gt;          Use clean_Date(..., max_date = Inf) to prevent this.</span>
 <span class="fu"><a href="../reference/clean.html">clean_Date</a></span><span class="op">(</span><span class="st">"23-01-67"</span>, max_date <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span>
-<span class="co">#&gt; [1] "2067-01-23"</span></pre></div>
+<span class="co">#&gt; [1] "2067-01-23"</span></code></pre></div>
 </li>
 <li><p>Cleaned all code using the <code>lintr</code> package</p></li>
 </ul>

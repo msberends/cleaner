@@ -32,6 +32,7 @@ freq(x, ...)
   sep = " ",
   decimal.mark = getOption("OutDec"),
   big.mark = "",
+  wt = NULL,
   ...
 )
 
@@ -97,6 +98,8 @@ header(f, property = NULL)
 \item{big.mark}{%
     used for prettying (longish) numerical and complex sequences.
     Passed to \code{\link[base]{prettyNum}}: that help page explains the details.}
+
+\item{wt}{frequency weights. If a variable, computes \code{sum(wt)} instead of counting the rows.}
 
 \item{droplevels}{a logical value indicating whether in factors empty levels should be dropped}
 

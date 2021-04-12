@@ -75,7 +75,7 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cleaner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.1.9000</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -97,7 +97,7 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/msberends/cleaner/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -142,6 +142,7 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
   sep <span class='op'>=</span> <span class='st'>" "</span>,
   decimal.mark <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"OutDec"</span><span class='op'>)</span>,
   big.mark <span class='op'>=</span> <span class='st'>""</span>,
+  wt <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -246,6 +247,10 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
       <td><p><!-- % -->
     used for prettying (longish) numerical and complex sequences.
     Passed to <code><a href='https://rdrr.io/r/base/formatc.html'>prettyNum</a></code>: that help page explains the details.</p></td>
+    </tr>
+    <tr>
+      <th>wt</th>
+      <td><p>frequency weights. If a variable, computes <code><a href='https://rdrr.io/r/base/sum.html'>sum(wt)</a></code> instead of counting the rows.</p></td>
     </tr>
     <tr>
       <th>droplevels</th>

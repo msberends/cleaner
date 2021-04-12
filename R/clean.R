@@ -345,7 +345,11 @@ clean_Date <- function(x, format = NULL, guess_each = FALSE, max_date = Sys.Date
   
   if (is.double(x)) {
     x <- as.integer(x)
+  } else {
+    x <- tolower(x)
   }
+  
+  original_format <- NULL
   
   if (!is.null(format) & length(format) == 1) {
     if (tolower(format) == "excel") {
@@ -354,8 +358,17 @@ clean_Date <- function(x, format = NULL, guess_each = FALSE, max_date = Sys.Date
       final_result <- as.Date(x = x, format = format_datetime(format), ...)
     }
   } else {
+    if (any(grepl("^[a-z]+$", x))) {
+      # support for clean_Date("February")
+      x[grepl("^[a-z]+$", x)] <- paste("1", x[grepl("^[a-z]+$", x)], format(Sys.Date(), "%Y"))
+      original_format <- "mmmm"
+    } else if (any(grepl("^[a-z]+( (19|20)[0-9]{2})?$", x))) {
+      # support for clean_Date("February 2021")
+      x[grepl("^[a-z]+( (19|20)[0-9]{2})?$", x)] <- paste("1", x[grepl("^[a-z]+( (19|20)[0-9]{2})?$", x)])
+      original_format <- "mmmm yyyy"
+    }
     if (guess_each == FALSE) {
-      final_result <- guess_Date(x = x, throw_note = TRUE, guess_each = guess_each)
+      final_result <- guess_Date(x = x, throw_note = TRUE, guess_each = guess_each, original_format = original_format)
     } else {
       if (length(format) > 1) {
         # checking date according to set vector of format options
@@ -371,7 +384,7 @@ clean_Date <- function(x, format = NULL, guess_each = FALSE, max_date = Sys.Date
         }
         final_result <- as.Date(as.double(x_coerced), origin = "1970-01-01")
       } else {
-        final_result <- as.Date(unname(sapply(x, guess_Date, throw_note = FALSE, format = format)), origin = "1970-01-01")
+        final_result <- as.Date(unname(sapply(x, guess_Date, throw_note = FALSE, format = format, original_format = original_format)), origin = "1970-01-01")
       }
     }
   }
@@ -405,6 +418,7 @@ clean_POSIXct <- function(x, tz = "", remove = "[^.0-9 :/-]", fixed = FALSE, max
       stop("`max_date` must be a date.")
     }
   }
+  max_date <- as.POSIXct(max_date) # must be same type as x
   
   x <- trimws(gsub_warn_on_error(remove, "", x, ignore.case = TRUE, fixed = fixed))
   x <- gsub("[\\./]", "-", x)
@@ -426,17 +440,21 @@ clean_POSIXct <- function(x, tz = "", remove = "[^.0-9 :/-]", fixed = FALSE, max
   as.POSIXct(x)
 }
 
-guess_Date <- function(x, throw_note = TRUE, format_options = NULL, guess_each = guess_each) {
-  msg_clean_as <- function(format_set, sep = " ") {
+
+
+guess_Date <- function(x, throw_note = TRUE, format_options = NULL, guess_each = guess_each, original_format = NULL) {
+  msg_clean_as <- function(format_set, sep = " ", orig_format = original_format) {
     if (throw_note == TRUE) {
-      if (tolower(format_set) == "excel") {
+      if (!is.null(orig_format)) {
+        message("(assuming format '", orig_format, "')")
+      } else if (tolower(format_set) == "excel") {
         message("(assuming Excel format)")
       } else {
         message("(assuming format '", gsub(" ", sep, format_set, fixed = TRUE), "')")
       }
     }
   }
-
+  
   x_numeric <- suppressWarnings(as.numeric(x))
   if (all(x_numeric %in% c(as.integer(as.Date("1970-01-01") - as.Date("1899-12-30")):as.integer(Sys.Date() - as.Date("1899-12-30"))), na.rm = TRUE)) {
     # is Excel date
@@ -454,40 +472,46 @@ guess_Date <- function(x, throw_note = TRUE, format_options = NULL, guess_each =
   separator <- ifelse(grepl("[0-9]-", x) & !grepl("[0-9]-$", x), "-",
                       ifelse(grepl("[0-9][.]", x) & !grepl("[0-9][.]$", x), ".",
                              " "))[1L]
-  x <- trimws(gsub("[^0-9a-z]+", " ", x, ignore.case = TRUE))
+  x <- trimws(gsub("[^0-9a-z]+", " ", x))
   
   # remove 1st, 2nd, 3rd, 4th followed by a space or at the end
-  x <- gsub("([0-9])(st|nd|rd|th) ", "\\1 ", x, ignore.case = TRUE)
-  x <- gsub("([0-9])(st|nd|rd|th)$", "\\1", x, ignore.case = TRUE)
+  x <- gsub("([0-9])(st|nd|rd|th) ", "\\1 ", x)
+  x <- gsub("([0-9])(st|nd|rd|th)$", "\\1", x)
   
   new_format <- NULL
   # first check if format is like 1-2 digits, text, 2-4 digits (12 August 2010) which is observed a lot
-  if (all(grepl("^[0-9]+ [a-z]+ [0-9]+$", x[!is.na(x)], ignore.case = TRUE))) {
-    if (all(grepl("^[0-9]{2} [a-z]{3} [0-9]{4}$", x[!is.na(x)], ignore.case = TRUE))) new_format <- "dd mmm yyyy"
-    if (all(grepl("^[0-9]{2} [a-z]{3} [0-9]{2}$", x[!is.na(x)], ignore.case = TRUE))) new_format <- "dd mmm yy"
-    if (all(grepl("^[0-9]{1} [a-z]{3} [0-9]{4}$", x[!is.na(x)], ignore.case = TRUE))) new_format <- "d mmm yyyy"
-    if (all(grepl("^[0-9]{1} [a-z]{3} [0-9]{2}$", x[!is.na(x)], ignore.case = TRUE))) new_format <- "d mmm yy"
-    if (all(grepl("^[0-9]{2} [a-z]{4,} [0-9]{4}$", x[!is.na(x)], ignore.case = TRUE))) new_format <- "dd mmmm yyyy"
-    if (all(grepl("^[0-9]{2} [a-z]{4,} [0-9]{2}$", x[!is.na(x)], ignore.case = TRUE))) new_format <- "dd mmmm yy"
-    if (all(grepl("^[0-9]{1} [a-z]{4,} [0-9]{4}$", x[!is.na(x)], ignore.case = TRUE))) new_format <- "d mmmm yyyy"
-    if (all(grepl("^[0-9]{1} [a-z]{4,} [0-9]{2}$", x[!is.na(x)], ignore.case = TRUE))) new_format <- "d mmmm yy"
+  if (all(grepl("^[0-9]+ [a-z]+ [0-9]+$", x[!is.na(x)]))) {
+    if (all(grepl("^[0-9]{2} [a-z]{3} [0-9]{4}$", x[!is.na(x)]))) new_format <- "dd mmm yyyy"
+    if (all(grepl("^[0-9]{2} [a-z]{3} [0-9]{2}$", x[!is.na(x)]))) new_format <- "dd mmm yy"
+    if (all(grepl("^[0-9]{1} [a-z]{3} [0-9]{4}$", x[!is.na(x)]))) new_format <- "d mmm yyyy"
+    if (all(grepl("^[0-9]{1} [a-z]{3} [0-9]{2}$", x[!is.na(x)]))) new_format <- "d mmm yy"
+    if (all(grepl("^[0-9]{2} [a-z]{4,} [0-9]{4}$", x[!is.na(x)]))) new_format <- "dd mmmm yyyy"
+    if (all(grepl("^[0-9]{2} [a-z]{4,} [0-9]{2}$", x[!is.na(x)]))) new_format <- "dd mmmm yy"
+    if (all(grepl("^[0-9]{1} [a-z]{4,} [0-9]{4}$", x[!is.na(x)]))) new_format <- "d mmmm yyyy"
+    if (all(grepl("^[0-9]{1} [a-z]{4,} [0-9]{2}$", x[!is.na(x)]))) new_format <- "d mmmm yy"
     if (!is.null(new_format)) {
-      msg_clean_as(new_format, sep = separator)
-      return(as.Date(as.character(x), format = format_datetime(new_format)))
+      out <- as.Date(as.character(x), format = format_datetime(new_format))
+      if (!all(is.na(out))) {
+        msg_clean_as(new_format, sep = separator)
+        return(out)  
+      }
     }
-  } else if (all(grepl("^[a-z]+ [0-9]+ [0-9]+$", x[!is.na(x)], ignore.case = TRUE))) {
+  } else if (all(grepl("^[a-z]+ [0-9]+ [0-9]+$", x[!is.na(x)]))) {
     # then text, 1-2 digits, 2-4 digits (like October 21 2012)
-    if (all(grepl("^[a-z]{4,} [0-9]{1} [0-9]{2}$", x[!is.na(x)], ignore.case = TRUE))) new_format <- "mmmm d yy"
-    if (all(grepl("^[a-z]{4,} [0-9]{1} [0-9]{4}$", x[!is.na(x)], ignore.case = TRUE))) new_format <- "mmmm d yyyy"
-    if (all(grepl("^[a-z]{4,} [0-9]{2} [0-9]{2}$", x[!is.na(x)], ignore.case = TRUE))) new_format <- "mmmm dd yy"
-    if (all(grepl("^[a-z]{4,} [0-9]{2} [0-9]{4}$", x[!is.na(x)], ignore.case = TRUE))) new_format <- "mmmm dd yyyy"
-    if (all(grepl("^[a-z]{3} [0-9]{1} [0-9]{2}$", x[!is.na(x)], ignore.case = TRUE))) new_format <- "mmm d yy"
-    if (all(grepl("^[a-z]{3} [0-9]{1} [0-9]{4}$", x[!is.na(x)], ignore.case = TRUE))) new_format <- "mmm d yyyy"
-    if (all(grepl("^[a-z]{3} [0-9]{2} [0-9]{2}$", x[!is.na(x)], ignore.case = TRUE))) new_format <- "mmm dd yy"
-    if (all(grepl("^[a-z]{3} [0-9]{2} [0-9]{4}$", x[!is.na(x)], ignore.case = TRUE))) new_format <- "mmm dd yyyy"
+    if (all(grepl("^[a-z]{4,} [0-9]{1} [0-9]{2}$", x[!is.na(x)]))) new_format <- "mmmm d yy"
+    if (all(grepl("^[a-z]{4,} [0-9]{1} [0-9]{4}$", x[!is.na(x)]))) new_format <- "mmmm d yyyy"
+    if (all(grepl("^[a-z]{4,} [0-9]{2} [0-9]{2}$", x[!is.na(x)]))) new_format <- "mmmm dd yy"
+    if (all(grepl("^[a-z]{4,} [0-9]{2} [0-9]{4}$", x[!is.na(x)]))) new_format <- "mmmm dd yyyy"
+    if (all(grepl("^[a-z]{3} [0-9]{1} [0-9]{2}$", x[!is.na(x)]))) new_format <- "mmm d yy"
+    if (all(grepl("^[a-z]{3} [0-9]{1} [0-9]{4}$", x[!is.na(x)]))) new_format <- "mmm d yyyy"
+    if (all(grepl("^[a-z]{3} [0-9]{2} [0-9]{2}$", x[!is.na(x)]))) new_format <- "mmm dd yy"
+    if (all(grepl("^[a-z]{3} [0-9]{2} [0-9]{4}$", x[!is.na(x)]))) new_format <- "mmm dd yyyy"
     if (!is.null(new_format)) {
-      msg_clean_as(new_format, sep = separator)
-      return(as.Date(as.character(x), format = format_datetime(new_format)))
+      out <- as.Date(as.character(x), format = format_datetime(new_format))
+      if (!all(is.na(out))) {
+        msg_clean_as(new_format, sep = separator)
+        return(out)  
+      }
     }
   }
   

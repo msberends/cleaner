@@ -38,4 +38,10 @@ test_that("frequency table works", {
   
   # character
   expect_output(print(freq(unclean$gender)))
+  
+  # with weights
+  df <- data.frame(x = sample(letters, size = 100, replace = TRUE),
+                   y = round(runif(100) * 100))
+  expect_gt(sum(freq(df, wt = y)$count),
+            sum(freq(df)$count))
 })
