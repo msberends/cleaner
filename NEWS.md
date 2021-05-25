@@ -1,5 +1,6 @@
-# cleaner 1.5.1.9000
+# cleaner 1.5.2
 
+* Fix for latest R-devel, that does not allow `digits = 0` for `format()`
 * `clean_Date()` now supports month-year format for which it sets the day as 1:
   ```r
   clean_Date("March")
