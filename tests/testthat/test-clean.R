@@ -20,6 +20,8 @@
 context("clean.R")
 
 test_that("cleaning works", {
+  skip_on_cran()
+
   expect_equal(clean_logical(c("Yes", "No", "Invalid", "Unknown")),
                c(TRUE, FALSE, NA, NA))
   expect_equal(clean_logical(x = c("Positive", "Negative", "Unknown", "Some value"),

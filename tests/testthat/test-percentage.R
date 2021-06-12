@@ -20,6 +20,8 @@
 context("percentage.R")
 
 test_that("percentage works", {
+  skip_on_cran()
+
   expect_identical(as.percentage(as.numeric(as.percentage(c(0.25, 25, 2.5)))),
                    as.percentage(c(0.25, 25, 2.5)))
   expect_true(is.percentage(clean_percentage(c("no5.538", "no.929", "yes23.90", "no.841", "no2.610"))))
