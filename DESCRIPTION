@@ -1,6 +1,6 @@
 Package: cleaner
 Title: Fast and Easy Data Cleaning
-Version: 1.5.2.9000
+Version: 1.5.3
 Date: 2021-06-13
 Authors@R: 
   person(
