@@ -6,7 +6,7 @@
 # https://github.com/msberends/cleaner                                 #
 #                                                                      #
 # LICENCE                                                              #
-# (c) 2020 Berends MS (m.s.berends@umcg.nl)                            #
+# (c) 2021 Berends MS (m.s.berends@umcg.nl)                            #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -111,8 +111,6 @@
 #' 
 #' clean_currency(c("Received 25", "Received 31.40"))
 #' clean_currency(c("Jack sent £ 25", "Bill sent £ 31.40"))
-#'  
-#' clean("12 06 2012")
 #' 
 #' df <- data.frame(A = c("2 Apr 2016", "5 Feb 2020"), 
 #'                  B = c("yes", "no"),
@@ -358,15 +356,6 @@ clean_Date <- function(x, format = NULL, guess_each = FALSE, max_date = Sys.Date
       final_result <- as.Date(x = x, format = format_datetime(format), ...)
     }
   } else {
-    if (any(grepl("^[a-z]+$", x))) {
-      # support for clean_Date("February")
-      x[grepl("^[a-z]+$", x)] <- paste("1", x[grepl("^[a-z]+$", x)], format(Sys.Date(), "%Y"))
-      original_format <- "mmmm"
-    } else if (any(grepl("^[a-z]+( (19|20)[0-9]{2})?$", x))) {
-      # support for clean_Date("February 2021")
-      x[grepl("^[a-z]+( (19|20)[0-9]{2})?$", x)] <- paste("1", x[grepl("^[a-z]+( (19|20)[0-9]{2})?$", x)])
-      original_format <- "mmmm yyyy"
-    }
     if (guess_each == FALSE) {
       final_result <- guess_Date(x = x, throw_note = TRUE, guess_each = guess_each, original_format = original_format)
     } else {
@@ -395,13 +384,13 @@ clean_Date <- function(x, format = NULL, guess_each = FALSE, max_date = Sys.Date
     x <- as.Date(time_lt)
     if (any(year(final_result) != year(x), na.rm = TRUE)) {
       warning("Some years were decreased by 100 to not exceed ", 
-              ifelse(max_date == Sys.Date(), "today", format(max_date, format_datetime("d mmmm yyyy"))), 
+              ifelse(max_date == Sys.Date(), "today", trimws(format(max_date, format_datetime("d mmmm yyyy")))), 
               ". Use clean_Date(..., max_date = Inf) to prevent this.", call. = FALSE)
     }
   },
   error = function(e) x <<- final_result)
   
-  x
+  as.Date(x)
 }
 
 #' @rdname clean
@@ -431,8 +420,8 @@ clean_POSIXct <- function(x, tz = "", remove = "[^.0-9 :/-]", fixed = FALSE, max
     x <- as.POSIXct(time_lt, tz = tz, ...)
     if (any(year(time_ct) != year(x), na.rm = TRUE)) {
       warning("Some years were decreased by 100 to not exceed ", 
-              ifelse(max_date == Sys.Date(), "today", format(max_date, format_datetime("d mmmm yyyy"))), 
-              ". Use clean_Date(..., max_date = Inf) to prevent this.", call. = FALSE)
+              ifelse(max_date == Sys.Date(), "today", trimws(format(max_date, format_datetime("d mmmm yyyy")))), 
+              ". Use clean_POSIXct(..., max_date = Inf) to prevent this.", call. = FALSE)
     }
   },
   error = function(e) x <<- time_ct)
@@ -468,6 +457,34 @@ guess_Date <- function(x, throw_note = TRUE, format_options = NULL, guess_each =
     return(as.Date(as.POSIXct(x)))
   }
   
+  if (all(grepl("^[a-z]+$", x))) {
+    # support for clean_Date("February")
+    out <- try(as.Date(paste("1", x, format(Sys.Date(), "%Y")),
+                       format = format_datetime("d mmmm yyyy")),
+               silent = TRUE)
+    if (!all(is.na(out))) {
+      msg_clean_as("mmmm", sep = "")
+      return(out)  
+    }
+  } else if (all(grepl("^[a-z]+( (19|20)[0-9]{2})?$", x))) {
+    # support for clean_Date("February 2021")
+    out <- try(as.Date(paste("1", x), format = format_datetime("d mmmm yyyy")),
+               silent = TRUE)
+    if (!all(is.na(out))) {
+      msg_clean_as("mmmm yyyy", sep = " ")
+      return(out)  
+    }
+  } else if (all(grepl("^[01]?[0-9] (19|20)?[0-9]{2}$", x))) {
+    # support for clean_Date("2 2021")
+    x[grepl(" [0-9][0-9]$", x)] <- gsub(" ([0-9][0-9])$", " 20\\1", x[grepl(" [0-9][0-9]$", x)])
+    out <- try(as.Date(paste("1", x), format = format_datetime("d mm yyyy")),
+               silent = TRUE)
+    if (!all(is.na(out))) {
+      msg_clean_as("mm yyyy", sep = " ")
+      return(out)  
+    }
+  }
+  
   # replace any non-number/separators ("-", ".", etc.) with space
   separator <- ifelse(grepl("[0-9]-", x) & !grepl("[0-9]-$", x), "-",
                       ifelse(grepl("[0-9][.]", x) & !grepl("[0-9][.]$", x), ".",
@@ -497,7 +514,7 @@ guess_Date <- function(x, throw_note = TRUE, format_options = NULL, guess_each =
       }
     }
   } else if (all(grepl("^[a-z]+ [0-9]+ [0-9]+$", x[!is.na(x)]))) {
-    # then text, 1-2 digits, 2-4 digits (like October 21 2012)
+    # text, 1-2 digits, 2-4 digits (like October 21 2012)
     if (all(grepl("^[a-z]{4,} [0-9]{1} [0-9]{2}$", x[!is.na(x)]))) new_format <- "mmmm d yy"
     if (all(grepl("^[a-z]{4,} [0-9]{1} [0-9]{4}$", x[!is.na(x)]))) new_format <- "mmmm d yyyy"
     if (all(grepl("^[a-z]{4,} [0-9]{2} [0-9]{2}$", x[!is.na(x)]))) new_format <- "mmmm dd yy"

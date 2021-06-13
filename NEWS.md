@@ -1,3 +1,8 @@
+# cleaner 1.5.3
+
+* CRAN fix for macOS (r-release-macos-arm64)
+
+
 # cleaner 1.5.2
 
 * Fix for latest R-devel, that does not allow `digits = 0` for `format()`
