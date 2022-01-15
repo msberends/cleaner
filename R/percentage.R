@@ -6,7 +6,7 @@
 # https://github.com/msberends/cleaner                                 #
 #                                                                      #
 # LICENCE                                                              #
-# (c) 2021 Berends MS (m.s.berends@umcg.nl)                            #
+# (c) 2022 Berends MS (m.s.berends@umcg.nl)                            #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -127,7 +127,6 @@ format.percentage <- function(x, digits = NULL, ...) {
   # round right: percentage(0.4455) and format(as.percentage(0.4455), 1) should return "44.6%", not "44.5%"
   x_formatted <- format(round2(as.double(x), digits = digits + 2) * 100,
                         scientific = FALSE,
-                        digits = digits,
                         nsmall = digits,
                         ...)
   x_formatted <- paste0(x_formatted, "%")
@@ -208,5 +207,5 @@ percentage <- function(x, digits = NULL, ...) {
     # max one digit if undefined
     digits <- getdecimalplaces(x, minimum = 0, maximum = 1)
   }
-  format(as.percentage(x), digits = digits, ...)
+  format(as.percentage(round(as.double(x), digits = digits)), ...)
 }

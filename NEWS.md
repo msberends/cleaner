@@ -1,3 +1,8 @@
+# cleaner 1.5.3.9000
+
+* Fix for `digits` in `format()`
+
+
 # cleaner 1.5.3
 
 * CRAN fix for macOS (r-release-macos-arm64)
