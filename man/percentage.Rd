@@ -48,4 +48,12 @@ format(as.percentage(pi), digits = 6)
 
 round(0.4455 * 100, 1) # mind the rounding
 percentage(0.4455) # does not round to 44.5\%
+
+if (require("ggplot2")) {
+  ggplot(iris) +
+    geom_col(aes(Species, Sepal.Length / sum(Sepal.Length)),
+             position = "stack") +
+    # add percentage as function to the labels:
+    scale_y_continuous(labels = percentage)
+}
 }

@@ -184,8 +184,6 @@ clean_character("Positive (0.143)")
 
 clean_currency(c("Received 25", "Received 31.40"))
 clean_currency(c("Jack sent £ 25", "Bill sent £ 31.40"))
- 
-clean("12 06 2012")
 
 df <- data.frame(A = c("2 Apr 2016", "5 Feb 2020"), 
                  B = c("yes", "no"),

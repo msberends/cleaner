@@ -41,25 +41,10 @@ gsub_warn_on_error <- function(pattern, replacement, x, ignore.case = FALSE, per
 }
 
 # works exactly like round(), but rounds `round(44.55, 1)` as 44.6 instead of 44.5
-# and adds decimal zeroes until `digits` is reached when force_zero = TRUE
-round2 <- function(x, digits = 1, force_zero = TRUE) {
+round2 <- function(x, digits = 1) {
   x <- as.double(x)
   # https://stackoverflow.com/a/12688836/4575331
-  val <- (trunc((abs(x) * 10 ^ digits) + 0.5) / 10 ^ digits) * sign(x)
-  if (digits > 0 & force_zero == TRUE) {
-    values_trans <- val[val != as.integer(val) & !is.na(val)]
-    val[val != as.integer(val) & !is.na(val)] <- paste0(values_trans,
-                                                        strrep("0", 
-                                                               max(0, 
-                                                                   digits - nchar(
-                                                                     format(
-                                                                       as.double(
-                                                                         gsub(".*[.](.*)$", 
-                                                                              "\\1",
-                                                                              values_trans)),
-                                                                       scientific = FALSE)))))
-  }
-  as.double(val)
+  (trunc((abs(x) * 10 ^ digits) + 0.5 + sqrt(.Machine$double.eps)) / 10 ^ digits) * sign(x)
 }
 
 getdecimalplaces <- function(x, minimum = 1, maximum = 3) {

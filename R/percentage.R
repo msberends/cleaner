@@ -44,6 +44,14 @@
 #' 
 #' round(0.4455 * 100, 1) # mind the rounding
 #' percentage(0.4455) # does not round to 44.5%
+#' 
+#' if (require("ggplot2")) {
+#'   ggplot(iris) +
+#'     geom_col(aes(Species, Sepal.Length / sum(Sepal.Length)),
+#'              position = "stack") +
+#'     # add percentage as function to the labels:
+#'     scale_y_continuous(labels = percentage)
+#' }
 as.percentage <- function(x, ...) {
   if (is.percentage(x)) {
     return(x)
@@ -125,12 +133,9 @@ format.percentage <- function(x, digits = NULL, ...) {
     digits <- getdecimalplaces(x)
   }
   # round right: percentage(0.4455) and format(as.percentage(0.4455), 1) should return "44.6%", not "44.5%"
-  x_formatted <- format(round2(as.double(x), digits = digits + 2) * 100,
-                        scientific = FALSE,
-                        nsmall = digits,
-                        ...)
-  x_formatted <- paste0(x_formatted, "%")
-  x_formatted[!grepl(pattern = "^[0-9.,e-]+$", x = x)] <- NA_character_
+  x <- round2(x = as.double(x) * 100, digits = digits)
+  x_formatted <- format(x, scientific = FALSE, ...)
+  x_formatted[!is.na(x_formatted)] <- paste0(x_formatted[!is.na(x_formatted)], "%")
   x_formatted
 }
 
@@ -202,10 +207,8 @@ pillar_shaft.percentage <- function(x, ...) {
 #' @rdname percentage
 #' @export
 percentage <- function(x, digits = NULL, ...) {
-  x <- as.double(x)
   if (is.null(digits)) {
-    # max one digit if undefined
-    digits <- getdecimalplaces(x, minimum = 0, maximum = 1)
+    digits <- getdecimalplaces(as.double(x), minimum = 0, maximum = 1)
   }
-  format(as.percentage(round(as.double(x), digits = digits)), ...)
+  trimws(format(as.percentage(x), digits = digits))
 }
