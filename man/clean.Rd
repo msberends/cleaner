@@ -100,7 +100,7 @@ For \code{clean_Date(..., guess_each = TRUE)}, this can be a vector of values to
 
 \item{guess_each}{logical to indicate whether all items of \code{x} should be guessed one by one, see Examples}
 
-\item{max_date}{date to indicate to maximum allowed of \code{x}, which defaults to today. This is to prevent that \code{clean_Date("23-03-47")} will return 23 March 2047 and instead returns 23 March 1947 with a warning.}
+\item{max_date}{date (coercible with [as.Date()]) to indicate to maximum allowed of \code{x}, which defaults to today. This is to prevent that \code{clean_Date("23-03-47")} will return 23 March 2047 and instead returns 23 March 1947 with a warning.}
 
 \item{...}{for \code{clean_Date} and \code{clean_POSIXct}: other parameters passed on these functions}
 

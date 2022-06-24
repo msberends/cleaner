@@ -1,7 +1,7 @@
-# cleaner 1.5.3.9000
+# cleaner 1.5.3.9xxx
 
 * Fix for `digits` in `format()`
-
+* For `clean_Date()` and `clean_POSIXct()`: allow argument `max_date` to be the same length as `x`
 
 # cleaner 1.5.3
 

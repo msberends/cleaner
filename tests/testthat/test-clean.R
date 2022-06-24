@@ -56,4 +56,23 @@ test_that("cleaning works", {
   expect_equal(clean_Date("2020-11-12 12:24:12"),
                as.Date("2020-11-12"))
   
+  expect_equal(
+    suppressMessages(
+      suppressWarnings(
+        clean_Date(c("01-02-50", "01-02-50"),
+                   format = c("dd-mm-yy", "dd-mm-yyyy"),
+                   max_date = c("2020-01-01", "2070-01-01"))
+      )),
+    as.Date(c("1950-02-01", "2050-02-01")))
+  
+  expect_equal(
+    as.Date(
+      suppressMessages(
+        suppressWarnings(
+          clean_POSIXct(c("01-02-50", "01-02-50"),
+                        format = c("dd-mm-yy", "dd-mm-yyyy"),
+                        max_date = c("2020-01-01", "2070-01-01"), tz = "UTC")
+        ))),
+    as.Date(c("1950-02-01", "2050-02-01"), tz = "UTC"))
+  
 })

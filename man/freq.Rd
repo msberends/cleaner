@@ -91,14 +91,6 @@ header(f, property = NULL)
 
 \item{sep}{a character string to separate the terms when selecting multiple columns}
 
-\item{decimal.mark}{%
-    used for prettying (longish) numerical and complex sequences.
-    Passed to \code{\link[base]{prettyNum}}: that help page explains the details.}
-
-\item{big.mark}{%
-    used for prettying (longish) numerical and complex sequences.
-    Passed to \code{\link[base]{prettyNum}}: that help page explains the details.}
-
 \item{wt}{frequency weights. If a variable, computes \code{sum(wt)} instead of counting the rows.}
 
 \item{droplevels}{a logical value indicating whether in factors empty levels should be dropped}

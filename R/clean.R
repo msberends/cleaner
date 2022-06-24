@@ -34,7 +34,7 @@
 #' @param format a date format that will be passed on to \code{\link{format_datetime}}, see Details
 #' @param currency_symbol the currency symbol to use, which will be guessed based on the input and otherwise defaults to the current system locale setting (see \code{\link{Sys.localeconv}})
 #' @param guess_each logical to indicate whether all items of \code{x} should be guessed one by one, see Examples
-#' @param max_date date to indicate to maximum allowed of \code{x}, which defaults to today. This is to prevent that \code{clean_Date("23-03-47")} will return 23 March 2047 and instead returns 23 March 1947 with a warning.
+#' @param max_date date (coercible with [as.Date()]) to indicate to maximum allowed of \code{x}, which defaults to today. This is to prevent that \code{clean_Date("23-03-47")} will return 23 March 2047 and instead returns 23 March 1947 with a warning.
 #' @param format character string giving a date-time format as used by \link[base]{strptime}. 
 #' 
 #' For \code{clean_Date(..., guess_each = TRUE)}, this can be a vector of values to be used for guessing, see Examples.
@@ -334,12 +334,17 @@ clean_Date <- function(x, format = NULL, guess_each = FALSE, max_date = Sys.Date
     return(as.Date(x))
   }
   
-  if (!is.Date(max_date) & !is.infinite(max_date)) {
-    max_date <- suppressWarnings(suppressMessages(clean_Date(max_date)))
-    if (is.na(max_date)) {
-      stop("`max_date` must be a date.")
+  if (length(max_date) == 1) {
+    max_date <- rep(max_date, length(x))
+  }
+  if (!is.Date(max_date)) {
+    max_date[is.infinite(max_date)] <- "2099-12-31"
+    max_date <- as.Date(max_date)
+    if (any(is.na(max_date))) {
+      stop("`max_date` must (all) be dates.")
     }
   }
+  max_date <- as.Date(max_date) # must be same type as x
   
   if (is.double(x)) {
     x <- as.integer(x)
@@ -356,7 +361,7 @@ clean_Date <- function(x, format = NULL, guess_each = FALSE, max_date = Sys.Date
       final_result <- as.Date(x = x, format = format_datetime(format), ...)
     }
   } else {
-    if (guess_each == FALSE) {
+    if (guess_each == FALSE && length(format) < 2) {
       final_result <- guess_Date(x = x, throw_note = TRUE, guess_each = guess_each, original_format = original_format)
     } else {
       if (length(format) > 1) {
@@ -380,11 +385,13 @@ clean_Date <- function(x, format = NULL, guess_each = FALSE, max_date = Sys.Date
   
   tryCatch({
     time_lt <- as.POSIXlt(final_result)
-    time_lt[final_result > max_date]$year <- time_lt[final_result > max_date]$year - 100
+    lowered <- which(final_result > max_date)
+    time_lt[lowered]$year <- time_lt[lowered]$year - 100
     x <- as.Date(time_lt)
-    if (any(year(final_result) != year(x), na.rm = TRUE)) {
-      warning("Some years were decreased by 100 to not exceed ", 
-              ifelse(max_date == Sys.Date(), "today", trimws(format(max_date, format_datetime("d mmmm yyyy")))), 
+    if (length(lowered) > 0) {
+      warning(length(lowered), " year", ifelse(length(lowered) > 1, "s were", " was"),
+              " decreased by 100 to not exceed ",
+              ifelse(all(max_date == Sys.Date()), "today", "the set 'max_date'"),
               ". Use clean_Date(..., max_date = Inf) to prevent this.", call. = FALSE)
     }
   },
@@ -401,10 +408,14 @@ clean_POSIXct <- function(x, tz = "", remove = "[^.0-9 :/-]", fixed = FALSE, max
     return(as.POSIXct(x))
   }
   
-  if (!is.Date(max_date) & !is.infinite(max_date)) {
-    max_date <- suppressWarnings(suppressMessages(clean_Date(max_date)))
-    if (is.na(max_date)) {
-      stop("`max_date` must be a date.")
+  if (length(max_date) == 1) {
+    max_date <- rep(max_date, length(x))
+  }
+  if (!is.Date(max_date)) {
+    max_date[is.infinite(max_date)] <- "2099-12-31"
+    max_date <- as.Date(max_date)
+    if (any(is.na(max_date))) {
+      stop("`max_date` must (all) be dates.")
     }
   }
   max_date <- as.POSIXct(max_date) # must be same type as x
@@ -414,18 +425,24 @@ clean_POSIXct <- function(x, tz = "", remove = "[^.0-9 :/-]", fixed = FALSE, max
   
   tryCatch({
     time_ct <- tryCatch(as.POSIXct(x, tz = tz, ...),
-                        error = function(e) clean_Date(x))
-    time_lt <- as.POSIXlt(time_ct, tz = tz)
-    time_lt[time_ct > max_date]$year <- time_lt[time_ct > max_date]$year - 100
+                        error = function(e) as.POSIXct(clean_Date(x, ..., max_date = Inf), tz = tz))
+    if (all(is.na(time_ct)) & !all(is.na(x))) {
+      # try clean_Date again
+      time_ct <- as.POSIXct(clean_Date(x, ..., max_date = Inf), tz = tz)
+    }
+    lowered <- which(time_ct > max_date)
+    time_lt <- as.POSIXlt(time_ct)
+    time_lt[lowered]$year <- time_lt[lowered]$year - 100
     x <- as.POSIXct(time_lt, tz = tz, ...)
-    if (any(year(time_ct) != year(x), na.rm = TRUE)) {
-      warning("Some years were decreased by 100 to not exceed ", 
-              ifelse(max_date == Sys.Date(), "today", trimws(format(max_date, format_datetime("d mmmm yyyy")))), 
+    if (length(lowered) > 0) {
+      warning(length(lowered), " year", ifelse(length(lowered) > 1, "s were", " was"),
+              " decreased by 100 to not exceed ",
+              ifelse(all(as.Date(max_date) == Sys.Date()), "today", "the set 'max_date'"),
               ". Use clean_POSIXct(..., max_date = Inf) to prevent this.", call. = FALSE)
     }
   },
   error = function(e) x <<- time_ct)
-
+  
   as.POSIXct(x)
 }
 
