@@ -18,42 +18,39 @@
 # ==================================================================== #
 
 on:
-  push:
-    branches:
-      - main
-      - master
   pull_request:
-    branches:
-      - main
-      - master
+    # run in each PR in this repo
+    branches: '**'
+  push:
+    branches: '**'
   schedule:
     # run a schedule everyday at 1 AM.
     # this is to check that all dependencies are still available (see R/zzz.R)
     - cron:  '0 1 * * *'
 
-name: R-CMD-check
+name: check-current
 
 jobs:
-  R-CMD-check:
+  R-code-check:
     runs-on: ${{ matrix.config.os }}
-    
+
     continue-on-error: ${{ matrix.config.allowfail }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.os }} (R-${{ matrix.config.r }})
 
     strategy:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest,   r: 'devel', allowfail: false}
-          - {os: windows-latest, r: 'devel', allowfail: false}
-          - {os: ubuntu-22.04,   r: 'devel', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
+          - {os: macOS-latest,   r: 'devel',   allowfail: false}
           - {os: macOS-latest,   r: 'release', allowfail: false}
-          - {os: windows-latest, r: 'release', allowfail: false}
-          - {os: ubuntu-22.04,   r: 'release', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
           - {os: macOS-latest,   r: 'oldrel', allowfail: false}
-          - {os: windows-latest, r: 'oldrel', allowfail: true}
-          - {os: ubuntu-22.04,   r: 'oldrel', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
+          - {os: ubuntu-latest,  r: 'devel',   allowfail: false}
+          - {os: ubuntu-latest,  r: 'release', allowfail: false}
+          - {os: ubuntu-latest,  r: 'oldrel', allowfail: false}
+          - {os: windows-latest, r: 'devel',   allowfail: false}
+          - {os: windows-latest, r: 'release', allowfail: false}
+          - {os: windows-latest, r: 'oldrel', allowfail: false}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -76,3 +73,6 @@ jobs:
           needs: check
 
       - uses: r-lib/actions/check-r-package@v2
+        env:
+          _R_CHECK_LENGTH_1_CONDITION_: verbose
+          _R_CHECK_LENGTH_1_LOGIC2_: verbose
