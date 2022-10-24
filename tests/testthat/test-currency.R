@@ -1,6 +1,6 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Fast and Easy Data Cleaning                                          #
+# cleaner: Fast and Easy Data Cleaning                                 #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/cleaner                                 #

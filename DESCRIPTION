@@ -1,7 +1,7 @@
 Package: cleaner
 Title: Fast and Easy Data Cleaning
-Version: 1.5.3.9002
-Date: 2022-06-24
+Version: 1.5.3.9003
+Date: 2022-10-24
 Authors@R: 
   person(
     given = c("Matthijs", "S."),
@@ -32,4 +32,4 @@ BugReports: https://github.com/msberends/cleaner/issues
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1

@@ -91,6 +91,10 @@ header(f, property = NULL)
 
 \item{sep}{a character string to separate the terms when selecting multiple columns}
 
+\item{decimal.mark}{the character to be used to indicate the numeric decimal point}
+
+\item{big.mark}{character; if not empty used as mark between every `big.interval` decimals \emph{before} (hence big) the decimal point}
+
 \item{wt}{frequency weights. If a variable, computes \code{sum(wt)} instead of counting the rows.}
 
 \item{droplevels}{a logical value indicating whether in factors empty levels should be dropped}

@@ -1,6 +1,6 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Fast and Easy Data Cleaning                                          #
+# cleaner: Fast and Easy Data Cleaning                                 #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/cleaner                                 #
@@ -38,10 +38,11 @@
 #' @param format a character to define the printing format (it supports \code{\link{format_datetime}} to transform e.g. \code{"d mmmm yyyy"} to \code{"\%e \%B \%Y"})
 #' @param sep a character string to separate the terms when selecting multiple columns
 #' @param wt frequency weights. If a variable, computes \code{sum(wt)} instead of counting the rows.
-#' @inheritParams base::format
 #' @param f a frequency table
 #' @param n number of top \emph{n} items to return, use -n for the bottom \emph{n} items. It will include more than \code{n} rows if there are ties.
 #' @param property property in header to return this value directly
+#' @param decimal.mark the character to be used to indicate the numeric decimal point
+#' @param big.mark character; if not empty used as mark between every `big.interval` decimals \emph{before} (hence big) the decimal point
 #' @details Frequency tables (or frequency distributions) are summaries of the distribution of values in a sample. With the `freq` function, you can create univariate frequency tables. Multiple variables will be pasted into one variable, so it forces a univariate distribution. 
 #' 
 #' Input can be done in many different ways. Base R methods are:

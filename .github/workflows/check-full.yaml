@@ -1,6 +1,6 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Fast and Easy Data Cleaning                                          #
+# cleaner: Fast and Easy Data Cleaning                                 #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/cleaner                                 #
@@ -45,92 +45,34 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest,   r: 'devel', allowfail: true}
-          - {os: windows-latest, r: 'devel', allowfail: true}
-          - {os: ubuntu-20.04,   r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", allowfail: false}
+          - {os: macOS-latest,   r: 'devel', allowfail: false}
+          - {os: windows-latest, r: 'devel', allowfail: false}
+          - {os: ubuntu-22.04,   r: 'devel', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
           - {os: macOS-latest,   r: 'release', allowfail: false}
           - {os: windows-latest, r: 'release', allowfail: false}
-          - {os: ubuntu-20.04,   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", allowfail: false}
+          - {os: ubuntu-22.04,   r: 'release', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
           - {os: macOS-latest,   r: 'oldrel', allowfail: false}
           - {os: windows-latest, r: 'oldrel', allowfail: true}
-          - {os: ubuntu-20.04,   r: 'oldrel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", allowfail: false}
-          - {os: ubuntu-20.04,   r: '4.1', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", allowfail: false}
-          - {os: ubuntu-20.04,   r: '4.0', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", allowfail: false}
-          - {os: ubuntu-20.04,   r: '3.6', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", allowfail: false}
-          - {os: ubuntu-20.04,   r: '3.5', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", allowfail: false}
-          - {os: ubuntu-20.04,   r: '3.4', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", allowfail: false}
+          - {os: ubuntu-22.04,   r: 'oldrel', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
 
     env:
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - uses: r-lib/actions/setup-r@v1
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
-          http-user-agent: ${{ matrix.config.http-user-agent }}
+          # use RStudio Package Manager to quickly install packages
+          use-public-rspm: true
 
-      - uses: r-lib/actions/setup-pandoc@v1
-
-      - name: Query dependencies
-        run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
-        shell: Rscript {0}
-
-      - name: Restore R package cache
-        uses: actions/cache@v2
+      - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+          extra-packages: any::rcmdcheck
+          needs: check
 
-      - name: Install system dependencies
-        if: runner.os == 'Linux'
-        run: |
-          while read -r cmd
-          do
-            eval sudo $cmd
-          done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "18.04"))')
-
-      - name: Install dependencies
-        run: |
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran("rcmdcheck")
-        shell: Rscript {0}
-
-      - name: Session info
-        run: |
-          options(width = 100)
-          pkgs <- installed.packages()[, "Package"]
-          sessioninfo::session_info(pkgs, include_base = TRUE)
-        shell: Rscript {0}
-
-      - name: Check
-        env:
-          _R_CHECK_CRAN_INCOMING_: false
-        run: |
-          options(crayon.enabled = TRUE)
-          rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
-        shell: Rscript {0}
-
-      - name: Show testthat output
-        if: always()
-        run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
-        shell: bash
-
-      - name: Upload check results
-        if: failure()
-        uses: actions/upload-artifact@main
-        with:
-          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
-          path: check
-
-      - name: Don't use tar from old Rtools to store the cache
-        if: ${{ runner.os == 'Windows' && startsWith(steps.install-r.outputs.installed-r-version, '3.6' ) }}
-        shell: bash
-        run: echo "C:/Program Files/Git/usr/bin" >> $GITHUB_PATH
+      - uses: r-lib/actions/check-r-package@v2

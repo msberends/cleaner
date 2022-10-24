@@ -1,6 +1,6 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Fast and Easy Data Cleaning                                          #
+# cleaner: Fast and Easy Data Cleaning                                 #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/cleaner                                 #
@@ -378,7 +378,7 @@ clean_Date <- function(x, format = NULL, guess_each = FALSE, max_date = Sys.Date
         }
         final_result <- as.Date(as.double(x_coerced), origin = "1970-01-01")
       } else {
-        final_result <- as.Date(unname(sapply(x, guess_Date, throw_note = FALSE, format = format, original_format = original_format)), origin = "1970-01-01")
+        final_result <- as.Date(unname(sapply(x, guess_Date, throw_note = FALSE, format = format, guess_each = guess_each, original_format = original_format)), origin = "1970-01-01")
       }
     }
   }
@@ -448,7 +448,7 @@ clean_POSIXct <- function(x, tz = "", remove = "[^.0-9 :/-]", fixed = FALSE, max
 
 
 
-guess_Date <- function(x, throw_note = TRUE, format_options = NULL, guess_each = guess_each, original_format = NULL) {
+guess_Date <- function(x, throw_note = TRUE, format_options = NULL, guess_each = FALSE, original_format = NULL) {
   msg_clean_as <- function(format_set, sep = " ", orig_format = original_format) {
     if (throw_note == TRUE) {
       if (!is.null(orig_format)) {
