@@ -21,4 +21,5 @@ context("currency.R")
 
 test_that("currency works", {
   expect_true(is.currency(clean_currency(c("no5538", "no929", "yes2390", "no841", "no2610"))))
+  expect_identical(symb2txt(txt2symb("EUR")), "EUR")
 })

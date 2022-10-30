@@ -24,7 +24,7 @@ Contents:
 ----
 
 ## Why this package
-As a data scientist, I'm often served with data that is not clean, not tidy and consequently not ready for analysis at all. For tidying data, there's of course the `tidyverse` (https://www.tidyverse.org), which lets you manipulate data in any way you can think of. But for *cleaning*, I think our community was still lacking a neat solution that makes data cleaning fast and easy with functions that kind of 'think on their own' to do that.
+You are probably often served with data that is not clean, not tidy and consequently not ready for analysis at all. For tidying data, there's of course the `tidyverse` (https://www.tidyverse.org), which lets you manipulate data in any way you can think of. But for *cleaning*, our community might still have been lacking a neat solution that makes data cleaning fast and easy with functions that kind of 'think on their own' to do that.
 
 If the CRAN button at the top of this page is green, install the package with:
 

@@ -96,21 +96,22 @@ c.currency <- function(x, ...) {
 }
 
 txt2symb <- function(txt) {
-  switch(txt,
-         "USD" = "\u0024",
-         "EUR" = "\u20ac",
-         "JPY" = "\u00a5",
-         "GBP" = "\u00a3",
-         txt)
+  txt <- toupper(txt)
+  sym <- unname(pkg_env$symbols[which(names(pkg_env$symbols) == txt)])
+  if (length(sym) == 0) {
+    txt
+  } else {
+    sym
+  }
 }
 
-symb2txt <- function(txt) {
-  switch(txt,
-         "\u0024" = "USD",
-         "\u20ac" = "EUR",
-         "\u00a5" = "JPY",
-         "\u00a3" = "GBP",
-         txt)
+symb2txt <- function(sym) {
+  txt <- unname(names(pkg_env$symbols)[which(pkg_env$symbols == sym)])
+  if (length(txt) == 0) {
+    sym
+  } else {
+    txt
+  }
 }
 
 #' @rdname currency

@@ -17,6 +17,14 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 # ==================================================================== #
 
+pkg_env <- new.env(hash = FALSE)
 .onLoad <- function(libname, pkgname) {
   backports::import(pkgname)
+  # read symbols from external file to prevent CRAN errors
+  symbols <- tryCatch(utils::read.delim(system.file("symbols.txt", package = "cleaner"), sep = ","), error = function(e) NULL)
+  if (!is.null(symbols)) {
+    pkg_env$symbols <- stats::setNames(symbols$symbol, symbols$txt)
+  } else {
+    pkg_env$symbols <- character(0)
+  }
 }

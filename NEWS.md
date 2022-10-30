@@ -1,7 +1,10 @@
-# cleaner 1.5.3.9xxx
+# cleaner 1.5.4
 
-* Fix for `digits` in `format()`
 * For `clean_Date()` and `clean_POSIXct()`: allow argument `max_date` to be the same length as `x`
+* Fix for `digits` in `format()`
+* Fix for currency symbols
+* Fix CRAN check error
+
 
 # cleaner 1.5.3
 
@@ -23,6 +26,7 @@
 * `freq()` now contains a `wt` argument to set the weights. The default (`NULL`) yields the old behaviour.
 * Fixed a bug in `clean_POSIXct()` that led to the warning `Incompatible methods ("Ops.POSIXt", "Ops.Date") for ">"`
 
+
 # cleaner 1.5.1
 
 * New function `format_p_value()` to format raw p values according to the APA guideline
@@ -33,6 +37,7 @@
   ```
 * Currency now prints and formats without symbols as default, use `as_symbol = TRUE` to print/format with currency symbols
 * Support for older versions of R (v3.2)
+
 
 # cleaner 1.5.0
 
@@ -65,6 +70,7 @@
     na_replace() # replace NAs in all columns ("" for hair_color and 0 for birth_year)
   ```
 * Support for the upcoming R 4.1.0
+
 
 # cleaner 1.4.0
 
@@ -100,10 +106,12 @@
   ```
 * Cleaned all code using the `lintr` package
 
+
 # cleaner 1.3.1
 
 * Fixed a bug when using a `percentage` class into the `percentage()` function, i.e. `percentage(as.percentage(1))` would fail
 * Fixed extremely small percentages, like `as.percentage(2.5e-14)`
+
 
 # cleaner 1.3.0
 
@@ -111,6 +119,7 @@
 * Added a method for `median()` in percentages
 * Fixed a bug where `NA` in percentages would not be formatted correctly
 * Fixed a bug in frequency tables where sometimes the number of digits used for percentages would be astronomical
+
 
 # cleaner 1.2.0
 
@@ -120,6 +129,7 @@
 * Support for negative values for `clean_numeric()`, `clean_percentage()` and `clean_currency()`
 * Fix for `clean_character()` on R v3.5 and lower
 * Fix for digits in frequency tables for numeric values
+
 
 # clean 1.1.0
 
@@ -131,6 +141,7 @@
 * More robust results for `clean_character()`, it also keeps in-between spaces now
 * `clean_numeric()` now supports currency
 * Fix for `freq()` where the precentage of NAs in the header was not calculated right
+
 
 # clean 1.0.0
 

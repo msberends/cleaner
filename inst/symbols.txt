@@ -1,0 +1,7 @@
+txt,symbol
+"CNY","元"
+"EUR","€"
+"GBP","£"
+"JPY","¥"
+"KRW","₩"
+"USD","$"

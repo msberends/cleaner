@@ -1,7 +1,7 @@
 Package: cleaner
 Title: Fast and Easy Data Cleaning
-Version: 1.5.3.9003
-Date: 2022-10-24
+Version: 1.5.4
+Date: 2022-10-28
 Authors@R: 
   person(
     given = c("Matthijs", "S."),
@@ -27,7 +27,7 @@ Suggests:
   ggplot2,
   rmarkdown,
   testthat (>= 1.0.2)
-URL: https://github.com/msberends/cleaner
+URL: https://msberends.github.io/cleaner/, https://github.com/msberends/cleaner
 BugReports: https://github.com/msberends/cleaner/issues
 License: GPL-2
 Encoding: UTF-8
