@@ -19,8 +19,8 @@
 
 on:
   push:
-    # only on master
-    branches: 'master'
+    # only on main
+    branches: 'main'
 
 name: website
 

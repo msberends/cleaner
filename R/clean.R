@@ -20,57 +20,67 @@
 #' Clean column data to a class
 #' 
 #' Use any of these functions to quickly clean columns in your data set. Use \code{clean()} to pick the functions that return the least relative number of \code{NA}s. They \strong{always} return the class from the function name (e.g. \code{clean_Date()} always returns class \code{Date}).
+#' @md
 #' @param x data to clean
-#' @param true \link[base]{regex} to interpret values as \code{TRUE} (which defaults to \code{\link{regex_true}}), see Details
-#' @param false \link[base]{regex} to interpret values as \code{FALSE} (which defaults to \code{\link{regex_false}}), see Details
-#' @param na \link[base]{regex} to force interpret values as \code{NA}, i.e. not as \code{TRUE} or \code{FALSE}
-#' @param remove \link[base]{regex} to define the character(s) that should be removed, see Details
+#' @param true [regex] to interpret values as `TRUE` (which defaults to [regex_true()]), see Details
+#' @param false [regex] to interpret values as `FALSE` (which defaults to [regex_false()]), see Details
+#' @param na [regex] to force interpret values as `NA`, i.e. not as `TRUE` or `FALSE`
+#' @param remove [regex] to define the character(s) that should be removed, see Details
 #' @param levels new factor levels, may be named with regular expressions to match existing values, see Details
 #' @param droplevels logical to indicate whether non-existing factor levels should be dropped
 #' @param ordered logical to indicate whether the factor levels should be ordered
 #' @param fixed logical to indicate whether regular expressions should be turned off
-#' @param trim logical to indicate whether the result should be trimmed with \code{\link{trimws}(..., which = "both")}
+#' @param trim logical to indicate whether the result should be trimmed with [`trimws(..., which = "both")`][trimws()]
 #' @param ignore.case logical to indicate whether matching should be case-insensitive
-#' @param format a date format that will be passed on to \code{\link{format_datetime}}, see Details
-#' @param currency_symbol the currency symbol to use, which will be guessed based on the input and otherwise defaults to the current system locale setting (see \code{\link{Sys.localeconv}})
-#' @param guess_each logical to indicate whether all items of \code{x} should be guessed one by one, see Examples
-#' @param max_date date (coercible with [as.Date()]) to indicate to maximum allowed of \code{x}, which defaults to today. This is to prevent that \code{clean_Date("23-03-47")} will return 23 March 2047 and instead returns 23 March 1947 with a warning.
-#' @param format character string giving a date-time format as used by \link[base]{strptime}. 
+#' @param format a date format that will be passed on to [format_datetime()], see Details
+#' @param currency_symbol the currency symbol to use, which will be guessed based on the input and otherwise defaults to the current system locale setting (see [Sys.localeconv()])
+#' @param guess_each logical to indicate whether all items of `x` should be guessed one by one, see Examples
+#' @param max_date date (coercible with [as.Date()]) to indicate the maximum allowed of `x`, which defaults to today. This is to prevent that `clean_Date("23-03-47")` will return 23 March 2047 and instead returns 23 March 1947 with a warning.
+#' @param format character string giving a date-time format as used by [strptime()].
 #' 
-#' For \code{clean_Date(..., guess_each = TRUE)}, this can be a vector of values to be used for guessing, see Examples.
-#' @param ... for \code{clean_Date} and \code{clean_POSIXct}: other parameters passed on these functions
+#' For `clean_Date(..., guess_each = TRUE)`, this can be a vector of values to be used for guessing, see Examples.
+#' @param ... for `clean_Date` and `clean_POSIXct`: other parameters passed on these functions
 #' @inheritParams base::as.POSIXct
 #' @details
-#' Using \code{clean()} on a vector will guess a cleaning function based on the potential number of \code{NAs} it returns. Using \code{clean()} on a data.frame to apply this guessed cleaning over all columns.
+#' Using `clean()` on a vector will guess a cleaning function based on the potential number of `NA`s it returns. Using `clean()` on a data frame to apply this guessed cleaning over all columns.
 #' 
 #' Info about the different functions:
 #' 
-#' \itemize{
-#'   \item{\code{clean_logical()}:\cr}{Use parameters \code{true} and \code{false} to match values using case-insensitive regular expressions (\link[base]{regex}). Unmatched values are considered \code{NA}. At default, values are matched with \code{\link{regex_true}} and \code{\link{regex_false}}. This allows support for values "Yes" and "No" in the following languages: Arabic, Bengali, Chinese (Mandarin), Dutch, English, French, German, Hindi, Indonesian, Japanese, Malay, Portuguese, Russian, Spanish, Telugu, Turkish and Urdu. Use parameter \code{na} to override values as \code{NA} that would else be matched with \code{true} or \code{false}. See Examples.}
-#'   \item{\code{clean_factor()}:\cr}{Use parameter \code{levels} to set new factor levels. They can be case-insensitive regular expressions to match existing values of \code{x}. For matching, new values for \code{levels} are internally temporary sorted descending on text length. See Examples.}
-#'   \item{\code{clean_numeric()}, \code{clean_double()}, \code{clean_integer()} and \code{clean_character()}:\cr}{Use parameter \code{remove} to match values that must be removed from the input, using regular expressions (\link[base]{regex}). In case of \code{clean_numeric()}, comma's will be read as dots and only the last dot will be kept. Function \code{clean_character()} will keep middle spaces at default. See Examples.}
-#'   \item{\code{clean_percentage()}:\cr}{This new class works like \code{clean_numeric()}, but transforms it with \code{\link{as.percentage}}, which will retain the original values, but will print them as percentages. See Examples.} 
-#'   \item{\code{clean_currency()}:\cr}{This new class works like \code{clean_numeric()}, but transforms it with \code{\link{as.currency}}. The currency symbol is guessed based on the most traded currencies by value (see Source): the United States dollar, Euro, Japanese yen, Pound sterling, Swiss franc, Renminbi, Swedish krona, Mexican peso, South Korean won, Turkish lira, Russian ruble, Indian rupee and the South African rand. See Examples.}
-#'   \item{\code{clean_Date()}:\cr}{Use parameter \code{format} to define a date format, or leave it empty to have the format guessed. Use \code{"Excel"} to read values as Microsoft Excel dates. The \code{format} parameter will be evaluated with \code{\link{format_datetime}}, which means that a format like \code{"d-mmm-yy"} with be translated internally to \code{"\%e-\%b-\%y"} for convenience. See Examples.}
-#'   \item{\code{clean_POSIXct()}:\cr}{Use parameter \code{remove} to match values that must be removed from the input, using regular expressions (\link[base]{regex}). The resulting string will be coerced to a date/time element with class \code{POSIXct}, using \code{\link{as.POSIXct}()}. See Examples.}
-#' }
+#' - **`clean_logical()`**:  
+#'   Use parameters `true` and `false` to match values using case-insensitive regular expressions ([regex]). Unmatched values are considered `NA`. By default, values are matched with [`regex_true`](#regex_true) and [`regex_false`](#regex_false). This allows support for values "Yes" and "No" in various languages. Use parameter `na` to override values as `NA` that would otherwise be matched with `true` or `false`. See Examples.
 #' 
-#' The use of invalid regular expressions in any of the above functions will not return an error (like in base R), but will instead interpret the expression as a fixed value and will throw a warning.
+#' - **`clean_factor()`**:  
+#'   Use parameter `levels` to set new factor levels. They can be case-insensitive regular expressions to match existing values of `x`. For matching, new values for `levels` are internally temporarily sorted descending on text length. See Examples.
+#' 
+#' - **`clean_numeric()`, `clean_double()`, `clean_integer()` and `clean_character()`**:  
+#'   Use parameter `remove` to match values that must be removed from the input, using regular expressions ([regex]). In the case of `clean_numeric()`, commas will be read as dots and only the last dot will be kept. Function `clean_character()` will keep middle spaces by default. See Examples.
+#' 
+#' - **`clean_percentage()`**:  
+#'   This new class works like `clean_numeric()`, but transforms it with [`as.percentage`](#as.percentage), which will retain the original values but will print them as percentages. See Examples.
+#' 
+#' - **`clean_currency()`**:  
+#'   This new class works like `clean_numeric()`, but transforms it with [`as.currency`](#as.currency). The currency symbol is guessed based on the most traded currencies by value (see Source): the United States dollar, Euro, Japanese yen, Pound sterling, Swiss franc, Renminbi, Swedish krona, Mexican peso, South Korean won, Turkish lira, Russian ruble, Indian rupee, and the South African rand. See Examples.
+#' 
+#' - **`clean_Date()`**:  
+#'   Use parameter `format` to define a date format or leave it empty to have the format guessed. Use `"Excel"` to read values as Microsoft Excel dates. The `format` parameter will be evaluated with [`format_datetime`](#format_datetime), meaning that a format like `"d-mmm-yy"` will be translated internally to `"%e-%b-%y"` for convenience. See Examples.
+#' 
+#' - **`clean_POSIXct()`**:  
+#'   Use parameter `remove` to match values that must be removed from the input, using regular expressions ([regex]). The resulting string will be coerced to a date/time element with class `POSIXct`, using [`as.POSIXct()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/as.POSIXct.html). See Examples.
+#' 
+#' The use of invalid regular expressions in any of the above functions will not return an error (as in base R) but will instead interpret the expression as a fixed value and will throw a warning.
 #' @rdname clean
-#' @return The \code{clean_*} functions \strong{always} return the class from the function name:
-#' \itemize{
-#'   \item{\code{clean_logical()}: class \code{logical}}
-#'   \item{\code{clean_factor()}: class \code{factor}}
-#'   \item{\code{clean_numeric()} and \code{clean_double()}: class \code{numeric}}
-#'   \item{\code{clean_integer()}: class \code{integer}}
-#'   \item{\code{clean_character()}: class \code{character}}
-#'   \item{\code{clean_percentage()}: class \code{percentage}}
-#'   \item{\code{clean_currency()}: class \code{currency}}
-#'   \item{\code{clean_Date()}: class \code{Date}}
-#'   \item{\code{clean_POSIXct()}: classes \code{POSIXct/POSIXt}}
-#' }
+#' @return The `clean_*` functions **always** return the class from the function name:
+#' - `clean_logical()`: class `logical`
+#' - `clean_factor()`: class `factor`
+#' - `clean_numeric()` and `clean_double()`: class `numeric`
+#' - `clean_integer()`: class `integer`
+#' - `clean_character()`: class `character`
+#' - `clean_percentage()`: class `percentage`
+#' - `clean_currency()`: class `currency`
+#' - `clean_Date()`: class `Date`
+#' - `clean_POSIXct()`: classes `POSIXct/POSIXt`
 #' @export
-#' @source \href{https://www.bis.org/publ/rpfx16fx.pdf}{Triennial Central Bank Survey Foreign exchange turnover in April 2016} (PDF). Bank for International Settlements. 11 December 2016. p. 10.
+#' @source [Triennial Central Bank Survey Foreign exchange turnover in April 2016 (PDF)](https://www.bis.org/publ/rpfx16fx.pdf). Bank for International Settlements. 11 December 2016. p. 10.
 #' @examples 
 #' clean_logical(c("Yes", "No"))   # English
 #' clean_logical(c("Oui", "Non"))  # French

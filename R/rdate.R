@@ -37,7 +37,10 @@ rdate <- function(n,
   }, error = function(e) {
     stop("Both 'min' and 'max' must be coercible to valid dates. Note: ", e$message)
   })
-  sample(seq.Date(min, max, by = "day"),
-         size = ifelse(length(n) == 1, n, length(n)),
-         replace = TRUE)
+  dates <- seq.Date(min, max, by = "day")
+  dates_numeric <- as.double(dates)
+  out <- sample(dates_numeric,
+                size = ifelse(length(n) == 1, n, length(n)),
+                replace = TRUE)
+  as.Date(out, origin = "1970-01-01")
 }
