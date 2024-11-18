@@ -57,5 +57,4 @@ rsconnect/
 # others
 .DS_Store
 *.Rproj
-cran-comments.md
 lintr.R
