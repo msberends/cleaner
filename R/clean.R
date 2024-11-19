@@ -6,7 +6,7 @@
 # https://github.com/msberends/cleaner                                 #
 #                                                                      #
 # LICENCE                                                              #
-# (c) 2022 Berends MS (m.s.berends@umcg.nl)                            #
+# 2019-2024 Berends MS (m.s.berends@umcg.nl)                           #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -26,7 +26,7 @@
 #' @param false [regex] to interpret values as `FALSE` (which defaults to [regex_false()]), see Details
 #' @param na [regex] to force interpret values as `NA`, i.e. not as `TRUE` or `FALSE`
 #' @param remove [regex] to define the character(s) that should be removed, see Details
-#' @param levels new factor levels, may be named with regular expressions to match existing values, see Details
+#' @param levels new factor levels, may be named regular expressions to match existing values, see Details
 #' @param droplevels logical to indicate whether non-existing factor levels should be dropped
 #' @param ordered logical to indicate whether the factor levels should be ordered
 #' @param fixed logical to indicate whether regular expressions should be turned off
@@ -39,7 +39,7 @@
 #' @param format character string giving a date-time format as used by [strptime()].
 #' 
 #' For `clean_Date(..., guess_each = TRUE)`, this can be a vector of values to be used for guessing, see Examples.
-#' @param ... for `clean_Date` and `clean_POSIXct`: other parameters passed on these functions
+#' @param ... for `clean_Date` and `clean_POSIXct`: other arguments passed on these functions
 #' @inheritParams base::as.POSIXct
 #' @details
 #' Using `clean()` on a vector will guess a cleaning function based on the potential number of `NA`s it returns. Using `clean()` on a data frame to apply this guessed cleaning over all columns.
@@ -47,25 +47,25 @@
 #' Info about the different functions:
 #' 
 #' - **`clean_logical()`**:  
-#'   Use parameters `true` and `false` to match values using case-insensitive regular expressions ([regex]). Unmatched values are considered `NA`. By default, values are matched with [`regex_true`](#regex_true) and [`regex_false`](#regex_false). This allows support for values "Yes" and "No" in various languages. Use parameter `na` to override values as `NA` that would otherwise be matched with `true` or `false`. See Examples.
+#'   Use arguments `true` and `false` to match values using case-insensitive regular expressions ([regex]). Unmatched values are considered `NA`. By default, values are matched with [regex_true()] and [regex_false()]. This allows support for values "Yes" and "No" in various languages. Use argument `na` to override values as `NA` that would otherwise be matched with `true` or `false`. See Examples.
 #' 
 #' - **`clean_factor()`**:  
-#'   Use parameter `levels` to set new factor levels. They can be case-insensitive regular expressions to match existing values of `x`. For matching, new values for `levels` are internally temporarily sorted descending on text length. See Examples.
+#'   Use argument `levels` to set new factor levels. They can be named case-insensitive regular expressions to match existing values of `x`. For matching, new values for `levels` are internally temporarily sorted descending on text length. See Examples.
 #' 
 #' - **`clean_numeric()`, `clean_double()`, `clean_integer()` and `clean_character()`**:  
-#'   Use parameter `remove` to match values that must be removed from the input, using regular expressions ([regex]). In the case of `clean_numeric()`, commas will be read as dots and only the last dot will be kept. Function `clean_character()` will keep middle spaces by default. See Examples.
+#'   Use argument `remove` to match values that must be removed from the input, using regular expressions ([regex]). In the case of `clean_numeric()`, commas will be read as dots and only the last dot will be kept. Function `clean_character()` will keep middle spaces by default. See Examples.
 #' 
 #' - **`clean_percentage()`**:  
-#'   This new class works like `clean_numeric()`, but transforms it with [`as.percentage`](#as.percentage), which will retain the original values but will print them as percentages. See Examples.
+#'   This new class works like `clean_numeric()`, but transforms it with [as.percentage()], which will retain the original values but will print them as percentages. See Examples.
 #' 
 #' - **`clean_currency()`**:  
-#'   This new class works like `clean_numeric()`, but transforms it with [`as.currency`](#as.currency). The currency symbol is guessed based on the most traded currencies by value (see Source): the United States dollar, Euro, Japanese yen, Pound sterling, Swiss franc, Renminbi, Swedish krona, Mexican peso, South Korean won, Turkish lira, Russian ruble, Indian rupee, and the South African rand. See Examples.
+#'   This new class works like `clean_numeric()`, but transforms it with [as.currency()]. The currency symbol is guessed based on the most traded currencies by value (see Source): the United States dollar, Euro, Japanese yen, Pound sterling, Swiss franc, Renminbi, Swedish krona, Mexican peso, South Korean won, Turkish lira, Russian ruble, Indian rupee, and the South African rand. See Examples.
 #' 
 #' - **`clean_Date()`**:  
-#'   Use parameter `format` to define a date format or leave it empty to have the format guessed. Use `"Excel"` to read values as Microsoft Excel dates. The `format` parameter will be evaluated with [`format_datetime`](#format_datetime), meaning that a format like `"d-mmm-yy"` will be translated internally to `"%e-%b-%y"` for convenience. See Examples.
+#'   Use argument `format` to define a date format or leave it empty to have the format guessed. Use `"Excel"` to read values as Microsoft Excel dates. The `format` argument will be evaluated with [format_datetime()], meaning that a format like `"d-mmm-yy"` will be translated internally to `"%e-%b-%y"` for convenience. See Examples.
 #' 
 #' - **`clean_POSIXct()`**:  
-#'   Use parameter `remove` to match values that must be removed from the input, using regular expressions ([regex]). The resulting string will be coerced to a date/time element with class `POSIXct`, using [`as.POSIXct()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/as.POSIXct.html). See Examples.
+#'   Use argument `remove` to match values that must be removed from the input, using regular expressions ([regex]). The resulting string will be coerced to a date/time element with class `POSIXct`, using [as.POSIXct()]. See Examples.
 #' 
 #' The use of invalid regular expressions in any of the above functions will not return an error (as in base R) but will instead interpret the expression as a fixed value and will throw a warning.
 #' @rdname clean
@@ -92,6 +92,7 @@
 #' clean_factor(gender_age, c("M", "F"))
 #' clean_factor(gender_age, c("Male", "Female"))
 #' clean_factor(gender_age, c("0-50", "50+"), ordered = TRUE)
+#' clean_factor(gender_age, levels = c("Group A" = "female", "Group B" = "male 50+", Other = ".*"))
 #' 
 #' clean_Date("13jul18", "ddmmmyy")
 #' clean_Date("12 August 2010")
@@ -195,6 +196,9 @@ clean_logical <- function(x, true = regex_true(), false = regex_false(), na = NU
 #' @rdname clean
 #' @export
 clean_factor <- function(x, levels = unique(x), ordered = FALSE, droplevels = FALSE, fixed = FALSE, ignore.case = TRUE) {
+  if (!is.null(names(levels))) {
+    levels <- stats::setNames(names(levels), levels)
+  }
   if (!all(levels %in% x)) {
     new_x <- rep(NA_character_, length(x))
     # sort descending on character length

@@ -82,7 +82,7 @@ clean_POSIXct(
 
 \item{ignore.case}{logical to indicate whether matching should be case-insensitive}
 
-\item{levels}{new factor levels, may be named with regular expressions to match existing values, see Details}
+\item{levels}{new factor levels, may be named regular expressions to match existing values, see Details}
 
 \item{ordered}{logical to indicate whether the factor levels should be ordered}
 
@@ -102,7 +102,7 @@ For \code{clean_Date(..., guess_each = TRUE)}, this can be a vector of values to
 
 \item{max_date}{date (coercible with \code{\link[=as.Date]{as.Date()}}) to indicate the maximum allowed of \code{x}, which defaults to today. This is to prevent that \code{clean_Date("23-03-47")} will return 23 March 2047 and instead returns 23 March 1947 with a warning.}
 
-\item{...}{for \code{clean_Date} and \code{clean_POSIXct}: other parameters passed on these functions}
+\item{...}{for \code{clean_Date} and \code{clean_POSIXct}: other arguments passed on these functions}
 
 \item{tz}{a character string.  The time zone specification to be used
     for the conversion, \emph{if one is required}.  System-specific (see
@@ -133,19 +133,19 @@ Using \code{clean()} on a vector will guess a cleaning function based on the pot
 Info about the different functions:
 \itemize{
 \item \strong{\code{clean_logical()}}:
-Use parameters \code{true} and \code{false} to match values using case-insensitive regular expressions (\link{regex}). Unmatched values are considered \code{NA}. By default, values are matched with \href{#regex_true}{\code{regex_true}} and \href{#regex_false}{\code{regex_false}}. This allows support for values "Yes" and "No" in various languages. Use parameter \code{na} to override values as \code{NA} that would otherwise be matched with \code{true} or \code{false}. See Examples.
+Use arguments \code{true} and \code{false} to match values using case-insensitive regular expressions (\link{regex}). Unmatched values are considered \code{NA}. By default, values are matched with \code{\link[=regex_true]{regex_true()}} and \code{\link[=regex_false]{regex_false()}}. This allows support for values "Yes" and "No" in various languages. Use argument \code{na} to override values as \code{NA} that would otherwise be matched with \code{true} or \code{false}. See Examples.
 \item \strong{\code{clean_factor()}}:
-Use parameter \code{levels} to set new factor levels. They can be case-insensitive regular expressions to match existing values of \code{x}. For matching, new values for \code{levels} are internally temporarily sorted descending on text length. See Examples.
+Use argument \code{levels} to set new factor levels. They can be named case-insensitive regular expressions to match existing values of \code{x}. For matching, new values for \code{levels} are internally temporarily sorted descending on text length. See Examples.
 \item \strong{\code{clean_numeric()}, \code{clean_double()}, \code{clean_integer()} and \code{clean_character()}}:
-Use parameter \code{remove} to match values that must be removed from the input, using regular expressions (\link{regex}). In the case of \code{clean_numeric()}, commas will be read as dots and only the last dot will be kept. Function \code{clean_character()} will keep middle spaces by default. See Examples.
+Use argument \code{remove} to match values that must be removed from the input, using regular expressions (\link{regex}). In the case of \code{clean_numeric()}, commas will be read as dots and only the last dot will be kept. Function \code{clean_character()} will keep middle spaces by default. See Examples.
 \item \strong{\code{clean_percentage()}}:
-This new class works like \code{clean_numeric()}, but transforms it with \href{#as.percentage}{\code{as.percentage}}, which will retain the original values but will print them as percentages. See Examples.
+This new class works like \code{clean_numeric()}, but transforms it with \code{\link[=as.percentage]{as.percentage()}}, which will retain the original values but will print them as percentages. See Examples.
 \item \strong{\code{clean_currency()}}:
-This new class works like \code{clean_numeric()}, but transforms it with \href{#as.currency}{\code{as.currency}}. The currency symbol is guessed based on the most traded currencies by value (see Source): the United States dollar, Euro, Japanese yen, Pound sterling, Swiss franc, Renminbi, Swedish krona, Mexican peso, South Korean won, Turkish lira, Russian ruble, Indian rupee, and the South African rand. See Examples.
+This new class works like \code{clean_numeric()}, but transforms it with \code{\link[=as.currency]{as.currency()}}. The currency symbol is guessed based on the most traded currencies by value (see Source): the United States dollar, Euro, Japanese yen, Pound sterling, Swiss franc, Renminbi, Swedish krona, Mexican peso, South Korean won, Turkish lira, Russian ruble, Indian rupee, and the South African rand. See Examples.
 \item \strong{\code{clean_Date()}}:
-Use parameter \code{format} to define a date format or leave it empty to have the format guessed. Use \code{"Excel"} to read values as Microsoft Excel dates. The \code{format} parameter will be evaluated with \href{#format_datetime}{\code{format_datetime}}, meaning that a format like \code{"d-mmm-yy"} will be translated internally to \code{"\%e-\%b-\%y"} for convenience. See Examples.
+Use argument \code{format} to define a date format or leave it empty to have the format guessed. Use \code{"Excel"} to read values as Microsoft Excel dates. The \code{format} argument will be evaluated with \code{\link[=format_datetime]{format_datetime()}}, meaning that a format like \code{"d-mmm-yy"} will be translated internally to \code{"\%e-\%b-\%y"} for convenience. See Examples.
 \item \strong{\code{clean_POSIXct()}}:
-Use parameter \code{remove} to match values that must be removed from the input, using regular expressions (\link{regex}). The resulting string will be coerced to a date/time element with class \code{POSIXct}, using \href{https://stat.ethz.ch/R-manual/R-devel/library/base/html/as.POSIXct.html}{\code{as.POSIXct()}}. See Examples.
+Use argument \code{remove} to match values that must be removed from the input, using regular expressions (\link{regex}). The resulting string will be coerced to a date/time element with class \code{POSIXct}, using \code{\link[=as.POSIXct]{as.POSIXct()}}. See Examples.
 }
 
 The use of invalid regular expressions in any of the above functions will not return an error (as in base R) but will instead interpret the expression as a fixed value and will throw a warning.
@@ -161,6 +161,7 @@ gender_age <- c("male 0-50", "male 50+", "female 0-50", "female 50+")
 clean_factor(gender_age, c("M", "F"))
 clean_factor(gender_age, c("Male", "Female"))
 clean_factor(gender_age, c("0-50", "50+"), ordered = TRUE)
+clean_factor(gender_age, levels = c("Group A" = "female", "Group B" = "male 50+", Other = ".*"))
 
 clean_Date("13jul18", "ddmmmyy")
 clean_Date("12 August 2010")

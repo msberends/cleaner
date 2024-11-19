@@ -99,9 +99,9 @@ Use `clean()` to clean data. It guesses what kind of data class would best fit y
   You can also name your levels to let them match your values. They support regular expressions too:
   
   ```r
-  clean_factor(gender_age, levels = c("female" = "Group A", 
-                                      "male 50+" = "Group B",
-                                      ".*" = "Other"))
+  clean_factor(gender_age, levels = c("Group A" = "female",
+                                      "Group B" = "male 50+",
+                                      Other = ".*"))
   #> [1] Other   Group B Group A Group A
   #> Levels: Group A Group B Other
   ```

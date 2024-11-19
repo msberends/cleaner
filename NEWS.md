@@ -1,3 +1,9 @@
+# cleaner 1.5.5
+
+* For `clean_factor()` switched the names and values of `levels`
+* Fix CRAN check error
+
+
 # cleaner 1.5.4
 
 * For `clean_Date()` and `clean_POSIXct()`: allow argument `max_date` to be the same length as `x`
