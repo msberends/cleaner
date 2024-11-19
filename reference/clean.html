@@ -139,7 +139,7 @@
 
 
 <dt id="arg-levels">levels<a class="anchor" aria-label="anchor" href="#arg-levels"></a></dt>
-<dd><p>new factor levels, may be named with regular expressions to match existing values, see Details</p></dd>
+<dd><p>new factor levels, may be named regular expressions to match existing values, see Details</p></dd>
 
 
 <dt id="arg-ordered">ordered<a class="anchor" aria-label="anchor" href="#arg-ordered"></a></dt>
@@ -176,7 +176,7 @@
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>for <code>clean_Date</code> and <code>clean_POSIXct</code>: other parameters passed on these functions</p></dd>
+<dd><p>for <code>clean_Date</code> and <code>clean_POSIXct</code>: other arguments passed on these functions</p></dd>
 
 
 <dt id="arg-tz">tz<a class="anchor" aria-label="anchor" href="#arg-tz"></a></dt>
@@ -203,19 +203,19 @@
     <h2>Details</h2>
     <p>Using <code>clean()</code> on a vector will guess a cleaning function based on the potential number of <code>NA</code>s it returns. Using <code>clean()</code> on a data frame to apply this guessed cleaning over all columns.</p>
 <p>Info about the different functions:</p><ul><li><p><strong><code>clean_logical()</code></strong>:
-Use parameters <code>true</code> and <code>false</code> to match values using case-insensitive regular expressions (<a href="https://rdrr.io/r/base/regex.html" class="external-link">regex</a>). Unmatched values are considered <code>NA</code>. By default, values are matched with <a href="#regex_true"><code>regex_true</code></a> and <a href="#regex_false"><code>regex_false</code></a>. This allows support for values "Yes" and "No" in various languages. Use parameter <code>na</code> to override values as <code>NA</code> that would otherwise be matched with <code>true</code> or <code>false</code>. See Examples.</p></li>
+Use arguments <code>true</code> and <code>false</code> to match values using case-insensitive regular expressions (<a href="https://rdrr.io/r/base/regex.html" class="external-link">regex</a>). Unmatched values are considered <code>NA</code>. By default, values are matched with <code><a href="regex_true_false.html">regex_true()</a></code> and <code><a href="regex_true_false.html">regex_false()</a></code>. This allows support for values "Yes" and "No" in various languages. Use argument <code>na</code> to override values as <code>NA</code> that would otherwise be matched with <code>true</code> or <code>false</code>. See Examples.</p></li>
 <li><p><strong><code>clean_factor()</code></strong>:
-Use parameter <code>levels</code> to set new factor levels. They can be case-insensitive regular expressions to match existing values of <code>x</code>. For matching, new values for <code>levels</code> are internally temporarily sorted descending on text length. See Examples.</p></li>
+Use argument <code>levels</code> to set new factor levels. They can be named case-insensitive regular expressions to match existing values of <code>x</code>. For matching, new values for <code>levels</code> are internally temporarily sorted descending on text length. See Examples.</p></li>
 <li><p><strong><code>clean_numeric()</code>, <code>clean_double()</code>, <code>clean_integer()</code> and <code>clean_character()</code></strong>:
-Use parameter <code>remove</code> to match values that must be removed from the input, using regular expressions (<a href="https://rdrr.io/r/base/regex.html" class="external-link">regex</a>). In the case of <code>clean_numeric()</code>, commas will be read as dots and only the last dot will be kept. Function <code>clean_character()</code> will keep middle spaces by default. See Examples.</p></li>
+Use argument <code>remove</code> to match values that must be removed from the input, using regular expressions (<a href="https://rdrr.io/r/base/regex.html" class="external-link">regex</a>). In the case of <code>clean_numeric()</code>, commas will be read as dots and only the last dot will be kept. Function <code>clean_character()</code> will keep middle spaces by default. See Examples.</p></li>
 <li><p><strong><code>clean_percentage()</code></strong>:
-This new class works like <code>clean_numeric()</code>, but transforms it with <a href="#as.percentage"><code>as.percentage</code></a>, which will retain the original values but will print them as percentages. See Examples.</p></li>
+This new class works like <code>clean_numeric()</code>, but transforms it with <code><a href="percentage.html">as.percentage()</a></code>, which will retain the original values but will print them as percentages. See Examples.</p></li>
 <li><p><strong><code>clean_currency()</code></strong>:
-This new class works like <code>clean_numeric()</code>, but transforms it with <a href="#as.currency"><code>as.currency</code></a>. The currency symbol is guessed based on the most traded currencies by value (see Source): the United States dollar, Euro, Japanese yen, Pound sterling, Swiss franc, Renminbi, Swedish krona, Mexican peso, South Korean won, Turkish lira, Russian ruble, Indian rupee, and the South African rand. See Examples.</p></li>
+This new class works like <code>clean_numeric()</code>, but transforms it with <code><a href="currency.html">as.currency()</a></code>. The currency symbol is guessed based on the most traded currencies by value (see Source): the United States dollar, Euro, Japanese yen, Pound sterling, Swiss franc, Renminbi, Swedish krona, Mexican peso, South Korean won, Turkish lira, Russian ruble, Indian rupee, and the South African rand. See Examples.</p></li>
 <li><p><strong><code>clean_Date()</code></strong>:
-Use parameter <code>format</code> to define a date format or leave it empty to have the format guessed. Use <code>"Excel"</code> to read values as Microsoft Excel dates. The <code>format</code> parameter will be evaluated with <a href="#format_datetime"><code>format_datetime</code></a>, meaning that a format like <code>"d-mmm-yy"</code> will be translated internally to <code>"%e-%b-%y"</code> for convenience. See Examples.</p></li>
+Use argument <code>format</code> to define a date format or leave it empty to have the format guessed. Use <code>"Excel"</code> to read values as Microsoft Excel dates. The <code>format</code> argument will be evaluated with <code><a href="format_datetime.html">format_datetime()</a></code>, meaning that a format like <code>"d-mmm-yy"</code> will be translated internally to <code>"%e-%b-%y"</code> for convenience. See Examples.</p></li>
 <li><p><strong><code>clean_POSIXct()</code></strong>:
-Use parameter <code>remove</code> to match values that must be removed from the input, using regular expressions (<a href="https://rdrr.io/r/base/regex.html" class="external-link">regex</a>). The resulting string will be coerced to a date/time element with class <code>POSIXct</code>, using <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/as.POSIXct.html" class="external-link"><code><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct()</a></code></a>. See Examples.</p></li>
+Use argument <code>remove</code> to match values that must be removed from the input, using regular expressions (<a href="https://rdrr.io/r/base/regex.html" class="external-link">regex</a>). The resulting string will be coerced to a date/time element with class <code>POSIXct</code>, using <code><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct()</a></code>. See Examples.</p></li>
 </ul><p>The use of invalid regular expressions in any of the above functions will not return an error (as in base R) but will instead interpret the expression as a fixed value and will throw a warning.</p>
     </div>
 
@@ -241,6 +241,9 @@ Use parameter <code>remove</code> to match values that must be removed from the 
 <span class="r-in"><span><span class="fu">clean_factor</span><span class="op">(</span><span class="va">gender_age</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-50"</span>, <span class="st">"50+"</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0-50 50+  0-50 50+ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 0-50 &lt; 50+</span>
+<span class="r-in"><span><span class="fu">clean_factor</span><span class="op">(</span><span class="va">gender_age</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Group A"</span> <span class="op">=</span> <span class="st">"female"</span>, <span class="st">"Group B"</span> <span class="op">=</span> <span class="st">"male 50+"</span>, Other <span class="op">=</span> <span class="st">".*"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] Other   Group B Group A Group A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: Group A Group B Other</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">clean_Date</span><span class="op">(</span><span class="st">"13jul18"</span>, <span class="st">"ddmmmyy"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2018-07-13"</span>
